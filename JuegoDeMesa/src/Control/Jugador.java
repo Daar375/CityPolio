@@ -1,6 +1,6 @@
 package Control;
 
-public class Jugador {
+public class Jugador implements Comparable {
 	private int Points;
 	private String Name;
 	private String Contraseña;
@@ -22,5 +22,10 @@ public class Jugador {
 	}
 	public void setName(String name) {
 		Name = name;
+	}
+	@Override
+	public int compareTo(Object arg0) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }
