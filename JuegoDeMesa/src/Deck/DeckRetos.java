@@ -1,9 +1,10 @@
 package Deck;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class DeckRetos extends Deck {
-	private ArrayList<Reto> Cartas;
+	private ArrayList<Reto> Cartas = new ArrayList();
 
 	public ArrayList<Reto> getCartas() {
 		return Cartas;
@@ -15,8 +16,11 @@ public class DeckRetos extends Deck {
 
 	public void Add(Reto Carta) {
 		Cartas.add(Carta);
-		Cantidad++;
 
 	}
+    public static <T extends Enum<?>> T randomEnum(Class<T> clazz){
+        int x = new Random().nextInt(clazz.getEnumConstants().length);
+        return clazz.getEnumConstants()[x];
+    }
 
 }
