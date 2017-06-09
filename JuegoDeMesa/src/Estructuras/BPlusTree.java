@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public class BPlusTree<K extends Comparable<K>, T> {
 
-	public Node<K,T> root;
+	public TreeNode<K,T> root;
 	public static final int D = 2;
 
 
@@ -27,7 +27,7 @@ public class BPlusTree<K extends Comparable<K>, T> {
 		return null;
 	}
 	
-	private Node<K,T> treeSearch(Node<K,T> node, K key) {
+	private TreeNode<K,T> treeSearch(TreeNode<K,T> node, K key) {
 		if(node.isLeafNode) {
 			return node;
 		} 
@@ -37,18 +37,18 @@ public class BPlusTree<K extends Comparable<K>, T> {
 			
 			// K < K1, return treeSearch(P0, K)
 			if(key.compareTo(index.keys.get(0)) < 0) {
-				return treeSearch((Node<K,T>)index.children.get(0), key);
+				return treeSearch((TreeNode<K,T>)index.children.get(0), key);
 			}
 			// K >= Km, return treeSearch(Pm, K), m = #entries
 			else if(key.compareTo(index.keys.get(node.keys.size()-1)) >= 0) {
-				return treeSearch((Node<K,T>)index.children.get(index.children.size()-1), key);
+				return treeSearch((TreeNode<K,T>)index.children.get(index.children.size()-1), key);
 			}
 			// Find i such that Ki <= K < K(i+1), return treeSearch(Pi,K)
 			else {
 				// Linear searching
 				for(int i=0; i<index.keys.size()-1; i++) {
 					if(key.compareTo(index.keys.get(i)) >= 0 && key.compareTo(index.keys.get(i+1)) < 0) {
-						return treeSearch((Node<K,T>)index.children.get(i+1), key);
+						return treeSearch((TreeNode<K,T>)index.children.get(i+1), key);
 					}
 				}
  			}
@@ -59,7 +59,7 @@ public class BPlusTree<K extends Comparable<K>, T> {
 
 	public void insert(K key, T value) {
 		LeafNode<K,T> newLeaf = new LeafNode<K,T>(key, value);
-		Entry<K, Node<K,T>> entry = new AbstractMap.SimpleEntry<K, Node<K,T>>(key, newLeaf);
+		Entry<K, TreeNode<K,T>> entry = new AbstractMap.SimpleEntry<K, TreeNode<K,T>>(key, newLeaf);
 		
 		// Insert entry into subtree with root node pointer
 		if(root == null || root.keys.size() == 0) {
@@ -67,7 +67,7 @@ public class BPlusTree<K extends Comparable<K>, T> {
 		}
 		
 		// newChildEntry null initially, and null on return unless child is split
-		Entry<K, Node<K,T>> newChildEntry = getChildEntry(root, entry, null);
+		Entry<K, TreeNode<K,T>> newChildEntry = getChildEntry(root, entry, null);
 		
 		if(newChildEntry == null) {
 			return;
@@ -79,8 +79,8 @@ public class BPlusTree<K extends Comparable<K>, T> {
 		}
 	}
 	
-	private Entry<K, Node<K,T>> getChildEntry(Node<K,T> node, Entry<K, Node<K,T>> entry, 
-			Entry<K, Node<K,T>> newChildEntry) {
+	private Entry<K, TreeNode<K,T>> getChildEntry(TreeNode<K,T> node, Entry<K, TreeNode<K,T>> entry, 
+			Entry<K, TreeNode<K,T>> newChildEntry) {
 		if(!node.isLeafNode) {
 			// Choose subtree, find i such that Ki <= entry's key value < J(i+1)
 			IndexNode<K,T> index = (IndexNode<K,T>) node;
@@ -92,7 +92,7 @@ public class BPlusTree<K extends Comparable<K>, T> {
 				i++;
 			}
 			// Recursively, insert entry
-			newChildEntry = getChildEntry((Node<K,T>) index.children.get(i), entry, newChildEntry);
+			newChildEntry = getChildEntry((TreeNode<K,T>) index.children.get(i), entry, newChildEntry);
 			
 			// Usual case, didn't split child
 			if(newChildEntry == null) {
@@ -161,7 +161,7 @@ public class BPlusTree<K extends Comparable<K>, T> {
 	 * @param leaf, any other relevant data
 	 * @return the key/node pair as an Entry
 	 */
-	public Entry<K, Node<K,T>> splitLeafNode(LeafNode<K,T> leaf) {
+	public Entry<K, TreeNode<K,T>> splitLeafNode(LeafNode<K,T> leaf) {
 		ArrayList<K> newKeys = new ArrayList<K>();
 		ArrayList<T> newValues = new ArrayList<T>();
 		
@@ -187,15 +187,15 @@ public class BPlusTree<K extends Comparable<K>, T> {
 		rightNode.previousLeaf = leaf;
 		rightNode.nextLeaf = tmp;
         
-		Entry<K, Node<K,T>> newChildEntry = new AbstractMap.SimpleEntry<K, Node<K,T>>(splitKey, rightNode);
+		Entry<K, TreeNode<K,T>> newChildEntry = new AbstractMap.SimpleEntry<K, TreeNode<K,T>>(splitKey, rightNode);
 		
 		return newChildEntry;
 	}
 
 
-	public Entry<K, Node<K,T>> splitIndexNode(IndexNode<K,T> index) {
+	public Entry<K, TreeNode<K,T>> splitIndexNode(IndexNode<K,T> index) {
 		ArrayList<K> newKeys = new ArrayList<K>();
-		ArrayList<Node<K,T>> newChildren = new ArrayList<Node<K,T>>();
+		ArrayList<TreeNode<K,T>> newChildren = new ArrayList<TreeNode<K,T>>();
 		
 		// Note difference with splitting leaf page, 2D+1 key values and 2D+2 node pointers
 		K splitKey = index.keys.get(D);
@@ -214,7 +214,7 @@ public class BPlusTree<K extends Comparable<K>, T> {
 		}
 
 		IndexNode<K,T> rightNode = new IndexNode<K,T>(newKeys, newChildren);
-		Entry<K, Node<K,T>> newChildEntry = new AbstractMap.SimpleEntry<K, Node<K,T>>(splitKey, rightNode);
+		Entry<K, TreeNode<K,T>> newChildEntry = new AbstractMap.SimpleEntry<K, TreeNode<K,T>>(splitKey, rightNode);
 
 		return newChildEntry;
 	}
@@ -231,10 +231,10 @@ public class BPlusTree<K extends Comparable<K>, T> {
 		}
 		
 		// Delete entry from subtree with root node pointer
-		Entry<K, Node<K,T>> entry = new AbstractMap.SimpleEntry<K, Node<K,T>>(key, leaf);
+		Entry<K, TreeNode<K,T>> entry = new AbstractMap.SimpleEntry<K, TreeNode<K,T>>(key, leaf);
 		
 		// oldChildEntry null initially, and null upon return unless child deleted
-		Entry<K, Node<K,T>> oldChildEntry = deleteChildEntry(root, root, entry, null);
+		Entry<K, TreeNode<K,T>> oldChildEntry = deleteChildEntry(root, root, entry, null);
 		
 		// Readjust the root, no child is deleted
 		if(oldChildEntry == null) {
@@ -267,8 +267,8 @@ public class BPlusTree<K extends Comparable<K>, T> {
 		}
 	}
 	
-	private Entry<K, Node<K,T>> deleteChildEntry(Node<K,T> parentNode, Node<K,T> node, 
-			Entry<K, Node<K,T>> entry, Entry<K, Node<K,T>> oldChildEntry) {
+	private Entry<K, TreeNode<K,T>> deleteChildEntry(TreeNode<K,T> parentNode, TreeNode<K,T> node, 
+			Entry<K, TreeNode<K,T>> entry, Entry<K, TreeNode<K,T>> oldChildEntry) {
 		if(!node.isLeafNode) {
 			// Choose subtree, find i such that Ki <= entry's key value < K(i+1)
 			IndexNode<K,T> index = (IndexNode<K,T>)node;
@@ -338,7 +338,7 @@ public class BPlusTree<K extends Comparable<K>, T> {
 					// Merge indexNode and S
 					else {
 						K parentKey = parentNode.keys.get(splitKeyPos);
-						oldChildEntry = new AbstractMap.SimpleEntry<K, Node<K,T>>(parentKey, parentNode);
+						oldChildEntry = new AbstractMap.SimpleEntry<K, TreeNode<K,T>>(parentKey, parentNode);
 						return oldChildEntry;
 					}
 				}
@@ -382,7 +382,7 @@ public class BPlusTree<K extends Comparable<K>, T> {
 				// Merge leaf and S
 				else {
 					parentKey = parentNode.keys.get(splitKeyPos);
-					oldChildEntry = new AbstractMap.SimpleEntry<K, Node<K,T>>(parentKey, parentNode);
+					oldChildEntry = new AbstractMap.SimpleEntry<K, TreeNode<K,T>>(parentKey, parentNode);
 					return oldChildEntry;
 				}	
 			}
