@@ -6,7 +6,7 @@ import org.json.JSONObject;
 public class tester {
 
 	public static void main(String[] args) throws Exception {
-		String res = HTTPPlaces.post("9.9354028", "-84.0753903", "restaurant");
+		String res = HTTPPlaces.getplaces("9.9354028", "-84.0753903", "restaurant");
 		
 		JSONObject placesjson = new JSONObject(res);
 		 JSONArray Array = placesjson.getJSONArray("results");
