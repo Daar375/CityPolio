@@ -1,5 +1,7 @@
 package Deck;
 
+import java.util.Random;
+
 import Mapa.Type;
 
 public class Reto {
@@ -21,4 +23,5 @@ public class Reto {
 	public void setCantidad(int cantidad) {
 		Cantidad = cantidad;
 	}
+
 }

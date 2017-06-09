@@ -3,7 +3,7 @@ package Deck;
 import java.util.ArrayList;
 
 public class DeckCuidades extends Deck {
-	private ArrayList<Cuidad> Cartas;
+	private ArrayList<Cuidad> Cartas= new ArrayList();
 
 	public ArrayList<Cuidad> getCartas() {
 		return Cartas;
@@ -16,6 +16,12 @@ public class DeckCuidades extends Deck {
 	public void Add(Cuidad Carta) {
 
 		Cartas.add(Carta);
-		Cantidad++;
+	}
+	
+	public void AddAll( ArrayList<Cuidad> adding){
+		Cartas.addAll(adding);
+	}
+	public void Print(){
+		System.out.println(Cartas.toString());
 	}
 }

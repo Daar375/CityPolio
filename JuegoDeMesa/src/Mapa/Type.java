@@ -1,5 +1,5 @@
 package Mapa;
 
 public enum Type {
-	Restaurante, Iglesia
+	restaurant,church,school,park,hospital
 }

@@ -10,15 +10,17 @@ import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
-public class HTTPPlaces {
+import Control.IConstants;
 
-	public static String post(String X, String Y, int radio, String tipo, String key) {
+public class HTTPPlaces implements IConstants{
+
+	public static String post(String X, String Y, String tipo) {
 		String result = null;
 
 		HttpClient httpclient = HttpClients.createDefault();
 		try {
 			URIBuilder builder = new URIBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="
-					+ X + "," + Y + "&radius=" + radio + "&type=" + tipo + "&key=" + key);
+					+ X + "," + Y + "&radius=" + 500 + "&type=" + tipo + "&key=" + MCS_IDKEY);
 			URI uri = builder.build();
 			HttpPost request = new HttpPost(uri);
 			HttpResponse response = httpclient.execute(request);
