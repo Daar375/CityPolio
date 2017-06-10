@@ -1,5 +1,7 @@
 package Control;
 
+import java.util.ArrayList;
+
 import Deck.DeckCiudades;
 import Deck.DeckRetos;
 import Deck.Reto;
@@ -32,9 +34,13 @@ public class CityPoly {
 	public void bluidDecks(){
 		GeoMap tool = new GeoMap();
 		HTTPPlaces get = new HTTPPlaces();
-		DecC.AddAll(tool.loadplaces(get.getplaces("9.9354028", "-84.0753903", "restaurant"), Type.restaurant));
-		DecC.AddAll(tool.loadplaces(get.getplaces("9.9354028", "-84.0753903", "hospital"), Type.hospital));
-		DecC.AddAll(tool.loadplaces(get.getplaces("9.9354028", "-84.0753903", "church"), Type.church));
+		ArrayList City = new ArrayList();
+		City.addAll(tool.loadplaces(get.getplaces("9.9354028", "-84.0753903", "restaurant"), Type.restaurant));
+
+		City.addAll(tool.loadplaces(get.getplaces("9.9354028", "-84.0753903", "hospital"), Type.hospital));
+		City.addAll(tool.loadplaces(get.getplaces("9.9354028", "-84.0753903", "church"), Type.church));
+		DecC.AddAll(City);
+
 		int index = 0;
 		while(index!=30){
 			Reto reto= new Reto();
