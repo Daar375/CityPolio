@@ -55,7 +55,7 @@ public class CityPoly {
 	public void logIn(String Name, String Pass) {
 		Jugador playerfound = Players.search(Name);
 		if (playerfound != null) {
-			if (playerfound.getContraseña() == Pass) {
+			if (playerfound.getContrasenha() == Pass) {
 				if (player1 == null) {
 					player1 = playerfound;
 				} else {
