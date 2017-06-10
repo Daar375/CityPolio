@@ -1,7 +1,5 @@
 package Control;
 
-import java.util.ArrayList;
-
 import Deck.DeckCiudades;
 import Deck.DeckRetos;
 import Deck.Reto;
@@ -9,6 +7,7 @@ import Estructuras.BPlusTree;
 import Google.GeoMap;
 import Google.HTTPPlaces;
 import Mapa.Type;
+import java.util.ArrayList;
 
 public class CityPoly {
 	private BPlusTree<String, Jugador> Players = new BPlusTree();
@@ -16,7 +15,7 @@ public class CityPoly {
 	private Jugador player2;
 	private DeckCiudades DecC= new DeckCiudades();
 	private DeckRetos DecR= new DeckRetos();
-	
+
 	
 	public CityPoly(){
 		bluidDecks();
@@ -33,14 +32,23 @@ public class CityPoly {
 
 	public void bluidDecks(){
 		GeoMap tool = new GeoMap();
-		HTTPPlaces get = new HTTPPlaces();
+                HTTPPlaces get = new HTTPPlaces();
 		ArrayList City = new ArrayList();
-		City.addAll(tool.loadplaces(get.getplaces("9.9354028", "-84.0753903", "restaurant"), Type.restaurant));
-
-		City.addAll(tool.loadplaces(get.getplaces("9.9354028", "-84.0753903", "hospital"), Type.hospital));
-		City.addAll(tool.loadplaces(get.getplaces("9.9354028", "-84.0753903", "church"), Type.church));
-		DecC.AddAll(City);
-
+                
+		City.addAll(tool.loadplaces(HTTPPlaces.getplaces("9.9354028", "-84.0753903", "restaurant"), Type.restaurant));
+		City.addAll(tool.loadplaces(HTTPPlaces.getplaces("9.9354028", "-84.0753903", "church"), Type.church));
+		City.addAll(tool.loadplaces(HTTPPlaces.getplaces("9.9354028", "-84.0753903", "park"), Type.park));
+                City.addAll(tool.loadplaces(HTTPPlaces.getplaces("9.9354028", "-84.0753903", "hospital"), Type.hospital));
+                City.addAll(tool.loadplaces(HTTPPlaces.getplaces("9.9354028", "-84.0753903", "stadium"), Type.stadium));
+                City.addAll(tool.loadplaces(HTTPPlaces.getplaces("9.9354028", "-84.0753903", "school"), Type.school));
+                City.addAll(tool.loadplaces(HTTPPlaces.getplaces("9.9354028", "-84.0753903", "police"), Type.police));
+                City.addAll(tool.loadplaces(HTTPPlaces.getplaces("9.9354028", "-84.0753903", "museum"), Type.museum));
+                City.addAll(tool.loadplaces(HTTPPlaces.getplaces("9.9354028", "-84.0753903", "bank"), Type.bank));
+                City.addAll(tool.loadplaces(HTTPPlaces.getplaces("9.9354028", "-84.0753903", "library"), Type.library));
+                City.addAll(tool.loadplaces(HTTPPlaces.getplaces("9.9354028", "-84.0753903", "gym"), Type.gym));
+                City.addAll(tool.loadplaces(HTTPPlaces.getplaces("9.9354028", "-84.0753903", "lodging"), Type.lodging));
+                DecC.AddAll(City);
+                
 		int index = 0;
 		while(index!=30){
 			Reto reto= new Reto();
