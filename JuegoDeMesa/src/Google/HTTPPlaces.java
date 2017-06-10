@@ -14,7 +14,7 @@ import Control.IConstants;
 
 public class HTTPPlaces implements IConstants{
 
-	public static String post(String X, String Y, String tipo) {
+	public static String getplaces(String X, String Y, String tipo) {
 		String result = null;
 
 		HttpClient httpclient = HttpClients.createDefault();
@@ -33,4 +33,24 @@ public class HTTPPlaces implements IConstants{
 		}
 		return "Error";
 	}
+
+public static String getmap(String X, String Y) {
+	String result = null;
+
+	HttpClient httpclient = HttpClients.createDefault();
+	try {
+		URIBuilder builder = new URIBuilder("https://maps.googleapis.com/maps/api/staticmap?center="+ X + "," + Y +"&zoom=17&size=1500x1500&key="+MCS_IDKEY);
+
+		URI uri = builder.build();
+		HttpPost request = new HttpPost(uri);
+		HttpResponse response = httpclient.execute(request);
+		HttpEntity entity = response.getEntity();
+		if (entity != null) {
+			return EntityUtils.toString(entity);
+		}
+	} catch (Exception e) {
+		System.out.println(e.getMessage());
+	}
+	return "Error";
+}
 }
