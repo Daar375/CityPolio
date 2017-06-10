@@ -30,7 +30,7 @@ public class LoginWindow extends javax.swing.JFrame {
     private void initComponents() {
 
         Usuario = new javax.swing.JTextField();
-        Contraseña = new javax.swing.JTextField();
+        UiContrasenha = new javax.swing.JTextField();
         CrearCuentaB = new javax.swing.JButton();
         LogInB = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -44,9 +44,9 @@ public class LoginWindow extends javax.swing.JFrame {
             }
         });
 
-        Contraseña.addActionListener(new java.awt.event.ActionListener() {
+        UiContrasenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ContraseñaActionPerformed(evt);
+                UiContrasenhaActionPerformed(evt);
             }
         });
 
@@ -66,7 +66,7 @@ public class LoginWindow extends javax.swing.JFrame {
 
         jLabel1.setText("Usuario");
 
-        jLabel2.setText("Contraseña");
+        jLabel2.setText("Contraseï¿½a");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -78,7 +78,7 @@ public class LoginWindow extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(Contraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(UiContrasenha, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -100,7 +100,7 @@ public class LoginWindow extends javax.swing.JFrame {
                     .addComponent(jLabel1))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Contraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(UiContrasenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -116,18 +116,18 @@ public class LoginWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
     }                                       
 
-    private void ContraseñaActionPerformed(java.awt.event.ActionEvent evt) {                                           
+    private void UiContrasenhaActionPerformed(java.awt.event.ActionEvent evt) {                                           
         // TODO add your handling code here:
     }                                          
 
     private void LogInBActionPerformed(java.awt.event.ActionEvent evt) {                                       
     	Usuario.getText();
-    	Contraseña.getText();
+    	UiContrasenha.getText();
     }                                      
 
     private void CrearCuentaBActionPerformed(java.awt.event.ActionEvent evt) {     
     	Usuario.getText();
-    	Contraseña.getText();
+    	UiContrasenha.getText();
     	
     }                                            
 
@@ -167,7 +167,7 @@ public class LoginWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify                     
-    private javax.swing.JTextField Contraseña;
+    private javax.swing.JTextField UiContrasenha;
     private javax.swing.JButton CrearCuentaB;
     private javax.swing.JButton LogInB;
     private javax.swing.JTextField Usuario;
