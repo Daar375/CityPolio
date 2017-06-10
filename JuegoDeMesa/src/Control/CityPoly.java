@@ -35,18 +35,11 @@ public class CityPoly {
                 HTTPPlaces get = new HTTPPlaces();
 		ArrayList City = new ArrayList();
                 
-		City.addAll(tool.loadplaces(HTTPPlaces.getplaces("9.9354028", "-84.0753903", "restaurant"), Type.restaurant));
-		City.addAll(tool.loadplaces(HTTPPlaces.getplaces("9.9354028", "-84.0753903", "church"), Type.church));
-		City.addAll(tool.loadplaces(HTTPPlaces.getplaces("9.9354028", "-84.0753903", "park"), Type.park));
-                City.addAll(tool.loadplaces(HTTPPlaces.getplaces("9.9354028", "-84.0753903", "hospital"), Type.hospital));
-                City.addAll(tool.loadplaces(HTTPPlaces.getplaces("9.9354028", "-84.0753903", "stadium"), Type.stadium));
-                City.addAll(tool.loadplaces(HTTPPlaces.getplaces("9.9354028", "-84.0753903", "school"), Type.school));
-                City.addAll(tool.loadplaces(HTTPPlaces.getplaces("9.9354028", "-84.0753903", "police"), Type.police));
-                City.addAll(tool.loadplaces(HTTPPlaces.getplaces("9.9354028", "-84.0753903", "museum"), Type.museum));
-                City.addAll(tool.loadplaces(HTTPPlaces.getplaces("9.9354028", "-84.0753903", "bank"), Type.bank));
-                City.addAll(tool.loadplaces(HTTPPlaces.getplaces("9.9354028", "-84.0753903", "library"), Type.library));
-                City.addAll(tool.loadplaces(HTTPPlaces.getplaces("9.9354028", "-84.0753903", "gym"), Type.gym));
-                City.addAll(tool.loadplaces(HTTPPlaces.getplaces("9.9354028", "-84.0753903", "lodging"), Type.lodging));
+		Double Long = -84.0753903;
+                Double Lat = 9.9354028;
+                for(Type t : Type.values()){
+                    City.addAll(tool.loadplaces(HTTPPlaces.getplaces(Lat.toString(),Long.toString() , t.toString()), t));
+                }
                 DecC.AddAll(City);
                 
 		int index = 0;
