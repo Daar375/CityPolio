@@ -1,6 +1,6 @@
 package Control;
 
-import Deck.DeckCuidades;
+import Deck.DeckCiudades;
 import Deck.DeckRetos;
 import Deck.Reto;
 import Estructuras.BPlusTree;
@@ -12,9 +12,9 @@ public class CityPoly {
 	private BPlusTree<String, Jugador> Players = new BPlusTree();
 	private Jugador player1;
 	private Jugador player2;
-	private DeckCuidades DecC= new DeckCuidades();
+	private DeckCiudades DecC= new DeckCiudades();
 	private DeckRetos DecR= new DeckRetos();
-
+	
 	
 	public CityPoly(){
 		bluidDecks();
