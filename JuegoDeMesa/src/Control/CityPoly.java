@@ -43,11 +43,17 @@ public class CityPoly {
                 
 		Double Long = -0.118092;
                 Double Lat = 51.509865;
+                Ciudad ciudad = new Ciudad();
+                ciudad.setLatitud(Lat);
+                ciudad.setLatitud(Long);
+                ciudad.setName("London");
                 for(Type t : Type.values()){
                     City.addAll(tool.loadplaces(HTTPPlaces.getplaces(Lat.toString(),Long.toString() , t.toString()), t));
                 }
-                DecC.AddAll(City);
-                
+            	ciudad.setPlaces(City);
+
+                DecC.Add(ciudad);
+                DecC.Print();
 		int index = 0;
 		while(index!=30){
 			Reto reto= new Reto();
@@ -56,7 +62,6 @@ public class CityPoly {
 			DecR.Add(reto);
 			index++;
 		}
-		//System.out.println("hoa");
 
 	}
         
@@ -82,7 +87,7 @@ public class CityPoly {
                 p.setTipo(Type.park);
                 p.setValor(5);
                 po.add(p);
-                System.out.println("i vale: " + i);
+               // System.out.println("i vale: " + i);
                 
                
             }

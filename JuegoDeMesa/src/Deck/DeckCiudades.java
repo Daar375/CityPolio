@@ -13,9 +13,9 @@ public class DeckCiudades extends Deck {
 		Cartas = cartas;
 	}
 
-	public void Add(Ciudad Carta) {
+	public void Add(Ciudad city) {
 
-		Cartas.add(Carta);
+		Cartas.add(city);
 	}
 	
 	public void AddAll( ArrayList<Ciudad> adding){
