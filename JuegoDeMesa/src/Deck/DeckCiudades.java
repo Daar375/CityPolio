@@ -3,22 +3,22 @@ package Deck;
 import java.util.ArrayList;
 
 public class DeckCiudades extends Deck {
-	private ArrayList<Ciudades> Cartas= new ArrayList();
+	private ArrayList<Ciudad> Cartas= new ArrayList<Ciudad>();
 
-	public ArrayList<Ciudades> getCartas() {
+	public ArrayList<Ciudad> getCartas() {
 		return Cartas;
 	}
 
-	public void setCartas(ArrayList<Ciudades> cartas) {
+	public void setCartas(ArrayList<Ciudad> cartas) {
 		Cartas = cartas;
 	}
 
-	public void Add(Ciudades Carta) {
+	public void Add(Ciudad Carta) {
 
 		Cartas.add(Carta);
 	}
 	
-	public void AddAll( ArrayList<Ciudades> adding){
+	public void AddAll( ArrayList<Ciudad> adding){
 		Cartas.addAll(adding);
 	}
 	public void Print(){

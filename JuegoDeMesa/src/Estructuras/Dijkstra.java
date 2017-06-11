@@ -3,7 +3,7 @@ package Estructuras;
 import java.util.*;
 
 
-class Dijkstra{
+public class Dijkstra{
     
     //similar a los defines de C++
     private final int MAX = 10005;  //maximo numero de vértices
@@ -12,7 +12,7 @@ class Dijkstra{
     private PriorityQueue< GraphNode > Q = new PriorityQueue<GraphNode>(); //priority queue propia de Java, usamos el comparador definido para que el de menor valor este en el tope
     Graph Grafo = new Graph();
     
-    Dijkstra(Graph pGrafo){
+    public Dijkstra(Graph pGrafo){
         this.Grafo = pGrafo;
         init();
     }
@@ -48,7 +48,7 @@ class Dijkstra{
      * Algoritmo de dijkstra
      * @param inicial 
      */
-    void dijkstra( int inicial ){
+    public void dijkstra( int inicial ){
         init(); //inicializamos nuestros arreglos
         Q.add( new GraphNode( inicial , 0 ) ); //Insertamos el vértice inicial en la Cola de Prioridad
         Grafo.distancia[ inicial ] = 0;      //Este paso es importante, inicializamos la distancia del inicial como 0

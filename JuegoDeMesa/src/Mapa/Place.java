@@ -7,6 +7,9 @@ public class Place {
 	private double Latitud;
 	private String Name;
 	private String icon;
+        
+        
+        
 	public String getIcon() {
 		return icon;
 	}

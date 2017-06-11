@@ -51,7 +51,7 @@ public class Graph {
 
     
        
-    void addEdge( int origen , int destino , int peso , boolean dirigido ){
+    public void addEdge( int origen , int destino , int peso , boolean dirigido ){
         AdyacencyList.get( origen ).add( new GraphNode( destino , peso ) );    //grafo diridigo
         if( !dirigido )
             AdyacencyList.get( destino ).add( new GraphNode( origen , peso ) ); //no dirigido

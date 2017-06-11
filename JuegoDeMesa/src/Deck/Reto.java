@@ -23,5 +23,10 @@ public class Reto {
 	public void setCantidad(int cantidad) {
 		Cantidad = cantidad;
 	}
+        
+        @Override
+        public String toString(){
+            return tipo.toString() + ": " + Cantidad + " veces.";
+        }
 
 }
