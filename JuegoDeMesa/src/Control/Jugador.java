@@ -3,13 +3,13 @@ package Control;
 public class Jugador implements Comparable {
 	private int Points;
 	private String Name;
-	private String Contraseña;
+	private String Contrasenha;
 	
-	public String getContraseña() {
-		return Contraseña;
+	public String getContrasenha() {
+		return Contrasenha;
 	}
-	public void setContraseña(String contraseña) {
-		Contraseña = contraseña;
+	public void setContrasenha(String pContrasenha) {
+		Contrasenha = pContrasenha;
 	}
 	public int getPoints() {
 		return Points;

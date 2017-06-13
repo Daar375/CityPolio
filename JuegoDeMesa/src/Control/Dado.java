@@ -6,6 +6,6 @@ public class Dado {
 
 	
 	public int rollDice(){
-		return ThreadLocalRandom.current().nextInt(0, 7);
+		return ThreadLocalRandom.current().nextInt(1, 7);
 			}
 }
