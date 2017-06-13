@@ -1,5 +1,6 @@
 package Deck;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import Mapa.Place;
@@ -9,7 +10,16 @@ public class Ciudad {
 	private double longitud;
 	private String Name;
 	private ArrayList<Place> Places;
+	private BufferedImage PictureULR;
 
+	
+	public BufferedImage getPictureULR() {
+		return PictureULR;
+	}
+
+	public void setPictureULR(BufferedImage pictureULR) {
+		PictureULR = pictureULR;
+	}
 
 	public double getLatitud() {
 		return latitud;

@@ -19,6 +19,7 @@ public class CityPoly implements IConstants {
 	private Jugador player2;
 	private DeckCiudades DecC = new DeckCiudades();
 	private DeckRetos DecR = new DeckRetos();
+	private Ciudad City = new Ciudad();
 	private Graph Grafo;
 
 	public CityPoly() {
@@ -50,6 +51,7 @@ public class CityPoly implements IConstants {
 			ciudad.setLatitud(Double.parseDouble(LISTA_CIUDADES[index][1]));
 			ciudad.setLongitud(Double.parseDouble(LISTA_CIUDADES[index][2]));
 			ciudad.setName(LISTA_CIUDADES[index][0]);
+			ciudad.setPictureULR(HTTPPlaces.getmap(LISTA_CIUDADES[index][1], LISTA_CIUDADES[index][2]));
 			for (Type t : Type.values()) {
 				
 				
