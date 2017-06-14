@@ -2,17 +2,32 @@ package Deck;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import Control.IConstants;
+import Google.HTTPPlaces;
 import Mapa.Place;
+import Mapa.Type;
 
-public class Ciudad {
+public class Ciudad implements IConstants {
 	private double latitud;
 	private double longitud;
+	private int CityNumber;
 	private String Name;
 	private ArrayList<Place> Places;
 	private BufferedImage PictureULR;
 
-	
+	public void getInfo() {
+		PictureULR=HTTPPlaces.getmap(LISTA_CIUDADES[CityNumber][1], LISTA_CIUDADES[CityNumber][2]);
+		for (Type tipo : Type.values()) {
+
+			loadplaces(HTTPPlaces.getplaces(LISTA_CIUDADES[CityNumber][1], LISTA_CIUDADES[CityNumber][2], tipo.toString()),tipo);
+		}
+	}
+
 	public BufferedImage getPictureULR() {
 		return PictureULR;
 	}
@@ -52,11 +67,44 @@ public class Ciudad {
 	public void setName(String name) {
 		Name = name;
 	}
-        
-        @Override
-        public String toString(){
-            return Name + ": Cantidad de Places: " + Places.size();
-        }
 
-	
+	@Override
+	public String toString() {
+		return Name + ": Cantidad de Places: " + Places.size();
+	}
+
+	private void loadplaces(String JsonString, Type tipe) {
+		JSONObject placesjson = new JSONObject(JsonString);
+		JSONArray Array = placesjson.getJSONArray("results");
+		int index = 0;
+		ArrayList lugares = new ArrayList();
+
+		while (index != Array.length()) {
+			Place place = new Place();
+			place.setName((String) Array.getJSONObject(index).get("name"));
+			place.setLatitud(
+					(double) Array.getJSONObject(index).getJSONObject("geometry").getJSONObject("location").get("lat"));
+			place.setLongitud(
+					(double) Array.getJSONObject(index).getJSONObject("geometry").getJSONObject("location").get("lng"));
+			place.setIcon(Array.getJSONObject(index).getString("icon"));
+			place.setTipo(tipe);
+			if (Array.getJSONObject(index).has("rating")) {
+				Object tempdouble = Array.getJSONObject(index).get("rating");
+				if (tempdouble.getClass() == Double.class) {
+					Double d = (Double) tempdouble;
+					place.setValor(d.intValue());
+
+				} else {
+					place.setValor((int) tempdouble);
+
+				}
+
+			} else {
+				place.setValor(ThreadLocalRandom.current().nextInt(0, 6));
+			}
+			lugares.add(place);
+			index++;
+		}
+		Places.addAll(lugares);
+	}
 }

@@ -2,6 +2,7 @@ package Deck;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class DeckRetos extends Deck {
 	private ArrayList<Reto> Cartas = new ArrayList();
@@ -9,7 +10,9 @@ public class DeckRetos extends Deck {
 	public ArrayList<Reto> getCartas() {
 		return Cartas;
 	}
-
+	public Reto getRandomCard(){
+		return Cartas.get(ThreadLocalRandom.current().nextInt(0, Cartas.size()));
+	}
 	public void setCartas(ArrayList<Reto> cartas) {
 		Cartas = cartas;
 	}
