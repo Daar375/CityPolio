@@ -78,8 +78,8 @@ public class CityPoly implements IConstants {
 	}
 
 	public void genGrafo() {
-		System.out.println(City.getPlaces());
-		Grafo = new Graph();
+		System.out.println(City.getPlaces().size() + " lugares en esta ciudad.");
+		Grafo = new Graph(City.getPlaces().size());
 		int indexP = -1; // Primer indice para recorrer los places
 		int indexP2 = -1; // Segundo indice para recorrer los places
 		double distanciaEntrePlace = 0;
@@ -95,18 +95,22 @@ public class CityPoly implements IConstants {
 			ExistenAristas = false;
 			while (indexP2 < City.getPlaces().size() - 1) {
 				indexP2++;
-				P2 = City.getPlaces().get(indexP2);
-				distanciaEntrePlace = DistanceCalc.distance(P.getLatitud(), P.getLongitud(), P2.getLatitud(),
-						P2.getLongitud());
-				System.out
-						.println(distanciaEntrePlace + " es la distancia entre el vertice " + indexP + " y " + indexP2);
-				if (P == P2) {
-					;
-				} else if (distanciaEntrePlace < distanciaPermitida) {
+                                if (!(indexP == indexP2)) {
+                                    P2 = City.getPlaces().get(indexP2);
+                                    distanciaEntrePlace = DistanceCalc.distance(P.getLatitud(), P.getLongitud(), P2.getLatitud(),P2.getLongitud());
+                                    System.out.println(distanciaEntrePlace + " es la distancia entre el vertice " + indexP + " y " + indexP2);
+				
+                                  
+                                    if (distanciaEntrePlace < distanciaPermitida) {
 
-					Grafo.addEdge(indexP, indexP2, (int) distanciaEntrePlace, false);
+					Grafo.addEdge(
+                                                indexP,
+                                                indexP2,
+                                                (int) distanciaEntrePlace,
+                                                false);
 					ExistenAristas = true;
-				}
+                                    }
+                                }
 
 			}
 			// Si busco y no encontro places cerca para agregarse como vecinos
