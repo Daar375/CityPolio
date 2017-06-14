@@ -8,14 +8,14 @@ import Control.IConstants;
 
 public class ArchivoSecuencial implements IConstants {
 
-	public void EscribirSecuancia(String name) throws IOException {
+	public void EscribirSecuancia(String name,String points) throws IOException {
 		byte[] savename = new byte[40];
-		//byte[] savepoints = new byte[40];
+		byte[] savepoints = new byte[40];
 
 		Serializador ser = new Serializador();
 
 		byte[] namebytes = ser.Serializador(name);
-	//	byte[] pointbytes = ser.Serializador(points);
+		byte[] pointbytes = ser.Serializador(points);
 
 		int index = 0;
 		while (namebytes.length != index) {
@@ -23,10 +23,10 @@ public class ArchivoSecuencial implements IConstants {
 			index++;
 		}
 		index = 0;
-		/*while (pointbytes.length != index) {
+		while (pointbytes.length != index) {
 			savepoints[index] = pointbytes[index];
 			index++;
-		}*/
+		}
 		FileManager write = new FileManager();
 		write.escribirArchivo(RANKINGFILE, savename);
 		//write.escribirArchivo(RANKINGFILE, savepoints);
