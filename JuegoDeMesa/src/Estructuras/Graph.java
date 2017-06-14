@@ -31,8 +31,8 @@ public class Graph {
     public int previo[] = new int[ MAX ];              //para la impresion de caminos
     private boolean dijkstraEjecutado;
 
-    public Graph() {
-    }
+    //public Graph() {
+    //}
     
     
     

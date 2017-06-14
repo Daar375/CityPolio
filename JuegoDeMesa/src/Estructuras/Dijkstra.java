@@ -10,10 +10,15 @@ public class Dijkstra{
     private final int INF = 1<<30;  //definimos un valor grande que represente la distancia infinita inicial, basta conque sea superior al maximo valor del peso en alguna de las aristas
     
     private PriorityQueue< GraphNode > Q = new PriorityQueue<GraphNode>(); //priority queue propia de Java, usamos el comparador definido para que el de menor valor este en el tope
-    Graph Grafo = new Graph();
+    Graph Grafo;
     
     public Dijkstra(Graph pGrafo){
         this.Grafo = pGrafo;
+        init();
+    }
+    
+    public Dijkstra(int V){
+        this.Grafo = new Graph(V);
         init();
     }
     
