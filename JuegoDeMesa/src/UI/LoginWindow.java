@@ -129,6 +129,7 @@ public class LoginWindow extends javax.swing.JFrame {
 		else if(Control.getPlayer1()!=null &&Control.getPlayer2()!=null){
 			Control.getGame();
 			Control.getGameWindow().setVisible(true);
+			Control.getGameWindow().setPlayerLabel(Control.getPlayer1().getName(),Control.getPlayer2().getName());
 			dispose();
 		}
 

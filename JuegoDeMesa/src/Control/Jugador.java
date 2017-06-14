@@ -5,13 +5,20 @@ import java.util.ArrayList;
 import Deck.Reto;
 
 public class Jugador implements Comparable {
-	private int Points;
+	private int PointsLife;
 	private String Name;
 	private String Contrasenha;
-	private ArrayList<Integer> CurrentPath;
+	private ArrayList<Integer> CurrentPath = new ArrayList();
 	private Reto reto;
+	private int Points;
+
 	
-	
+	public int getPointsLife() {
+		return PointsLife;
+	}
+	public void setPointsLife(int pointsLife) {
+		PointsLife = pointsLife;
+	}
 	public Reto getReto() {
 		return reto;
 	}

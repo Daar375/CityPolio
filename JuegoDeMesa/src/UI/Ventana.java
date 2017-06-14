@@ -18,6 +18,9 @@ public class Ventana extends javax.swing.JFrame {
 	private GameController Game;
 	public Ventana() {
 		initComponents();
+		RollDice.setVisible(false);
+
+
 	}
 
 
@@ -61,13 +64,14 @@ public class Ventana extends javax.swing.JFrame {
 
 		Puntaje1.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
 		Puntaje1.setForeground(new java.awt.Color(100, 100, 100));
-		Puntaje1.setText("0/0");
+		Puntaje1.setText("0");
 		getContentPane().add(Puntaje1);
 		Puntaje1.setBounds(150, 10, 60, 30);
 
 		Username1.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
 		Username1.setForeground(new java.awt.Color(100, 100, 100));
 		Username1.setText("Username1");
+		Username1.setForeground(Color.green);
 		getContentPane().add(Username1);
 		Username1.setBounds(10, 10, 140, 30);
 
@@ -79,7 +83,7 @@ public class Ventana extends javax.swing.JFrame {
 
 		Puntaje2.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
 		Puntaje2.setForeground(new java.awt.Color(100, 100, 100));
-		Puntaje2.setText("0/0");
+		Puntaje2.setText("0");
 		getContentPane().add(Puntaje2);
 		Puntaje2.setBounds(360, 10, 60, 30);
 
@@ -167,10 +171,13 @@ public class Ventana extends javax.swing.JFrame {
 
 	private void CiudadBActionPerformed(java.awt.event.ActionEvent evt) {
 		Game.ciudadButton();
+		CiudadB.setVisible(false);
+		RollDice.setVisible(true);
 	}
 
 	private void RetoBActionPerformed(java.awt.event.ActionEvent evt) {
 		Game.retoButton();
+		CartaJugador1.setText("Debe Visitar "+Game.getPlayerActual().getReto().getCantidad() +" lugares de tipo: "+ Game.getPlayerActual().getReto().getTipo().toString());
 		// TODO add your handling code here:
 	}
 
@@ -178,14 +185,28 @@ public class Ventana extends javax.swing.JFrame {
 		Game.diceButton();
 	}
 
+	public void swichPlayer(){
+		if(Username1.getForeground()==Color.green){
+		Username1.setForeground(Color.green);
+		Username2.setForeground(Color.black);
+		}else{
+			Username1.setForeground(Color.black);
+			Username2.setForeground(Color.green);
+			}
+	}
+	
+	public void setPlayerLabel(String nameplayer,String nameplayer2){
+		Username1.setText(nameplayer);
+		Username2.setText(nameplayer2);
+	}
 	public void PanelMap(BufferedImage mapimage) {
 		int h = mapimage.getHeight();
 		int w = 500 * mapimage.getWidth() / h;
 
-		jPanel1.getGraphics().setColor(Color.BLACK);
-		jPanel1.getGraphics().drawRect(0, 0, 2000, 2000);
-		jPanel1.getGraphics().fillRect(0, 0, 2000, 2000);
-		jPanel1.getGraphics().drawImage(mapimage, jPanel1.getWidth() / 4, jPanel1.getHeight() / 4, null);
+		//jPanel1.getGraphics().setColor(Color.BLACK);
+		//jPanel1.getGraphics().drawRect(0, 0, 2000, 2000);
+		//jPanel1.getGraphics().fillRect(0, 0, 2000, 2000);
+		jPanel1.getGraphics().drawImage(mapimage, 0, 0, null);
 	}
 
 	/**

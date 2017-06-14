@@ -7,7 +7,15 @@ public class Place {
 	private double Latitud;
 	private String Name;
 	private String icon;
-        
+    public boolean isVisitado() {
+		return visitado;
+	}
+
+	public void setVisitado(boolean visitado) {
+		this.visitado = visitado;
+	}
+
+	private boolean visitado;
         
         
 	public String getIcon() {

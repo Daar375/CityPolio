@@ -26,24 +26,29 @@ public class CityPoly implements IConstants {
 	private Ciudad City;
 	private Graph Grafo;
 	private GameController Game;
-	private Ventana GameWindow ;
+	private Ventana GameWindow;
+	private Dijkstra dijkstraplayer1 ;
+	private Dijkstra dijkstraplayer2 ;
+
 
 	public CityPoly() {
 		GameWindow = new Ventana();
 		Game = new GameController(this);
 		GameWindow.setVisible(false);
-
 		DeckBuilder build = new DeckBuilder();
 		DecC = build.bluidCityDeck();
 		DecR = build.bluidRetoDeck();
-		
+
 	}
+
 	public Ventana getGameWindow() {
 		return GameWindow;
 	}
+
 	public void setGameWindow(Ventana gameWindow) {
 		GameWindow = gameWindow;
 	}
+
 	public GameController getGame() {
 		return Game;
 	}
@@ -51,6 +56,7 @@ public class CityPoly implements IConstants {
 	public void setGame(GameController game) {
 		Game = game;
 	}
+
 	public void iniciarUi() {
 		LoginWindow UI = new LoginWindow(this);
 		UI.setVisible(true);
@@ -95,22 +101,17 @@ public class CityPoly implements IConstants {
 			ExistenAristas = false;
 			while (indexP2 < City.getPlaces().size() - 1) {
 				indexP2++;
-                                if (!(indexP == indexP2)) {
-                                    P2 = City.getPlaces().get(indexP2);
-                                    distanciaEntrePlace = DistanceCalc.distance(P.getLatitud(), P.getLongitud(), P2.getLatitud(),P2.getLongitud());
-                                    System.out.println(distanciaEntrePlace + " es la distancia entre el vertice " + indexP + " y " + indexP2);
-				
-                                  
-                                    if (distanciaEntrePlace < distanciaPermitida) {
+				if (!(indexP == indexP2)) {
+					P2 = City.getPlaces().get(indexP2);
+					distanciaEntrePlace = DistanceCalc.distance(P.getLatitud(), P.getLongitud(), P2.getLatitud(),
+							P2.getLongitud());
 
-					Grafo.addEdge(
-                                                indexP,
-                                                indexP2,
-                                                (int) distanciaEntrePlace,
-                                                false);
-					ExistenAristas = true;
-                                    }
-                                }
+					if (distanciaEntrePlace < distanciaPermitida) {
+						System.out.println((int) distanciaEntrePlace + " es la distancia entre el vertice " + indexP + " y "+ indexP2);
+						Grafo.addEdge(indexP, indexP2, (int) distanciaEntrePlace, false);
+						ExistenAristas = true;
+					}
+				}
 
 			}
 			// Si busco y no encontro places cerca para agregarse como vecinos
@@ -123,6 +124,24 @@ public class CityPoly implements IConstants {
 				distanciaPermitida = 50;
 			}
 		}
+	}
+
+
+
+	public Dijkstra getDijkstraplayer1() {
+		return dijkstraplayer1;
+	}
+
+	public void setDijkstraplayer1(Dijkstra dijkstraplayer1) {
+		this.dijkstraplayer1 = dijkstraplayer1;
+	}
+
+	public Dijkstra getDijkstraplayer2() {
+		return dijkstraplayer2;
+	}
+
+	public void setDijkstraplayer2(Dijkstra dijkstraplayer2) {
+		this.dijkstraplayer2 = dijkstraplayer2;
 	}
 
 	public int genRandom(int rangoI, int rangoF) {

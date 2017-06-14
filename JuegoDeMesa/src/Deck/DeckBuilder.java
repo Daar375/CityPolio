@@ -40,7 +40,7 @@ public class DeckBuilder implements IConstants {
 			reto.setTipo(DecR.randomEnum(Type.class));
 			Random r = new Random();
 
-			reto.setCantidad(r.nextInt(5));
+			reto.setCantidad(r.nextInt(2));
 			DecR.Add(reto);
 			index++;
 		}
