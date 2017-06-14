@@ -63,5 +63,5 @@ public class HTTPPlaces implements IConstants {
 		return image;
 
 	}
-
+	
 }
