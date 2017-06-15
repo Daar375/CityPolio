@@ -5,7 +5,6 @@ import Deck.DeckRetos;
 import Deck.Reto;
 import Deck.*;
 import Estructuras.*;
-import Estructuras.BPlusTree;
 import Google.HTTPPlaces;
 import Mapa.Place;
 import Mapa.Type;
@@ -67,6 +66,22 @@ public class CityPoly implements IConstants {
 
 	}
 
+	public void SaveTree() throws IOException{
+		LeafNode Inicio = Players.getFirst();
+		
+		while(Inicio.HasNextLeaf()){
+			
+			ArrayList<Jugador> PlayersInNode = Inicio.getValues();
+			for(Jugador player:PlayersInNode){
+				ArchivoSecuencial save = new ArchivoSecuencial();
+				save.EscribirSecuancialUsuarios(player);
+			}
+			Inicio=Inicio.getNextLeaf();
+
+		}
+	}
+	
+	
         /**
          * Crea un nuevo jugador
          * @param Name
