@@ -2,6 +2,7 @@ package UI;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 import Control.CityPoly;
 import Control.GameController;
@@ -150,7 +151,12 @@ public class Ventana extends javax.swing.JFrame {
 		LogOffB.setText("Log Off");
 		LogOffB.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				LogOffBActionPerformed(evt);
+				try {
+					LogOffBActionPerformed(evt);
+				} catch (ClassNotFoundException | IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		getContentPane().add(LogOffB);
@@ -159,7 +165,7 @@ public class Ventana extends javax.swing.JFrame {
 		pack();
 	}// </editor-fold>
 
-	private void LogOffBActionPerformed(java.awt.event.ActionEvent evt) {
+	private void LogOffBActionPerformed(java.awt.event.ActionEvent evt) throws ClassNotFoundException, IOException {
 		Game.logoffButton();
 		dispose();
 

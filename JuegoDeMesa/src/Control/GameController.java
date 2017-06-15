@@ -1,5 +1,6 @@
 package Control;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.ResourceBundle.Control;
 import java.util.concurrent.ThreadLocalRandom;
@@ -35,7 +36,7 @@ public class GameController {
 
 	}
 
-	public void logoffButton() {
+	public void logoffButton() throws ClassNotFoundException, IOException {
 		Control.EndGame();
 		LoginWindow login = new LoginWindow(Control);
 

@@ -13,6 +13,7 @@ import Tools.DistanceCalc;
 import UI.LoginWindow;
 import UI.Ventana;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -46,8 +47,10 @@ public class CityPoly implements IConstants {
 
 	/**
          * Inicia la ventana de Login
+	 * @throws IOException 
+	 * @throws ClassNotFoundException 
          */
-	public void iniciarUi() {
+	public void iniciarUi() throws ClassNotFoundException, IOException {
 		LoginWindow UI = new LoginWindow(this);
 		UI.setVisible(true);
 	}
