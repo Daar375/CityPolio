@@ -13,10 +13,13 @@ public class BPlusTree<K extends Comparable<K>, T> {
 	public LeafNode getFirst(){
 		if(root == null) {
 			return null;
-		}else{
+		}else if(root.isLeafNode){
+			return (LeafNode) root;
+			
+		}
+		else{
+		
 			TreeNode Searching =root;
-			
-			
 			IndexNode<K,T> index = (IndexNode<K, T>) Searching;
 			
 			while(!Searching.isLeafNode){

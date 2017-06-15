@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.ResourceBundle.Control;
 import java.util.concurrent.ThreadLocalRandom;
 
+import Estructuras.ArchivoSecuencial;
 import Estructuras.Dijkstra;
 import Google.HTTPPlaces;
 import UI.LoginWindow;
+import UI.RankingUI;
 import UI.Ventana;
 
 public class GameController {
@@ -32,13 +34,27 @@ public class GameController {
 			PlayerActual=Control.getPlayer1();
 		}
 	}
-	public void rankingButton() {
+	public void rankingButton() throws ClassNotFoundException, IOException {
+		ArchivoSecuencial rankingread = new ArchivoSecuencial();
+		ArrayList<Jugador> rankingplayerlist = rankingread.LeerSecuenciaRanking();
+		Object[][] ranking = new Object[rankingplayerlist.size()][];
+		int index=0;
+		while(index!=ranking.length){
+			Object[] playerdata = new Object[3];
+			playerdata[0]=index+1;
+			playerdata[1]=rankingplayerlist.get(index).getName();
 
+			playerdata[2]=rankingplayerlist.get(index).getPoints();
+			ranking[index]=playerdata;
+
+		}
+		RankingUI UI= new RankingUI(ranking);
 	}
 
 	public void logoffButton() throws ClassNotFoundException, IOException {
 		Control.EndGame();
 		LoginWindow login = new LoginWindow(Control);
+		login.setVisible(true);
 
 	}
 
@@ -55,6 +71,7 @@ public class GameController {
 
 		Control.getDijkstraplayer1().dijkstra(Control.getPlayer1().getCurrentPos());
 		Control.getDijkstraplayer2().dijkstra(Control.getPlayer2().getCurrentPos());
+		VentanaJuego.PanelMap(Control.getCity().getPictureULR());
 
 	}
 

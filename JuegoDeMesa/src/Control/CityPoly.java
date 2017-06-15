@@ -68,11 +68,19 @@ public class CityPoly implements IConstants {
 
 	public void SaveTree() throws IOException{
 		LeafNode Inicio = Players.getFirst();
-		
+		ArrayList<Jugador> PlayersInNode = Inicio.getValues();
+		SAVEFILE.delete();
+		SAVEFILE.createNewFile();
+		for(Jugador player:PlayersInNode){
+			System.out.println(player.getName());
+			ArchivoSecuencial save = new ArchivoSecuencial();
+			save.EscribirSecuancialUsuarios(player);
+		}
 		while(Inicio.HasNextLeaf()){
 			
-			ArrayList<Jugador> PlayersInNode = Inicio.getValues();
+			PlayersInNode = Inicio.getValues();
 			for(Jugador player:PlayersInNode){
+				System.out.println(player.getName());
 				ArchivoSecuencial save = new ArchivoSecuencial();
 				save.EscribirSecuancialUsuarios(player);
 			}

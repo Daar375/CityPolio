@@ -14,6 +14,7 @@ import Control.CityPoly;
 import Control.GameController;
 import Control.Jugador;
 import Estructuras.ArchivoSecuencial;
+import Estructuras.BPlusTree;
 
 /**
  *
@@ -29,8 +30,10 @@ public class LoginWindow extends javax.swing.JFrame {
 	public LoginWindow(CityPoly bcontrol) throws ClassNotFoundException, IOException {
 		ArchivoSecuencial usertree = new ArchivoSecuencial();
 		initComponents();
-		Control.setPlayers(		usertree.LeerSecuenciaUsuarios());
 		Control = bcontrol;
+
+			Control.setPlayers(		 usertree.LeerSecuenciaUsuarios()	);
+		
 	}
 
 	/**
