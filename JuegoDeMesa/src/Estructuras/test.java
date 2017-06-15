@@ -4,17 +4,23 @@ import Control.Jugador;
 
 public class test {
 	public static void main(String[] args) throws Exception {
-		BPlusTree arbol = new BPlusTree();
-		Jugador Daar = new Jugador();
-		Daar.setContraseña("123");
-		Daar.setName("Daar");
-		Daar.setPoints(1000);
-		arbol.insert(Daar.getName(), Daar);
-		if(arbol.search("Daar2")!=null){
-			System.out.println(		arbol.search("Daar"));
-
+		Serializador ser = new Serializador ();
+		
+		byte[] save = new byte[50];
+		
+		byte[] text=ser.Serializador("hola");
+		
+		int index = 0;
+		while(text.length!= index){
+			save[index]=text[index];
+			index++;
 		}
-		arbol.delete("Daar");
+		index = 0;
+		while(save.length!= index){
+			System.out.print(save[index]);
+			index++;
+		}
+		System.out.println(	"  "+	ser.deseerializador(save));
 	}
 
 	

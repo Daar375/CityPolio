@@ -2,7 +2,7 @@ package Estructuras;
 
 import java.util.ArrayList;
 
-public class Node<K extends Comparable<K>, T> {
+public class TreeNode<K extends Comparable<K>, T> {
 	protected boolean isLeafNode;
 	protected ArrayList<K> keys;
 

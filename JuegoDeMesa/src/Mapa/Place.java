@@ -5,9 +5,39 @@ import org.json.JSONObject;
 public class Place {
 	private double Longitud;
 	private double Latitud;
+	private String Name;
+	private String icon;
+    public boolean isVisitado() {
+		return visitado;
+	}
+
+	public void setVisitado(boolean visitado) {
+		this.visitado = visitado;
+	}
+
+	private boolean visitado;
+        
+        
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
+
 	private int Valor;
 	private Type Tipo;
-	private JSONObject info;
+	
+	
+	public String getName() {
+		return Name;
+	}
+
+	public void setName(String name) {
+		Name = name;
+	}
+
 
 	public double getLongitud() {
 		return Longitud;
@@ -25,13 +55,7 @@ public class Place {
 		Latitud = latitud;
 	}
 
-	public JSONObject getInfo() {
-		return info;
-	}
 
-	public void setInfo(JSONObject info) {
-		this.info = info;
-	}
 
 	public int getValor() {
 		return Valor;
