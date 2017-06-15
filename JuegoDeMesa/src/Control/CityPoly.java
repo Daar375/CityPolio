@@ -27,8 +27,7 @@ public class CityPoly implements IConstants {
 	private Graph Grafo;
 	private GameController Game;
 	private Ventana GameWindow;
-	private Dijkstra dijkstraplayer1 ;
-	private Dijkstra dijkstraplayer2 ;
+	private Dijkstra Dijkstra ;
 
 
         /**
@@ -199,18 +198,18 @@ public class CityPoly implements IConstants {
          */
         public ArrayList<Integer> caminoMasCorto(boolean dosRetos, Jugador JugadorActual){
             ArrayList<Integer> CaminoAAgregar;
-            this.dijkstraplayer1.dijkstra(JugadorActual.getCurrentPos());
+            this.Dijkstra.dijkstra(JugadorActual.getCurrentPos());
             int Cercano = this.searchNear(JugadorActual.getCurrentPos(), JugadorActual.getReto().getTipo());
-            CaminoAAgregar = this.dijkstraplayer1.shortestPath(Cercano);
+            CaminoAAgregar = this.Dijkstra.shortestPath(Cercano);
             if(dosRetos){ // Si son dos lugares en el reto
-                this.dijkstraplayer1.dijkstra(Cercano);
+                this.Dijkstra.dijkstra(Cercano);
                 // Buscamos el mass cercano desde el ultimo lugar hasta el segundo lugar
                 Cercano = this.searchNear(Cercano, JugadorActual.getReto().getTipo());
                 // Eliminar el ultimo elemento ya que se repite al agregarle el segundo camino
                 CaminoAAgregar.remove(CaminoAAgregar.size()-1); 
                 // Le agregamos al camino que ya tenemos, el nuevo que va desde
                 // el ultimo encontrado hasta el siguiente luar del reto
-                CaminoAAgregar.addAll(this.dijkstraplayer1.shortestPath(Cercano));
+                CaminoAAgregar.addAll(this.Dijkstra.shortestPath(Cercano));
                 
             }
             
@@ -256,21 +255,15 @@ public class CityPoly implements IConstants {
 	}
         
         
-	public Dijkstra getDijkstraplayer1() {
-		return dijkstraplayer1;
+	public Dijkstra getDijkstra() {
+		return Dijkstra;
 	}
 
-	public void setDijkstraplayer1(Dijkstra dijkstraplayer1) {
-		this.dijkstraplayer1 = dijkstraplayer1;
+	public void setDijkstra(Dijkstra Dijkstra) {
+		this.Dijkstra = Dijkstra;
 	}
 
-	public Dijkstra getDijkstraplayer2() {
-		return dijkstraplayer2;
-	}
 
-	public void setDijkstraplayer2(Dijkstra dijkstraplayer2) {
-		this.dijkstraplayer2 = dijkstraplayer2;
-	}
 
 	public Graph getGrafo() {
 		return Grafo;

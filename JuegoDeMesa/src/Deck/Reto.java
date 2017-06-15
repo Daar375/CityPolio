@@ -6,7 +6,7 @@ import Mapa.Type;
 
 public class Reto {
 	private Type tipo;
-	private int Cantidad;
+	private boolean DosRetos;
 
 	public Type getTipo() {
 		return tipo;
@@ -16,17 +16,22 @@ public class Reto {
 		this.tipo = tipo;
 	}
 
-	public int getCantidad() {
-		return Cantidad;
-	}
+    public boolean isDosRetos() {
+        return DosRetos;
+    }
 
-	public void setCantidad(int cantidad) {
-		Cantidad = cantidad;
-	}
+    public void setDosRetos(boolean DosRetos) {
+        this.DosRetos = DosRetos;
+    }
+
+    public int getCantidad(){
+        if(DosRetos) return 2;
+        return 1;
+    }
         
         @Override
         public String toString(){
-            return tipo.toString() + ": " + Cantidad + " veces.";
+            return tipo.toString() + ": " + DosRetos + " veces.";
         }
 
 }
