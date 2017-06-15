@@ -1,6 +1,7 @@
 package UI;
 
 import java.awt.Color;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -136,6 +137,17 @@ public class Ventana extends javax.swing.JFrame {
 				RetoBActionPerformed(evt);
 			}
 		});
+		   addWindowListener(new java.awt.event.WindowAdapter() {
+		        public void windowClosing(WindowEvent winEvt) {
+		        	try {
+						Game.getControl().SaveTree();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		        	System.exit(0);
+		        }
+		    });
 		getContentPane().add(RetoB);
 		RetoB.setBounds(890, 200, 100, 23);
 
