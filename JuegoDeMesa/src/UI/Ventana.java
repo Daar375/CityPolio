@@ -7,6 +7,10 @@ import java.io.IOException;
 
 import Control.CityPoly;
 import Control.GameController;
+import java.util.Arrays;
+import java.util.List;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 
 /**
  *
@@ -18,6 +22,9 @@ public class Ventana extends javax.swing.JFrame {
 	 * Creates new form Ventana
 	 */
 	private GameController Game;
+        List<JLabel> P1Move = Arrays.asList(this.Player1Place0,this.Player1Place1,this.Player1Place2,this.Player1Place3,this.Player1Place4);
+        List<JLabel> P2Move = Arrays.asList(this.Player2Place0,this.Player2Place1,this.Player2Place2,this.Player2Place3,this.Player2Place4);
+
 	public Ventana() {
 		initComponents();
 		RollDice.setVisible(false);
@@ -372,6 +379,7 @@ public class Ventana extends javax.swing.JFrame {
 	private void RetoBActionPerformed(java.awt.event.ActionEvent evt) {
 		Game.retoButton();
 		CartaJugador1.setText("Debe Visitar "+Game.getPlayerActual().getReto().getCantidad() +" lugares de tipo: "+ Game.getPlayerActual().getReto().getTipo().toString());
+                
 		// TODO add your handling code here:
 	}
 
@@ -400,6 +408,32 @@ public class Ventana extends javax.swing.JFrame {
 		jPanel1.getGraphics().drawImage(mapimage, 0, 0, null);
 		//paint(jPanel1.getGraphics());
 	}
+
+    public List<JLabel> getP1Move() {
+        return P1Move;
+    }
+
+    public void setP1Move(List<JLabel> P1Move) {
+        this.P1Move = P1Move;
+    }
+
+    public List<JLabel> getP2Move() {
+        return P2Move;
+    }
+
+    public void setP2Move(List<JLabel> P2Move) {
+        this.P2Move = P2Move;
+    }
+
+    public JButton getRetoB() {
+        return RetoB;
+    }
+
+    public void setRetoB(JButton RetoB) {
+        this.RetoB = RetoB;
+    }
+        
+        
 
 	/**
 	 * @param args
