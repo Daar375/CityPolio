@@ -3,6 +3,7 @@ package Control;
 import java.util.ArrayList;
 
 import Deck.Reto;
+import Mapa.Place;
 
 public class Jugador implements Comparable {
 	private int PointsLife;
@@ -11,8 +12,12 @@ public class Jugador implements Comparable {
 	private ArrayList<Integer> CurrentPath = new ArrayList();
 	private Reto reto;
 	private int Points;
+        private Place Objetivo;
 
-	
+	 public void addPoints(int pointsadd){
+            Points=pointsadd+Points;
+ }
+        
 	public int getPointsLife() {
 		return PointsLife;
 	}
@@ -53,6 +58,17 @@ public class Jugador implements Comparable {
 	public void setName(String name) {
 		Name = name;
 	}
+
+    public Place getObjetivo() {
+        return Objetivo;
+    }
+
+    public void setObjetivo(Place Objetivo) {
+        this.Objetivo = Objetivo;
+    }
+        
+        
+        
 	@Override
 	public int compareTo(Object arg0) {
 		// TODO Auto-generated method stub
