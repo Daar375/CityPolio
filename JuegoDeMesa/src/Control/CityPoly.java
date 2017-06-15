@@ -26,36 +26,35 @@ public class CityPoly implements IConstants {
 	private Ciudad City;
 	private Graph Grafo;
 	private GameController Game;
-	private Ventana GameWindow ;
+	private Ventana GameWindow;
+	private Dijkstra dijkstraplayer1 ;
+	private Dijkstra dijkstraplayer2 ;
 
+
+        /**
+         * Constructor
+         */
 	public CityPoly() {
 		GameWindow = new Ventana();
 		Game = new GameController(this);
 		GameWindow.setVisible(false);
-
 		DeckBuilder build = new DeckBuilder();
 		DecC = build.bluidCityDeck();
 		DecR = build.bluidRetoDeck();
-		
-	}
-	public Ventana getGameWindow() {
-		return GameWindow;
-	}
-	public void setGameWindow(Ventana gameWindow) {
-		GameWindow = gameWindow;
-	}
-	public GameController getGame() {
-		return Game;
+
 	}
 
-	public void setGame(GameController game) {
-		Game = game;
-	}
+	/**
+         * Inicia la ventana de Login
+         */
 	public void iniciarUi() {
 		LoginWindow UI = new LoginWindow(this);
 		UI.setVisible(true);
 	}
 
+        /**
+         * Termina el juego y pone en NULL todo lo utilizado en el juego pasado.
+         */
 	public void EndGame() {
 		player1 = null;
 		player2 = null;
@@ -65,6 +64,12 @@ public class CityPoly implements IConstants {
 
 	}
 
+        /**
+         * Crea un nuevo jugador
+         * @param Name
+         * @param Pass
+         * @return 
+         */
 	public boolean newPlayer(String Name, String Pass) {
 		if (Players.search(Name) == null) {
 			Jugador player = new Jugador();
@@ -77,6 +82,11 @@ public class CityPoly implements IConstants {
 		return false;
 	}
 
+        /**
+         * Basado en la cantidad de vertices del grafo, revisa la lista de lugares
+         * en la ciudad y va armando el grafo segun sus distancias, contando
+         * como distancia minima los que estan a 50m.
+         */
 	public void genGrafo() {
 		System.out.println(City.getPlaces().size() + " lugares en esta ciudad.");
 		Grafo = new Graph(City.getPlaces().size());
@@ -95,22 +105,17 @@ public class CityPoly implements IConstants {
 			ExistenAristas = false;
 			while (indexP2 < City.getPlaces().size() - 1) {
 				indexP2++;
-                                if (!(indexP == indexP2)) {
-                                    P2 = City.getPlaces().get(indexP2);
-                                    distanciaEntrePlace = DistanceCalc.distance(P.getLatitud(), P.getLongitud(), P2.getLatitud(),P2.getLongitud());
-                                    System.out.println(distanciaEntrePlace + " es la distancia entre el vertice " + indexP + " y " + indexP2);
-				
-                                  
-                                    if (distanciaEntrePlace < distanciaPermitida) {
+				if (!(indexP == indexP2)) {
+					P2 = City.getPlaces().get(indexP2);
+					distanciaEntrePlace = DistanceCalc.distance(P.getLatitud(), P.getLongitud(), P2.getLatitud(),
+							P2.getLongitud());
 
-					Grafo.addEdge(
-                                                indexP,
-                                                indexP2,
-                                                (int) distanciaEntrePlace,
-                                                false);
-					ExistenAristas = true;
-                                    }
-                                }
+					if (distanciaEntrePlace < distanciaPermitida) {
+						System.out.println((int) distanciaEntrePlace + " es la distancia entre el vertice " + indexP + " y "+ indexP2);
+						Grafo.addEdge(indexP, indexP2, (int) distanciaEntrePlace, false);
+						ExistenAristas = true;
+					}
+				}
 
 			}
 			// Si busco y no encontro places cerca para agregarse como vecinos
@@ -125,11 +130,87 @@ public class CityPoly implements IConstants {
 		}
 	}
 
+        /**
+         * Busca el indice del Place del tipo buscado mas cercano a la posicion 
+         * actual
+         * @param CurrentPos
+         * @param TipoBuscado
+         * @return 
+         */
+        private int searchNear(int CurrentPos, Type TipoBuscado){
+            int index = 0;
+            int EncontradoMejor = CurrentPos;
+            int DistanciaMejor = 999999; 
+            int DistanciActual= 0;
+            for(Place lugar : City.getPlaces()){
+                index++;
+                if(lugar.getTipo().equals(TipoBuscado)){
+                    DistanciActual = (int) DistanceCalc.distance(
+                            City.getPlaces().get(CurrentPos).getLatitud(),
+                            City.getPlaces().get(CurrentPos).getLongitud(),
+                            City.getPlaces().get(index).getLatitud(),
+                            City.getPlaces().get(index).getLongitud());
+                    
+                    if(DistanciActual < DistanciaMejor){
+                        if(!City.getPlaces().get(index).isVisitado()){
+                            DistanciaMejor = DistanciActual;
+                            EncontradoMejor = index;
+                        }
+                        
+                    }
+                }
+                
+            }
+            return EncontradoMejor;
+        }
+        
+        /**
+         * Recibe al jugador en juego, y si son dos retos o uno y devuelve el camino
+         * mas corto que hay que recorrer para cubrir un reto o ambos
+         * @param dosRetos
+         * @param JugadorActual
+         * @return 
+         */
+        public ArrayList<Integer> caminoMasCorto(boolean dosRetos, Jugador JugadorActual){
+            ArrayList<Integer> CaminoAAgregar;
+            this.dijkstraplayer1.dijkstra(JugadorActual.getCurrentPos());
+            int Cercano = this.searchNear(JugadorActual.getCurrentPos(), JugadorActual.getReto().getTipo());
+            CaminoAAgregar = this.dijkstraplayer1.shortestPath(Cercano);
+            if(dosRetos){ // Si son dos lugares en el reto
+                this.dijkstraplayer1.dijkstra(Cercano);
+                // Buscamos el mass cercano desde el ultimo lugar hasta el segundo lugar
+                Cercano = this.searchNear(Cercano, JugadorActual.getReto().getTipo());
+                // Eliminar el ultimo elemento ya que se repite al agregarle el segundo camino
+                CaminoAAgregar.remove(CaminoAAgregar.size()-1); 
+                // Le agregamos al camino que ya tenemos, el nuevo que va desde
+                // el ultimo encontrado hasta el siguiente luar del reto
+                CaminoAAgregar.addAll(this.dijkstraplayer1.shortestPath(Cercano));
+                
+            }
+            
+            
+            return CaminoAAgregar;
+
+        }
+
+
+        /**
+         * Genera un int random en el rango indicado
+         * @param rangoI
+         * @param rangoF
+         * @return 
+         */
 	public int genRandom(int rangoI, int rangoF) {
 		System.out.println("Random generado!");
 		return ThreadLocalRandom.current().nextInt(rangoI, rangoF);
 	}
 
+        /**
+         * Recibe username y password del usuario para comprobar si existen
+         * @param Name
+         * @param Pass
+         * @return True if exist, else False.
+         */
 	public boolean logIn(String Name, String Pass) {
 		Jugador playerfound = Players.search(Name);
 		if (playerfound != null) {
@@ -146,6 +227,23 @@ public class CityPoly implements IConstants {
 		}
 		return false;
 
+	}
+        
+        
+	public Dijkstra getDijkstraplayer1() {
+		return dijkstraplayer1;
+	}
+
+	public void setDijkstraplayer1(Dijkstra dijkstraplayer1) {
+		this.dijkstraplayer1 = dijkstraplayer1;
+	}
+
+	public Dijkstra getDijkstraplayer2() {
+		return dijkstraplayer2;
+	}
+
+	public void setDijkstraplayer2(Dijkstra dijkstraplayer2) {
+		this.dijkstraplayer2 = dijkstraplayer2;
 	}
 
 	public Graph getGrafo() {
@@ -203,4 +301,21 @@ public class CityPoly implements IConstants {
 	public void setCity(Ciudad city) {
 		City = city;
 	}
+        
+        public Ventana getGameWindow() {
+		return GameWindow;
+	}
+
+	public void setGameWindow(Ventana gameWindow) {
+		GameWindow = gameWindow;
+	}
+
+	public GameController getGame() {
+		return Game;
+	}
+
+	public void setGame(GameController game) {
+		Game = game;
+	}
+
 }

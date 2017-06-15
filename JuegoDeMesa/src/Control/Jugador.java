@@ -1,15 +1,45 @@
 package Control;
 
+import java.util.ArrayList;
+
+import Deck.Reto;
+
 public class Jugador implements Comparable {
-	private int Points;
+	private int PointsLife;
 	private String Name;
-	private String Contraseña;
+	private String Contrasenha;
+	private ArrayList<Integer> CurrentPath = new ArrayList();
+	private Reto reto;
+	private int Points;
+
 	
-	public String getContraseña() {
-		return Contraseña;
+	public int getPointsLife() {
+		return PointsLife;
 	}
-	public void setContraseña(String contraseña) {
-		Contraseña = contraseña;
+	public void setPointsLife(int pointsLife) {
+		PointsLife = pointsLife;
+	}
+	public Reto getReto() {
+		return reto;
+	}
+	public void setReto(Reto reto) {
+		this.reto = reto;
+	}
+	public int  getCurrentPos(){
+		return CurrentPath.get(0);
+		
+	}
+	public String getContrasenha() {
+		return Contrasenha;
+	}
+	public ArrayList<Integer> getCurrentPath() {
+		return CurrentPath;
+	}
+	public void setCurrentPath(ArrayList<Integer> currentPath) {
+		CurrentPath = currentPath;
+	}
+	public void setContrasenha(String pContrasenha) {
+		Contrasenha = pContrasenha;
 	}
 	public int getPoints() {
 		return Points;
