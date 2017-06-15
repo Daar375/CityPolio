@@ -5,6 +5,7 @@
  */
 package UI;
 
+import java.io.IOException;
 import java.util.ResourceBundle.Control;
 
 import javax.swing.JOptionPane;
@@ -12,6 +13,7 @@ import javax.swing.JOptionPane;
 import Control.CityPoly;
 import Control.GameController;
 import Control.Jugador;
+import Estructuras.ArchivoSecuencial;
 
 /**
  *
@@ -24,8 +26,10 @@ public class LoginWindow extends javax.swing.JFrame {
 	 */
 	private CityPoly Control;
 	
-	public LoginWindow(CityPoly bcontrol) {
+	public LoginWindow(CityPoly bcontrol) throws ClassNotFoundException, IOException {
+		ArchivoSecuencial usertree = new ArchivoSecuencial();
 		initComponents();
+		Control.setPlayers(		usertree.LeerSecuenciaUsuarios());
 		Control = bcontrol;
 	}
 
@@ -129,6 +133,7 @@ public class LoginWindow extends javax.swing.JFrame {
 		else if(Control.getPlayer1()!=null &&Control.getPlayer2()!=null){
 			Control.getGame();
 			Control.getGameWindow().setVisible(true);
+			Control.getGameWindow().setPlayerLabel(Control.getPlayer1().getName(),Control.getPlayer2().getName());
 			dispose();
 		}
 
@@ -136,7 +141,7 @@ public class LoginWindow extends javax.swing.JFrame {
 
 	private void CrearCuentaBActionPerformed(java.awt.event.ActionEvent evt) {
 		if (!Control.newPlayer(Usuario.getText(), UiContrasenha.getText())) {
-
+			
 			JOptionPane.showMessageDialog(null, "User already exist");
 		}
 
