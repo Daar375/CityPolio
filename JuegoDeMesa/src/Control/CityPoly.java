@@ -12,6 +12,7 @@ import Tools.DistanceCalc;
 import UI.LoginWindow;
 import UI.Ventana;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
@@ -29,7 +30,14 @@ public class CityPoly implements IConstants {
 	private Ventana GameWindow;
 	private Dijkstra Dijkstra ;
 
+	public BufferedImage getMapWithMarkers() {
+		String Player1Markerlat=Double.toString(City.getPlaces().get(player1.getCurrentPos()).getLatitud());
+		String Player1Markerlong=Double.toString(City.getPlaces().get(player1.getCurrentPos()).getLongitud());
+		String Player2Markerlat=Double.toString(City.getPlaces().get(player2.getCurrentPos()).getLatitud());
+		String Player2Markerlong=Double.toString(City.getPlaces().get(player2.getCurrentPos()).getLongitud());
+		return HTTPPlaces.getmap(LISTA_CIUDADES[City.getCityNumber()][1], LISTA_CIUDADES[City.getCityNumber()][2],Player1Markerlat,Player1Markerlong,Player2Markerlat,Player2Markerlong);
 
+	}
         /**
          * Constructor
          */

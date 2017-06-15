@@ -80,7 +80,7 @@ public class GameController {
 		Control.getPlayer1().getCurrentPath().add(ThreadLocalRandom.current().nextInt(1, Control.getCity().getPlaces().size()));
 		Control.getPlayer2().getCurrentPath().add(ThreadLocalRandom.current().nextInt(1, Control.getCity().getPlaces().size()));
 
-		VentanaJuego.PanelMap(Control.getCity().getPictureULR());
+		VentanaJuego.PanelMap(Control.getMapWithMarkers());
 
 	}
 

@@ -21,7 +21,7 @@ public class Ciudad implements IConstants {
 	private BufferedImage PictureULR;
 
 	public void getInfo() {
-		PictureULR=HTTPPlaces.getmap(LISTA_CIUDADES[CityNumber][1], LISTA_CIUDADES[CityNumber][2]);
+		PictureULR=HTTPPlaces.getmap(LISTA_CIUDADES[CityNumber][1], LISTA_CIUDADES[CityNumber][2],"0","0","0","0");
 		for (Type tipo : Type.values()) {
 
 			loadplaces(HTTPPlaces.getplaces(LISTA_CIUDADES[CityNumber][1], LISTA_CIUDADES[CityNumber][2], tipo.toString()),tipo);
@@ -29,11 +29,20 @@ public class Ciudad implements IConstants {
 	}
 
 	public BufferedImage getPictureULR() {
+		
 		return PictureULR;
 	}
 
 	public void setPictureULR(BufferedImage pictureULR) {
 		PictureULR = pictureULR;
+	}
+
+	public int getCityNumber() {
+		return CityNumber;
+	}
+
+	public void setCityNumber(int cityNumber) {
+		CityNumber = cityNumber;
 	}
 
 	public double getLatitud() {
