@@ -5,6 +5,7 @@ import java.io.File;
 public interface IConstants {
 	
 
+	public final File SAVEFILE = new File("E//save");
 
 	public final File RANKINGFILE = new File("E//ranking");
 	public final String MCS_IDKEY = "AIzaSyCbb9-AtcNbXpRLRWaR-fuqDha0SEoss6k";
@@ -18,7 +19,7 @@ public interface IConstants {
 	            {"Berlin, Germany","52.520008","13.404954"},
 	            {"Paris, France","48.864716","2.349014"},
 	            {"The Colosseum of Rome, Rome, Italy"," 41.890251","12.492373"},
-	            {"Sao Paulo, São Paulo, Brazil","-23.533773","-46.625290"},
+	            {"Sao Paulo, SÃ£o Paulo, Brazil","-23.533773","-46.625290"},
 	            {"Moscow, Russia","55.751244","37.618423"},
 	            {"Tokyo, Japan","35.652832","139.839478"}
 	            
