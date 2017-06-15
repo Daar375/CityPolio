@@ -9,6 +9,31 @@ public class BPlusTree<K extends Comparable<K>, T> {
 	public static final int D = 2;
 
 
+	
+	public LeafNode getFirst(){
+		if(root == null) {
+			return null;
+		}else if(root.isLeafNode){
+			return (LeafNode) root;
+			
+		}
+		else{
+		
+			TreeNode Searching =root;
+			IndexNode<K,T> index = (IndexNode<K, T>) Searching;
+			
+			while(!Searching.isLeafNode){
+				Searching=index.children.get(0);
+
+			}
+			return (LeafNode) Searching;
+
+		}
+		
+		
+		
+	}
+
 	public T search(K key) {
 		// Return if empty tree or key
 		if(key == null || root == null) {

@@ -7,7 +7,6 @@ import java.util.Arrays;
 
 import Control.IConstants;
 import Control.Jugador;
-import Tools.FileManager;
 
 public class ArchivoSecuencial implements IConstants {
 
@@ -44,8 +43,8 @@ public class ArchivoSecuencial implements IConstants {
 
 		byte jugadorbytes[] = outputStream.toByteArray( );
 		
-		int index=0;
-
+		
+		
 		
 		FileManager write = new FileManager();
 		write.escribirArchivo(SAVEFILE, jugadorbytes);
@@ -57,22 +56,14 @@ public class ArchivoSecuencial implements IConstants {
 
 		byte[] rankbytes = read.leerArchivo(RANKINGFILE);
 		int index = 0;		
-		ArrayList<Jugador> Ranking = new ArrayList();
+		ArrayList<String> Ranking = new ArrayList();
 		while (index != rankbytes.length) {
 			byte[] Nameb = Arrays.copyOfRange(rankbytes, 0+index, 10+index);
 			byte[] Pointb = Arrays.copyOfRange(rankbytes, 10+index, 20+index);
 			String NameString = new String (Nameb);
 			String PointString = new String (Pointb);
-			Jugador player = new Jugador();
-			byte[] deletthis = new  byte[1];
 
-			NameString=NameString.replaceAll(new String(deletthis), "");
-			PointString=PointString.replaceAll(new String(deletthis), "");
-
-			
-			player.setName(NameString);
-			player.setPoints(Integer.valueOf(PointString));
-			Ranking.add(player);
+			Ranking.add(NameString);
 			index = index+20;
 			
 		}
@@ -93,19 +84,12 @@ public class ArchivoSecuencial implements IConstants {
 			String NameString = new String (Nameb);
 			String PointString = new String (Pointb);
 			String PassString = new String (Passb);
+
 			Jugador player = new Jugador();
-	
-			PointString=PointString.replaceAll("[^\\d.]", "");
-			byte[] deletthis = new  byte[1];
-			NameString=NameString.replaceAll(new String(deletthis), "");
-			PassString=PassString.replaceAll(new String(deletthis), "");
-
-
 			player.setContrasenha(PassString);
 			player.setName(NameString);
-			player.setPoints( Integer.valueOf(PointString));
+			player.setPoints(Integer.valueOf(PointString));
 			index = index+30;
-			System.out.println(NameString);
 			tree.insert(NameString, player);
 		}
 		return tree;

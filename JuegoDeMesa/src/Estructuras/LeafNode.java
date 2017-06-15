@@ -1,12 +1,13 @@
 package Estructuras;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
 public class LeafNode<K extends Comparable<K>, T> extends TreeNode<K, T> {
 	protected ArrayList<T> values;
-	protected LeafNode<K,T> nextLeaf;
-	protected LeafNode<K,T> previousLeaf;
+	protected LeafNode<K, T> nextLeaf;
+	protected LeafNode<K, T> previousLeaf;
 
 	public LeafNode(K firstKey, T firstValue) {
 		isLeafNode = true;
@@ -15,6 +16,38 @@ public class LeafNode<K extends Comparable<K>, T> extends TreeNode<K, T> {
 		keys.add(firstKey);
 		values.add(firstValue);
 
+	}
+
+	public boolean HasNextLeaf() {
+		if (nextLeaf == null) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	public ArrayList<T> getValues() {
+		return values;
+	}
+
+	public void setValues(ArrayList<T> values) {
+		this.values = values;
+	}
+
+	public LeafNode<K, T> getNextLeaf() {
+		return nextLeaf;
+	}
+
+	public void setNextLeaf(LeafNode<K, T> nextLeaf) {
+		this.nextLeaf = nextLeaf;
+	}
+
+	public LeafNode<K, T> getPreviousLeaf() {
+		return previousLeaf;
+	}
+
+	public void setPreviousLeaf(LeafNode<K, T> previousLeaf) {
+		this.previousLeaf = previousLeaf;
 	}
 
 	public LeafNode(List<K> newKeys, List<T> newValues) {
