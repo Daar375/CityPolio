@@ -48,7 +48,7 @@ public class HTTPPlaces implements IConstants {
 		URL url = null;
 		try {
 			url = new URL("https://maps.googleapis.com/maps/api/staticmap?center=" + X + "," + Y+"&markers=color:blue%7Clabel:P1%7C"+Player1Markerlat+","+Player1Markerlong+
-					"&markers=color:red%7Clabel:P2%7C"+Player2Markerlat+","+Player2Markerlong +"&zoom=17&size=1500x1500&key=" + MCS_IDKEY);
+					"&markers=color:red%7Clabel:P2%7C"+Player2Markerlat+","+Player2Markerlong +"&zoom=15&size=1500x1500&key=" + MCS_IDKEY);
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -56,7 +56,6 @@ public class HTTPPlaces implements IConstants {
 
 		BufferedImage image = null;
 		try {
-			System.out.println(url);
 			image = ImageIO.read(url);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

@@ -40,6 +40,9 @@ public class Jugador implements Comparable {
 	public ArrayList<Integer> getCurrentPath() {
 		return CurrentPath;
 	}
+	public void addPath(ArrayList<Integer> currentPath){
+		CurrentPath.addAll(currentPath);
+	}
 	public void setCurrentPath(ArrayList<Integer> currentPath) {
 		CurrentPath = currentPath;
 	}

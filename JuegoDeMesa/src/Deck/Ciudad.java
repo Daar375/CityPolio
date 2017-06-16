@@ -17,19 +17,22 @@ public class Ciudad implements IConstants {
 	private double longitud;
 	private int CityNumber;
 	private String Name;
-	private ArrayList<Place> Places;
+	private ArrayList<Place> Places = new ArrayList();
 	private BufferedImage PictureULR;
 
 	public void getInfo() {
-		PictureULR=HTTPPlaces.getmap(LISTA_CIUDADES[CityNumber][1], LISTA_CIUDADES[CityNumber][2],"0","0","0","0");
+		PictureULR = HTTPPlaces.getmap(LISTA_CIUDADES[CityNumber][1], LISTA_CIUDADES[CityNumber][2], "0", "0", "0",
+				"0");
 		for (Type tipo : Type.values()) {
 
-			loadplaces(HTTPPlaces.getplaces(LISTA_CIUDADES[CityNumber][1], LISTA_CIUDADES[CityNumber][2], tipo.toString()),tipo);
+			loadplaces(
+					HTTPPlaces.getplaces(LISTA_CIUDADES[CityNumber][1], LISTA_CIUDADES[CityNumber][2], tipo.toString()),
+					tipo);
 		}
 	}
 
 	public BufferedImage getPictureULR() {
-		
+
 		return PictureULR;
 	}
 
@@ -82,6 +85,26 @@ public class Ciudad implements IConstants {
 		return Name + ": Cantidad de Places: " + Places.size();
 	}
 
+	public ArrayList TiposPermitidos() {
+		ArrayList res = new ArrayList();
+		for (Type tipe : Type.values()) {
+			int index = 0;
+			int cantidad=0;
+			while (index != Places.size()) {
+				if(Places.get(index).getTipo()==tipe){
+					cantidad++;
+				}
+				index++;
+			}
+			if(cantidad>4){
+				res.add(tipe);
+			}
+		}
+
+		return res;
+
+	}
+
 	private void loadplaces(String JsonString, Type tipe) {
 		JSONObject placesjson = new JSONObject(JsonString);
 		JSONArray Array = placesjson.getJSONArray("results");
@@ -114,6 +137,7 @@ public class Ciudad implements IConstants {
 			lugares.add(place);
 			index++;
 		}
+		System.out.println(tipe.toString() + " " + lugares.size());
 		Places.addAll(lugares);
 	}
 }

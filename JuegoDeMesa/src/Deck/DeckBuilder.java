@@ -2,6 +2,7 @@ package Deck;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import Control.IConstants;
 import Google.HTTPPlaces;
@@ -12,7 +13,6 @@ public class DeckBuilder implements IConstants {
 	
 	public DeckCiudades bluidCityDeck() {
 		HTTPPlaces get = new HTTPPlaces();
-		ArrayList City = new ArrayList();
 		DeckCiudades DecC = new DeckCiudades();
 		int index = 0;
 
@@ -21,9 +21,7 @@ public class DeckBuilder implements IConstants {
 			ciudad.setLatitud(Double.parseDouble(LISTA_CIUDADES[index][1]));
 			ciudad.setLongitud(Double.parseDouble(LISTA_CIUDADES[index][2]));
 			ciudad.setName(LISTA_CIUDADES[index][0]);
-
-			ciudad.setPlaces(City);
-
+			ciudad.setCityNumber(index);
 			DecC.Add(ciudad);
 			index++;
 		}
@@ -31,13 +29,16 @@ public class DeckBuilder implements IConstants {
 
 	}
 
-	public DeckRetos bluidRetoDeck() {
+	public DeckRetos bluidRetoDeck(Ciudad city) {
 		DeckRetos DecR = new DeckRetos();
-
+		ArrayList<Type> permitidos = city.TiposPermitidos();
 		int index = 0;
 		while (index != 30) {
+			int randomnumber = 	ThreadLocalRandom.current().nextInt(0, permitidos.size());
+			
+			
 			Reto reto = new Reto();
-			reto.setTipo(DecR.randomEnum(Type.class));
+			reto.setTipo(permitidos.get(randomnumber));
 			Random r = new Random();
 			reto.setDosRetos(r.nextBoolean());
 			DecR.Add(reto);

@@ -13,54 +13,71 @@ import UI.RankingUI;
 import UI.Ventana;
 import java.util.List;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
+import Deck.DeckBuilder;
 
 public class GameController {
 	private CityPoly Control;
 
-
 	private Ventana VentanaJuego;
-	private Jugador PlayerActual ;
+	private Jugador PlayerActual;
 
 	public GameController(CityPoly ControlB) {
 		Control = ControlB;
-		VentanaJuego=Control.getGameWindow();
+		VentanaJuego = Control.getGameWindow();
 		VentanaJuego.setGame(this);
-		PlayerActual=Control.getPlayer1();
+		PlayerActual = Control.getPlayer1();
 	}
 
-	
-	public void nextTurn(){
-		if(PlayerActual==Control.getPlayer1()){
-			PlayerActual=Control.getPlayer2();
-                        
-		}else{
-			PlayerActual=Control.getPlayer1();
+	public void nextTurn() {
+
+		VentanaJuego.swichPlayer();
+
+		if (PlayerActual.getObjetivo().isVisitado()) {
+			// Correr el dijsktra otra vez desde la posicion actual
+
 		}
-                if(PlayerActual.getReto()==null){
-                    this.VentanaJuego.getRetoB().setEnabled(true);}
-                    else{this.VentanaJuego.getRetoB().setEnabled(false);}
-                if(PlayerActual.getObjetivo().isVisitado()){
-                    // Correr el dijsktra otra vez desde la posicion actual
-                    
-                }
-                
-                
+		if (PlayerActual == Control.getPlayer1()) {
+			PlayerActual = Control.getPlayer2();
+
+		} else {
+			PlayerActual = Control.getPlayer1();
+		}
+		if (PlayerActual.getReto() != null) {
+			VentanaJuego.getTipoLabel().setText("Tipo: " + PlayerActual.getReto().getTipo().toString());
+			VentanaJuego.getCantidadLabel().setText("Tipo: " + PlayerActual.getReto().getCantidad());
+		}
+		if (PlayerActual.getReto() == null) {
+			this.VentanaJuego.getRetoB().setEnabled(true);
+			VentanaJuego.getRollDice().setEnabled(false);
+
+		} else {
+			this.VentanaJuego.getRetoB().setEnabled(false);
+			VentanaJuego.getRollDice().setEnabled(true);
+
+		}
+		JOptionPane.showMessageDialog(null,"Turno:" +  PlayerActual.getName());
+		System.out.println("\n"+PlayerActual.getName()+"\n");
+		VentanaJuego.PanelMap(Control.getMapWithMarkers());
+
 	}
+
 	public void rankingButton() throws ClassNotFoundException, IOException {
 		ArchivoSecuencial rankingread = new ArchivoSecuencial();
 		ArrayList<Jugador> rankingplayerlist = rankingread.LeerSecuenciaRanking();
 		Object[][] ranking = new Object[rankingplayerlist.size()][];
-		int index=0;
-		while(index!=ranking.length){
+		int index = 0;
+		while (index != ranking.length) {
 			Object[] playerdata = new Object[3];
-			playerdata[0]=index+1;
-			playerdata[1]=rankingplayerlist.get(index).getName();
+			playerdata[0] = index + 1;
+			playerdata[1] = rankingplayerlist.get(index).getName();
 
-			playerdata[2]=rankingplayerlist.get(index).getPoints();
-			ranking[index]=playerdata;
+			playerdata[2] = rankingplayerlist.get(index).getPoints();
+			ranking[index] = playerdata;
 
 		}
-		RankingUI UI= new RankingUI(ranking);
+		RankingUI UI = new RankingUI(ranking);
 	}
 
 	public void logoffButton() throws ClassNotFoundException, IOException {
@@ -77,70 +94,95 @@ public class GameController {
 		Control.genGrafo();
 		Control.setDijkstra(new Dijkstra(Control.getGrafo()));
 
-		Control.getPlayer1().getCurrentPath().add(ThreadLocalRandom.current().nextInt(1, Control.getCity().getPlaces().size()));
-		Control.getPlayer2().getCurrentPath().add(ThreadLocalRandom.current().nextInt(1, Control.getCity().getPlaces().size()));
+		Control.getPlayer1().getCurrentPath()
+				.add(ThreadLocalRandom.current().nextInt(1, Control.getCity().getPlaces().size()));
+		Control.getPlayer2().getCurrentPath()
+				.add(ThreadLocalRandom.current().nextInt(1, Control.getCity().getPlaces().size()));
 
 		VentanaJuego.PanelMap(Control.getMapWithMarkers());
-
+		PlayerActual = Control.getPlayer1();
+		DeckBuilder build = new DeckBuilder();
+		Control.setDecR(build.bluidRetoDeck(Control.getCity()));
 	}
 
 	public void retoButton() {
+
 		PlayerActual.setReto(Control.getDecR().getRandomCard());
-                
-		PlayerActual.setCurrentPath(this.Control.caminoMasCorto(PlayerActual.getReto().isDosRetos(), PlayerActual));
 		
+		System.out.println(PlayerActual.getReto().toString());
+		System.out.println("esta: "+PlayerActual.getCurrentPos());
+		PlayerActual.setCurrentPath(this.Control.caminoMasCorto(PlayerActual.getReto().isDosRetos(), PlayerActual));
+		System.out.println(PlayerActual.getCurrentPath());
+
+		System.out.println("ahora esta: "+PlayerActual.getCurrentPos());
+
+		PlayerActual.setObjetivo(Control.getCity().getPlaces()
+				.get(PlayerActual.getCurrentPath().get(PlayerActual.getCurrentPath().size() - 1)));
+		thisTurn(PlayerActual);
 		nextTurn();
+
 	}
 
 	public void diceButton() {
-                
+
 		int dice = rollDice();
+		JOptionPane.showMessageDialog(null, dice);
+
 		ArrayList Path = PlayerActual.getCurrentPath();
 		int index = 0;
 		while (index != dice && Path.size() > 1) {
 			Path.remove(0);
+			index++;
 		}
-                
-                if(PlayerActual.getCurrentPath().size() > 1){
-                    thisTurn(PlayerActual); 
-                }
-                // Lo que pasa cuando el jugador llega al lugar
-                else{
-                    
-                    PlayerActual.setReto(null);
-                    PlayerActual.addPoints(this.Control.getCity().getPlaces().get(PlayerActual.getCurrentPos()).getValor());
-                    
-                }
-               
+
+		if (PlayerActual.getCurrentPath().size() > 1) {
+			thisTurn(PlayerActual);
+		}
+		// Lo que pasa cuando el jugador llega al lugar
+		else {
+
+			PlayerActual.setReto(null);
+			PlayerActual.addPoints(this.Control.getCity().getPlaces().get(PlayerActual.getCurrentPos()).getValor());
+
+		}
+
 		nextTurn();
 	}
-        
-        private void thisTurn(Jugador Actual){
-            this.actualizarRecorridoUi(Actual);
-            
-            
-        }
-        
-        private void actualizarRecorridoUi(Jugador Actual){
-            int index = -1;
-            int indexPlace = 0;
-            List<JLabel> recorrido;
-            if(this.Control.getPlayer1().equals(Actual)){
-                recorrido = this.VentanaJuego.getP1Move();}
-            else{recorrido = this.VentanaJuego.getP2Move();}
-            
-            for(JLabel JL : recorrido){
-                index++;
-                indexPlace = Actual.getCurrentPath().get(index);
-                JL.setText(this.Control.getCity().getPlaces().get(indexPlace).getName()); 
-            }
-            
-            
-        }
+
+	private void thisTurn(Jugador Actual) {
+		this.actualizarRecorridoUi(Actual);
+
+	}
+
+	private void actualizarRecorridoUi(Jugador Actual) {
+		int index = 0;
+		int indexPlace = 0;
+		List<JLabel> recorrido;
+		if (this.Control.getPlayer1().equals(Actual)) {
+			recorrido = this.VentanaJuego.getP1Move();
+		} else {
+			recorrido = this.VentanaJuego.getP2Move();
+		}
+		for (JLabel JL : recorrido) {
+			JL.setText("");
+		}
+		for (JLabel JL : recorrido) {
+			if (Actual.getCurrentPath().size() - 1 < index) {
+				break;
+			}
+			indexPlace = Actual.getCurrentPath().get(index);
+			JL.setText(this.Control.getCity().getPlaces().get(indexPlace).getName());
+
+			index++;
+
+		}
+
+	}
 
 	public int rollDice() {
-		return ThreadLocalRandom.current().nextInt(1, 7);
+		return ThreadLocalRandom.current().nextInt(1, 6);
 	}
+
 	public CityPoly getControl() {
 		return Control;
 	}

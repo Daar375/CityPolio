@@ -22,26 +22,20 @@ public class Ventana extends javax.swing.JFrame {
 	 * Creates new form Ventana
 	 */
 	private GameController Game;
-        List<JLabel> P1Move = Arrays.asList(this.Player1Place0,this.Player1Place1,this.Player1Place2,this.Player1Place3,this.Player1Place4);
-        List<JLabel> P2Move = Arrays.asList(this.Player2Place0,this.Player2Place1,this.Player2Place2,this.Player2Place3,this.Player2Place4);
 
 	public Ventana() {
 		initComponents();
-		RollDice.setVisible(false);
-
+		RollDice.setEnabled(false);
 
 	}
-
 
 	public GameController getGame() {
 		return Game;
 	}
 
-
 	public void setGame(GameController game) {
 		Game = game;
 	}
-
 
 	/**
 	 * This method is called from within the constructor to initialize the form.
@@ -50,310 +44,298 @@ public class Ventana extends javax.swing.JFrame {
 	 */
 	@SuppressWarnings("unchecked")
 	// <editor-fold defaultstate="collapsed" desc="Generated Code">
-    private void initComponents() {
+	private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        Puntaje1 = new javax.swing.JLabel();
-        Username1 = new javax.swing.JLabel();
-        Username2 = new javax.swing.JLabel();
-        TipoLabel = new javax.swing.JLabel();
-        CityLabel = new javax.swing.JLabel();
-        CantidadLabel = new javax.swing.JLabel();
-        Puntaje2 = new javax.swing.JLabel();
-        jSeparator1 = new javax.swing.JSeparator();
-        jSeparator2 = new javax.swing.JSeparator();
-        RankingB = new javax.swing.JButton();
-        CiudadB = new javax.swing.JButton();
-        RetoB = new javax.swing.JButton();
-        RollDice = new javax.swing.JButton();
-        Box = new javax.swing.JLabel();
-        CartaJugador1 = new javax.swing.JLabel();
-        LogOffB = new javax.swing.JButton();
-        CartaJugador3 = new javax.swing.JLabel();
-        Box1 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        Player1Place4 = new javax.swing.JLabel();
-        Box2 = new javax.swing.JLabel();
-        Box3 = new javax.swing.JLabel();
-        Box4 = new javax.swing.JLabel();
-        Box5 = new javax.swing.JLabel();
-        Box6 = new javax.swing.JLabel();
-        Box7 = new javax.swing.JLabel();
-        Box8 = new javax.swing.JLabel();
-        Box9 = new javax.swing.JLabel();
-        jSeparator4 = new javax.swing.JSeparator();
-        jSeparator5 = new javax.swing.JSeparator();
-        jSeparator6 = new javax.swing.JSeparator();
-        jSeparator7 = new javax.swing.JSeparator();
-        jSeparator8 = new javax.swing.JSeparator();
-        jSeparator9 = new javax.swing.JSeparator();
-        jSeparator10 = new javax.swing.JSeparator();
-        jSeparator11 = new javax.swing.JSeparator();
-        jSeparator12 = new javax.swing.JSeparator();
-        jSeparator13 = new javax.swing.JSeparator();
-        jSeparator14 = new javax.swing.JSeparator();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        Player1Place0 = new javax.swing.JLabel();
-        Player1Place1 = new javax.swing.JLabel();
-        Player1Place2 = new javax.swing.JLabel();
-        Player1Place3 = new javax.swing.JLabel();
-        Player2Place0 = new javax.swing.JLabel();
-        Player2Place1 = new javax.swing.JLabel();
-        Player2Place2 = new javax.swing.JLabel();
-        Player2Place3 = new javax.swing.JLabel();
-        Player2Place4 = new javax.swing.JLabel();
+		jPanel1 = new javax.swing.JPanel();
+		Puntaje1 = new javax.swing.JLabel();
+		Username1 = new javax.swing.JLabel();
+		Username2 = new javax.swing.JLabel();
+		TipoLabel = new javax.swing.JLabel();
+		CityLabel = new javax.swing.JLabel();
+		CantidadLabel = new javax.swing.JLabel();
+		Puntaje2 = new javax.swing.JLabel();
+		jSeparator1 = new javax.swing.JSeparator();
+		jSeparator2 = new javax.swing.JSeparator();
+		RankingB = new javax.swing.JButton();
+		CiudadB = new javax.swing.JButton();
+		RetoB = new javax.swing.JButton();
+		RollDice = new javax.swing.JButton();
+		Box = new javax.swing.JLabel();
+		LogOffB = new javax.swing.JButton();
+		Box1 = new javax.swing.JLabel();
+		jLabel1 = new javax.swing.JLabel();
+		Player1Place4 = new javax.swing.JLabel();
+		Box2 = new javax.swing.JLabel();
+		Box3 = new javax.swing.JLabel();
+		Box4 = new javax.swing.JLabel();
+		Box5 = new javax.swing.JLabel();
+		Box6 = new javax.swing.JLabel();
+		Box7 = new javax.swing.JLabel();
+		Box8 = new javax.swing.JLabel();
+		Box9 = new javax.swing.JLabel();
+		jSeparator4 = new javax.swing.JSeparator();
+		jSeparator5 = new javax.swing.JSeparator();
+		jSeparator6 = new javax.swing.JSeparator();
+		jSeparator7 = new javax.swing.JSeparator();
+		jSeparator8 = new javax.swing.JSeparator();
+		jSeparator9 = new javax.swing.JSeparator();
+		jSeparator10 = new javax.swing.JSeparator();
+		jSeparator11 = new javax.swing.JSeparator();
+		jSeparator12 = new javax.swing.JSeparator();
+		jSeparator13 = new javax.swing.JSeparator();
+		jSeparator14 = new javax.swing.JSeparator();
+		jLabel3 = new javax.swing.JLabel();
+		jLabel4 = new javax.swing.JLabel();
+		Player1Place0 = new javax.swing.JLabel();
+		Player1Place1 = new javax.swing.JLabel();
+		Player1Place2 = new javax.swing.JLabel();
+		Player1Place3 = new javax.swing.JLabel();
+		Player2Place0 = new javax.swing.JLabel();
+		Player2Place1 = new javax.swing.JLabel();
+		Player2Place2 = new javax.swing.JLabel();
+		Player2Place3 = new javax.swing.JLabel();
+		Player2Place4 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1000, 900));
-        getContentPane().setLayout(null);
-        getContentPane().add(jPanel1);
-        jPanel1.setBounds(50, 50, 700, 680);
+		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		setPreferredSize(new java.awt.Dimension(1000, 900));
+		getContentPane().setLayout(null);
+		getContentPane().add(jPanel1);
+		jPanel1.setBounds(50, 50, 700, 680);
 
-        Puntaje1.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
-        Puntaje1.setForeground(new java.awt.Color(100, 100, 100));
-        Puntaje1.setText("0/0");
-        getContentPane().add(Puntaje1);
-        Puntaje1.setBounds(150, 10, 60, 30);
+		Puntaje1.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
+		Puntaje1.setForeground(new java.awt.Color(100, 100, 100));
+		Puntaje1.setText("0/0");
+		getContentPane().add(Puntaje1);
+		Puntaje1.setBounds(150, 10, 60, 30);
 
-        Username1.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
-        Username1.setForeground(new java.awt.Color(100, 100, 100));
-        Username1.setText("Username1");
-        getContentPane().add(Username1);
-        Username1.setBounds(10, 10, 140, 30);
+		Username1.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
+		Username1.setForeground(new java.awt.Color(100, 100, 100));
+		Username1.setText("Username1");
+		getContentPane().add(Username1);
+		Username1.setBounds(10, 10, 140, 30);
 
-        Username2.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
-        Username2.setForeground(new java.awt.Color(100, 100, 100));
-        Username2.setText("Username1");
-        getContentPane().add(Username2);
-        Username2.setBounds(220, 10, 140, 30);
+		Username2.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
+		Username2.setForeground(new java.awt.Color(100, 100, 100));
+		Username2.setText("Username1");
+		getContentPane().add(Username2);
+		Username2.setBounds(220, 10, 140, 30);
 
-        TipoLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        getContentPane().add(TipoLabel);
-        TipoLabel.setBounds(820, 340, 150, 70);
+		TipoLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+		getContentPane().add(TipoLabel);
+		TipoLabel.setBounds(820, 340, 150, 70);
 
-        CityLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        getContentPane().add(CityLabel);
-        CityLabel.setBounds(820, 0, 150, 60);
+		CityLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+		getContentPane().add(CityLabel);
+		CityLabel.setBounds(820, 0, 150, 60);
 
-        CantidadLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        getContentPane().add(CantidadLabel);
-        CantidadLabel.setBounds(820, 270, 150, 60);
+		CantidadLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+		getContentPane().add(CantidadLabel);
+		CantidadLabel.setBounds(820, 270, 150, 60);
 
-        Puntaje2.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
-        Puntaje2.setForeground(new java.awt.Color(100, 100, 100));
-        Puntaje2.setText("0/0");
-        getContentPane().add(Puntaje2);
-        Puntaje2.setBounds(360, 10, 60, 30);
+		Puntaje2.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
+		Puntaje2.setForeground(new java.awt.Color(100, 100, 100));
+		Puntaje2.setText("0/0");
+		getContentPane().add(Puntaje2);
+		Puntaje2.setBounds(360, 10, 60, 30);
 
-        jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        getContentPane().add(jSeparator1);
-        jSeparator1.setBounds(420, -20, 10, 60);
+		jSeparator1.setOrientation(javax.swing.SwingConstants.VERTICAL);
+		getContentPane().add(jSeparator1);
+		jSeparator1.setBounds(420, -20, 10, 60);
 
-        jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        getContentPane().add(jSeparator2);
-        jSeparator2.setBounds(210, -20, 10, 60);
+		jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
+		getContentPane().add(jSeparator2);
+		jSeparator2.setBounds(210, -20, 10, 60);
 
-        RankingB.setText("Ranking");
-        RankingB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RankingBActionPerformed(evt);
-            }
-        });
-        getContentPane().add(RankingB);
-        RankingB.setBounds(460, 0, 150, 40);
+		RankingB.setText("Ranking");
+		RankingB.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				RankingBActionPerformed(evt);
+			}
+		});
+		getContentPane().add(RankingB);
+		RankingB.setBounds(460, 0, 150, 40);
 
-        CiudadB.setText("Elegir Ciudad");
-        CiudadB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CiudadBActionPerformed(evt);
-            }
-        });
-        getContentPane().add(CiudadB);
-        CiudadB.setBounds(850, 200, 100, 23);
+		CiudadB.setText("Elegir Ciudad");
+		CiudadB.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				CiudadBActionPerformed(evt);
+			}
+		});
+		getContentPane().add(CiudadB);
+		CiudadB.setBounds(850, 200, 100, 23);
 
-        RetoB.setText("Elegir Reto");
-        RetoB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RetoBActionPerformed(evt);
-            }
-        });
-        getContentPane().add(RetoB);
-        RetoB.setBounds(850, 440, 100, 23);
+		RetoB.setText("Elegir Reto");
+		RetoB.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				RetoBActionPerformed(evt);
+			}
+		});
+		getContentPane().add(RetoB);
+		RetoB.setBounds(850, 440, 100, 23);
 
-        RollDice.setText("RollDice");
-        RollDice.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                RollDiceActionPerformed(evt);
-            }
-        });
-				   addWindowListener(new java.awt.event.WindowAdapter() {
-		        public void windowClosing(WindowEvent winEvt) {
-		        	try {
-						Game.getControl().SaveTree();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-		        	System.exit(0);
-		        }
-		    });
-        getContentPane().add(RollDice);
-        RollDice.setBounds(820, 470, 150, 170);
+		RollDice.setText("RollDice");
+		RollDice.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				RollDiceActionPerformed(evt);
+			}
+		});
+		addWindowListener(new java.awt.event.WindowAdapter() {
+			public void windowClosing(WindowEvent winEvt) {
+				try {
+					Game.getControl().SaveTree();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.exit(0);
+			}
+		});
+		getContentPane().add(RollDice);
+		RollDice.setBounds(820, 470, 150, 170);
 
-        Box.setBackground(new java.awt.Color(50, 255, 50));
-        Box.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(Box);
-        Box.setBounds(50, 820, 150, 30);
+		Box.setBackground(new java.awt.Color(50, 255, 50));
+		Box.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		getContentPane().add(Box);
+		Box.setBounds(50, 820, 150, 30);
 
-        CartaJugador1.setBackground(new java.awt.Color(255, 50, 50));
-        CartaJugador1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(CartaJugador1);
-        CartaJugador1.setBounds(820, 0, 150, 200);
+		LogOffB.setText("Log Off");
+		getContentPane().add(LogOffB);
+		LogOffB.setBounds(640, 0, 150, 40);
 
-        LogOffB.setText("Log Off");
-        getContentPane().add(LogOffB);
-        LogOffB.setBounds(640, 0, 150, 40);
+		Box1.setBackground(new java.awt.Color(50, 255, 50));
+		Box1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		getContentPane().add(Box1);
+		Box1.setBounds(50, 740, 150, 30);
 
-        CartaJugador3.setBackground(new java.awt.Color(255, 50, 50));
-        CartaJugador3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(CartaJugador3);
-        CartaJugador3.setBounds(820, 240, 150, 200);
+		jLabel1.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
+		jLabel1.setText("P2");
+		getContentPane().add(jLabel1);
+		jLabel1.setBounds(20, 820, 34, 20);
 
-        Box1.setBackground(new java.awt.Color(50, 255, 50));
-        Box1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(Box1);
-        Box1.setBounds(50, 740, 150, 30);
+		Player1Place4.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+		Player1Place4.setText("P1");
+		getContentPane().add(Player1Place4);
+		Player1Place4.setBounds(810, 770, 150, 20);
 
-        jLabel1.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
-        jLabel1.setText("P2");
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(20, 820, 34, 20);
+		Box2.setBackground(new java.awt.Color(255, 50, 50));
+		Box2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		getContentPane().add(Box2);
+		Box2.setBounds(240, 740, 150, 30);
 
-        Player1Place4.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        Player1Place4.setText("P1");
-        getContentPane().add(Player1Place4);
-        Player1Place4.setBounds(810, 770, 150, 20);
+		Box3.setBackground(new java.awt.Color(255, 50, 50));
+		Box3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		getContentPane().add(Box3);
+		Box3.setBounds(240, 820, 150, 30);
 
-        Box2.setBackground(new java.awt.Color(255, 50, 50));
-        Box2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(Box2);
-        Box2.setBounds(240, 740, 150, 30);
+		Box4.setBackground(new java.awt.Color(255, 50, 50));
+		Box4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		getContentPane().add(Box4);
+		Box4.setBounds(430, 820, 150, 30);
 
-        Box3.setBackground(new java.awt.Color(255, 50, 50));
-        Box3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(Box3);
-        Box3.setBounds(240, 820, 150, 30);
+		Box5.setBackground(new java.awt.Color(255, 50, 50));
+		Box5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		getContentPane().add(Box5);
+		Box5.setBounds(430, 740, 150, 30);
 
-        Box4.setBackground(new java.awt.Color(255, 50, 50));
-        Box4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(Box4);
-        Box4.setBounds(430, 820, 150, 30);
+		Box6.setBackground(new java.awt.Color(255, 50, 50));
+		Box6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		getContentPane().add(Box6);
+		Box6.setBounds(620, 820, 150, 30);
 
-        Box5.setBackground(new java.awt.Color(255, 50, 50));
-        Box5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(Box5);
-        Box5.setBounds(430, 740, 150, 30);
+		Box7.setBackground(new java.awt.Color(255, 50, 50));
+		Box7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		getContentPane().add(Box7);
+		Box7.setBounds(620, 740, 150, 30);
 
-        Box6.setBackground(new java.awt.Color(255, 50, 50));
-        Box6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(Box6);
-        Box6.setBounds(620, 820, 150, 30);
+		Box8.setBackground(new java.awt.Color(255, 50, 50));
+		Box8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		getContentPane().add(Box8);
+		Box8.setBounds(810, 820, 150, 30);
 
-        Box7.setBackground(new java.awt.Color(255, 50, 50));
-        Box7.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(Box7);
-        Box7.setBounds(620, 740, 150, 30);
+		Box9.setBackground(new java.awt.Color(255, 50, 50));
+		Box9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+		getContentPane().add(Box9);
+		Box9.setBounds(810, 740, 150, 30);
+		getContentPane().add(jSeparator4);
+		jSeparator4.setBounds(-40, 40, 860, 10);
+		getContentPane().add(jSeparator5);
+		jSeparator5.setBounds(200, 830, 40, 30);
+		getContentPane().add(jSeparator6);
+		jSeparator6.setBounds(200, 750, 40, 30);
+		getContentPane().add(jSeparator7);
+		jSeparator7.setBounds(390, 830, 40, 30);
+		getContentPane().add(jSeparator8);
+		jSeparator8.setBounds(390, 750, 40, 30);
+		getContentPane().add(jSeparator9);
+		jSeparator9.setBounds(580, 830, 40, 30);
+		getContentPane().add(jSeparator10);
+		jSeparator10.setBounds(580, 750, 40, 30);
+		getContentPane().add(jSeparator11);
+		jSeparator11.setBounds(770, 750, 40, 30);
+		getContentPane().add(jSeparator12);
+		jSeparator12.setBounds(770, 830, 40, 30);
+		getContentPane().add(jSeparator13);
+		jSeparator13.setBounds(960, 750, 40, 30);
+		getContentPane().add(jSeparator14);
+		jSeparator14.setBounds(960, 830, 40, 30);
 
-        Box8.setBackground(new java.awt.Color(255, 50, 50));
-        Box8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(Box8);
-        Box8.setBounds(810, 820, 150, 30);
+		jLabel3.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
+		jLabel3.setText("P1");
+		getContentPane().add(jLabel3);
+		jLabel3.setBounds(20, 744, 34, 20);
 
-        Box9.setBackground(new java.awt.Color(255, 50, 50));
-        Box9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(Box9);
-        Box9.setBounds(810, 740, 150, 30);
-        getContentPane().add(jSeparator4);
-        jSeparator4.setBounds(-40, 40, 860, 10);
-        getContentPane().add(jSeparator5);
-        jSeparator5.setBounds(200, 830, 40, 30);
-        getContentPane().add(jSeparator6);
-        jSeparator6.setBounds(200, 750, 40, 30);
-        getContentPane().add(jSeparator7);
-        jSeparator7.setBounds(390, 830, 40, 30);
-        getContentPane().add(jSeparator8);
-        jSeparator8.setBounds(390, 750, 40, 30);
-        getContentPane().add(jSeparator9);
-        jSeparator9.setBounds(580, 830, 40, 30);
-        getContentPane().add(jSeparator10);
-        jSeparator10.setBounds(580, 750, 40, 30);
-        getContentPane().add(jSeparator11);
-        jSeparator11.setBounds(770, 750, 40, 30);
-        getContentPane().add(jSeparator12);
-        jSeparator12.setBounds(770, 830, 40, 30);
-        getContentPane().add(jSeparator13);
-        jSeparator13.setBounds(960, 750, 40, 30);
-        getContentPane().add(jSeparator14);
-        jSeparator14.setBounds(960, 830, 40, 30);
+		jLabel4.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
+		jLabel4.setText("P1");
+		getContentPane().add(jLabel4);
+		jLabel4.setBounds(20, 744, 34, 20);
 
-        jLabel3.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
-        jLabel3.setText("P1");
-        getContentPane().add(jLabel3);
-        jLabel3.setBounds(20, 744, 34, 20);
+		Player1Place0.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+		Player1Place0.setText("P1");
+		getContentPane().add(Player1Place0);
+		Player1Place0.setBounds(50, 770, 150, 20);
 
-        jLabel4.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
-        jLabel4.setText("P1");
-        getContentPane().add(jLabel4);
-        jLabel4.setBounds(20, 744, 34, 20);
+		Player1Place1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+		Player1Place1.setText("P1");
+		getContentPane().add(Player1Place1);
+		Player1Place1.setBounds(240, 770, 150, 20);
 
-        Player1Place0.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        Player1Place0.setText("P1");
-        getContentPane().add(Player1Place0);
-        Player1Place0.setBounds(50, 770, 150, 20);
+		Player1Place2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+		Player1Place2.setText("P1");
+		getContentPane().add(Player1Place2);
+		Player1Place2.setBounds(430, 770, 150, 20);
 
-        Player1Place1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        Player1Place1.setText("P1");
-        getContentPane().add(Player1Place1);
-        Player1Place1.setBounds(240, 770, 150, 20);
+		Player1Place3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+		Player1Place3.setText("P1");
+		getContentPane().add(Player1Place3);
+		Player1Place3.setBounds(620, 770, 150, 20);
 
-        Player1Place2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        Player1Place2.setText("P1");
-        getContentPane().add(Player1Place2);
-        Player1Place2.setBounds(430, 770, 150, 20);
+		Player2Place0.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+		Player2Place0.setText("P1");
+		getContentPane().add(Player2Place0);
+		Player2Place0.setBounds(50, 850, 150, 20);
 
-        Player1Place3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        Player1Place3.setText("P1");
-        getContentPane().add(Player1Place3);
-        Player1Place3.setBounds(620, 770, 150, 20);
+		Player2Place1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+		Player2Place1.setText("P1");
+		getContentPane().add(Player2Place1);
+		Player2Place1.setBounds(240, 850, 150, 20);
 
-        Player2Place0.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        Player2Place0.setText("P1");
-        getContentPane().add(Player2Place0);
-        Player2Place0.setBounds(50, 850, 150, 20);
+		Player2Place2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+		Player2Place2.setText("P1");
+		getContentPane().add(Player2Place2);
+		Player2Place2.setBounds(430, 850, 150, 20);
 
-        Player2Place1.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        Player2Place1.setText("P1");
-        getContentPane().add(Player2Place1);
-        Player2Place1.setBounds(240, 850, 150, 20);
+		Player2Place3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+		Player2Place3.setText("P1");
+		getContentPane().add(Player2Place3);
+		Player2Place3.setBounds(620, 850, 150, 20);
 
-        Player2Place2.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        Player2Place2.setText("P1");
-        getContentPane().add(Player2Place2);
-        Player2Place2.setBounds(430, 850, 150, 20);
+		Player2Place4.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+		Player2Place4.setText("P1");
+		getContentPane().add(Player2Place4);
+		Player2Place4.setBounds(810, 850, 150, 20);
 
-        Player2Place3.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        Player2Place3.setText("P1");
-        getContentPane().add(Player2Place3);
-        Player2Place3.setBounds(620, 850, 150, 20);
-
-        Player2Place4.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
-        Player2Place4.setText("P1");
-        getContentPane().add(Player2Place4);
-        Player2Place4.setBounds(810, 850, 150, 20);
-
-        pack();
-    }
+		pack();
+	}
 
 	private void LogOffBActionPerformed(java.awt.event.ActionEvent evt) throws ClassNotFoundException, IOException {
 		Game.logoffButton();
@@ -373,67 +355,81 @@ public class Ventana extends javax.swing.JFrame {
 	private void CiudadBActionPerformed(java.awt.event.ActionEvent evt) {
 		Game.ciudadButton();
 		CiudadB.setVisible(false);
-		RollDice.setVisible(true);
 	}
 
 	private void RetoBActionPerformed(java.awt.event.ActionEvent evt) {
 		Game.retoButton();
-		CartaJugador1.setText("Debe Visitar "+Game.getPlayerActual().getReto().getCantidad() +" lugares de tipo: "+ Game.getPlayerActual().getReto().getTipo().toString());
-                
+
 		// TODO add your handling code here:
+	}
+
+	public javax.swing.JButton getRollDice() {
+		return RollDice;
+	}
+
+	public void setRollDice(javax.swing.JButton rollDice) {
+		RollDice = rollDice;
+	}
+
+	public javax.swing.JLabel getCantidadLabel() {
+		return CantidadLabel;
+	}
+
+	public void setCantidadLabel(javax.swing.JLabel cantidadLabel) {
+		CantidadLabel = cantidadLabel;
+	}
+
+	public javax.swing.JLabel getTipoLabel() {
+		return TipoLabel;
+	}
+
+	public void setTipoLabel(javax.swing.JLabel tipoLabel) {
+		TipoLabel = tipoLabel;
 	}
 
 	private void RollDiceActionPerformed(java.awt.event.ActionEvent evt) {
 		Game.diceButton();
 	}
 
-	public void swichPlayer(){
-		if(Username1.getForeground()==Color.green){
-		Username1.setForeground(Color.green);
-		Username2.setForeground(Color.black);
-		}else{
-			Username1.setForeground(Color.black);
+	public void swichPlayer() {
+		if (Username1.getForeground() == Color.green) {
 			Username2.setForeground(Color.green);
-			}
+			Username1.setForeground(Color.black);
+		} else {
+			Username2.setForeground(Color.black);
+			Username1.setForeground(Color.green);
+		}
 	}
-	
-	public void setPlayerLabel(String nameplayer,String nameplayer2){
+
+	public void setPlayerLabel(String nameplayer, String nameplayer2) {
 		Username1.setText(nameplayer);
 		Username2.setText(nameplayer2);
 	}
+
 	public void PanelMap(BufferedImage mapimage) {
 		int h = mapimage.getHeight();
 		int w = 500 * mapimage.getWidth() / h;
 
 		jPanel1.getGraphics().drawImage(mapimage, 0, 0, null);
-		//paint(jPanel1.getGraphics());
+		// paint(jPanel1.getGraphics());
 	}
 
-    public List<JLabel> getP1Move() {
-        return P1Move;
-    }
+	public List<JLabel> getP1Move() {
 
-    public void setP1Move(List<JLabel> P1Move) {
-        this.P1Move = P1Move;
-    }
+		return Arrays.asList(Player1Place0, Player1Place1, Player1Place2, Player1Place3, Player1Place4);
+	}
 
-    public List<JLabel> getP2Move() {
-        return P2Move;
-    }
+	public List<JLabel> getP2Move() {
+		return Arrays.asList(Player2Place0, Player2Place1, Player2Place2, Player2Place3, Player2Place4);
+	}
 
-    public void setP2Move(List<JLabel> P2Move) {
-        this.P2Move = P2Move;
-    }
+	public JButton getRetoB() {
+		return RetoB;
+	}
 
-    public JButton getRetoB() {
-        return RetoB;
-    }
-
-    public void setRetoB(JButton RetoB) {
-        this.RetoB = RetoB;
-    }
-        
-        
+	public void setRetoB(JButton RetoB) {
+		this.RetoB = RetoB;
+	}
 
 	/**
 	 * @param args
@@ -441,56 +437,55 @@ public class Ventana extends javax.swing.JFrame {
 	 */
 
 	// Variables declaration - do not modify
-    private javax.swing.JLabel Box;
-    private javax.swing.JLabel Box1;
-    private javax.swing.JLabel Box2;
-    private javax.swing.JLabel Box3;
-    private javax.swing.JLabel Box4;
-    private javax.swing.JLabel Box5;
-    private javax.swing.JLabel Box6;
-    private javax.swing.JLabel Box7;
-    private javax.swing.JLabel Box8;
-    private javax.swing.JLabel Box9;
-    private javax.swing.JLabel CantidadLabel;
-    private javax.swing.JLabel CartaJugador1;
-    private javax.swing.JLabel CartaJugador3;
-    private javax.swing.JLabel CityLabel;
-    private javax.swing.JButton CiudadB;
-    private javax.swing.JButton LogOffB;
-    private javax.swing.JLabel Player1Place0;
-    private javax.swing.JLabel Player1Place1;
-    private javax.swing.JLabel Player1Place2;
-    private javax.swing.JLabel Player1Place3;
-    private javax.swing.JLabel Player1Place4;
-    private javax.swing.JLabel Player2Place0;
-    private javax.swing.JLabel Player2Place1;
-    private javax.swing.JLabel Player2Place2;
-    private javax.swing.JLabel Player2Place3;
-    private javax.swing.JLabel Player2Place4;
-    private javax.swing.JLabel Puntaje1;
-    private javax.swing.JLabel Puntaje2;
-    private javax.swing.JButton RankingB;
-    private javax.swing.JButton RetoB;
-    private javax.swing.JButton RollDice;
-    private javax.swing.JLabel TipoLabel;
-    private javax.swing.JLabel Username1;
-    private javax.swing.JLabel Username2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator10;
-    private javax.swing.JSeparator jSeparator11;
-    private javax.swing.JSeparator jSeparator12;
-    private javax.swing.JSeparator jSeparator13;
-    private javax.swing.JSeparator jSeparator14;
-    private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator4;
-    private javax.swing.JSeparator jSeparator5;
-    private javax.swing.JSeparator jSeparator6;
-    private javax.swing.JSeparator jSeparator7;
-    private javax.swing.JSeparator jSeparator8;
-    private javax.swing.JSeparator jSeparator9;
+	private javax.swing.JLabel Box;
+	private javax.swing.JLabel Box1;
+	private javax.swing.JLabel Box2;
+	private javax.swing.JLabel Box3;
+	private javax.swing.JLabel Box4;
+	private javax.swing.JLabel Box5;
+	private javax.swing.JLabel Box6;
+	private javax.swing.JLabel Box7;
+	private javax.swing.JLabel Box8;
+	private javax.swing.JLabel Box9;
+	private javax.swing.JLabel CantidadLabel;
+
+	private javax.swing.JLabel CityLabel;
+	private javax.swing.JButton CiudadB;
+	private javax.swing.JButton LogOffB;
+	private javax.swing.JLabel Player1Place0;
+	private javax.swing.JLabel Player1Place1;
+	private javax.swing.JLabel Player1Place2;
+	private javax.swing.JLabel Player1Place3;
+	private javax.swing.JLabel Player1Place4;
+	private javax.swing.JLabel Player2Place0;
+	private javax.swing.JLabel Player2Place1;
+	private javax.swing.JLabel Player2Place2;
+	private javax.swing.JLabel Player2Place3;
+	private javax.swing.JLabel Player2Place4;
+	private javax.swing.JLabel Puntaje1;
+	private javax.swing.JLabel Puntaje2;
+	private javax.swing.JButton RankingB;
+	private javax.swing.JButton RetoB;
+	private javax.swing.JButton RollDice;
+	private javax.swing.JLabel TipoLabel;
+	private javax.swing.JLabel Username1;
+	private javax.swing.JLabel Username2;
+	private javax.swing.JLabel jLabel1;
+	private javax.swing.JLabel jLabel3;
+	private javax.swing.JLabel jLabel4;
+	private javax.swing.JPanel jPanel1;
+	private javax.swing.JSeparator jSeparator1;
+	private javax.swing.JSeparator jSeparator10;
+	private javax.swing.JSeparator jSeparator11;
+	private javax.swing.JSeparator jSeparator12;
+	private javax.swing.JSeparator jSeparator13;
+	private javax.swing.JSeparator jSeparator14;
+	private javax.swing.JSeparator jSeparator2;
+	private javax.swing.JSeparator jSeparator4;
+	private javax.swing.JSeparator jSeparator5;
+	private javax.swing.JSeparator jSeparator6;
+	private javax.swing.JSeparator jSeparator7;
+	private javax.swing.JSeparator jSeparator8;
+	private javax.swing.JSeparator jSeparator9;
 	// End of variables declaration
 }

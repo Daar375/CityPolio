@@ -47,8 +47,7 @@ public class CityPoly implements IConstants {
 		GameWindow.setVisible(false);
 		DeckBuilder build = new DeckBuilder();
 		DecC = build.bluidCityDeck();
-		DecR = build.bluidRetoDeck();
-
+		
 	}
 
 	/**
@@ -79,7 +78,6 @@ public class CityPoly implements IConstants {
 		SAVEFILE.delete();
 		SAVEFILE.createNewFile();
 		for(Jugador player:PlayersInNode){
-			System.out.println(player.getName());
 			ArchivoSecuencial save = new ArchivoSecuencial();
 			save.EscribirSecuancialUsuarios(player);
 		}
@@ -87,7 +85,6 @@ public class CityPoly implements IConstants {
 			
 			PlayersInNode = Inicio.getValues();
 			for(Jugador player:PlayersInNode){
-				System.out.println(player.getName());
 				ArchivoSecuencial save = new ArchivoSecuencial();
 				save.EscribirSecuancialUsuarios(player);
 			}
@@ -121,7 +118,6 @@ public class CityPoly implements IConstants {
          * como distancia minima los que estan a 50m.
          */
 	public void genGrafo() {
-		System.out.println(City.getPlaces().size() + " lugares en esta ciudad.");
 		Grafo = new Graph(City.getPlaces().size());
 		int indexP = -1; // Primer indice para recorrer los places
 		int indexP2 = -1; // Segundo indice para recorrer los places
@@ -144,7 +140,6 @@ public class CityPoly implements IConstants {
 							P2.getLongitud());
 
 					if (distanciaEntrePlace < distanciaPermitida) {
-						System.out.println((int) distanciaEntrePlace + " es la distancia entre el vertice " + indexP + " y "+ indexP2);
 						Grafo.addEdge(indexP, indexP2, (int) distanciaEntrePlace, false);
 						ExistenAristas = true;
 					}
@@ -155,7 +150,6 @@ public class CityPoly implements IConstants {
 			// al grafo, hace la busqueda otra vez pero con 50mts mas
 			if (!ExistenAristas) {
 				distanciaPermitida += 50;
-				System.out.print("+50 ");
 				indexP--;
 			} else {
 				distanciaPermitida = 50;
@@ -170,32 +164,33 @@ public class CityPoly implements IConstants {
          * @param TipoBuscado
          * @return 
          */
-        private int searchNear(int CurrentPos, Type TipoBuscado){
-            int index = 0;
-            int EncontradoMejor = CurrentPos;
-            int DistanciaMejor = 999999; 
-            int DistanciActual= 0;
-            for(Place lugar : City.getPlaces()){
-                index++;
-                if(lugar.getTipo().equals(TipoBuscado)){
-                    DistanciActual = (int) DistanceCalc.distance(
-                            City.getPlaces().get(CurrentPos).getLatitud(),
-                            City.getPlaces().get(CurrentPos).getLongitud(),
-                            City.getPlaces().get(index).getLatitud(),
-                            City.getPlaces().get(index).getLongitud());
-                    
-                    if(DistanciActual < DistanciaMejor){
-                        if(!City.getPlaces().get(index).isVisitado()){
-                            DistanciaMejor = DistanciActual;
-                            EncontradoMejor = index;
-                        }
-                        
-                    }
-                }
+	private int searchNear(int CurrentPos, Type TipoBuscado){
+        int index = 0;
+        int EncontradoMejor = CurrentPos;
+        int DistanciaMejor = 999999; 
+        int DistanciActual= 0;
+        for(Place lugar : City.getPlaces()){
+            
+            if(lugar.getTipo().equals(TipoBuscado)){
+                DistanciActual = (int) DistanceCalc.distance(
+                        City.getPlaces().get(CurrentPos).getLatitud(),
+                        City.getPlaces().get(CurrentPos).getLongitud(),
+                        City.getPlaces().get(index).getLatitud(),
+                        City.getPlaces().get(index).getLongitud());
                 
+                if(DistanciActual < DistanciaMejor && CurrentPos != index){
+                    if(!City.getPlaces().get(index).isVisitado()){
+                        DistanciaMejor = DistanciActual;
+                        EncontradoMejor = index;
+                    }
+                    
+                }
             }
-            return EncontradoMejor;
+            index++;
+            
         }
+        return EncontradoMejor;
+    }
         
         /**
          * Recibe al jugador en juego, y si son dos retos o uno y devuelve el camino
@@ -234,7 +229,6 @@ public class CityPoly implements IConstants {
          * @return 
          */
 	public int genRandom(int rangoI, int rangoF) {
-		System.out.println("Random generado!");
 		return ThreadLocalRandom.current().nextInt(rangoI, rangoF);
 	}
 

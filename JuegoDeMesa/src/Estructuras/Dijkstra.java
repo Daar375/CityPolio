@@ -73,9 +73,7 @@ public class Dijkstra{
             }
         }
 
-        System.out.printf( "Distancias mas cortas iniciando en vertice %d\n" , inicial );
         for( int i = 1 ; i <= Grafo.getCantVertices() ; ++i ){
-            System.out.printf("Vertice %d , distancia mas corta = %d\n" , i , Grafo.distancia[ i ] );
         }
         Grafo.setDijkstraEjecutado(true);
     }
@@ -87,7 +85,6 @@ public class Dijkstra{
      */
     public ArrayList shortestPath(int destino){
         if( !Grafo.isDijkstraEjecutado() ){
-            System.out.println("Es necesario ejecutar el algorithmo de Dijkstra antes de poder imprimir el camino mas corto");
             return  null;
         }
         ArrayList<Integer> Lista = new ArrayList();
@@ -104,7 +101,6 @@ public class Dijkstra{
     private ArrayList  path( int destino, ArrayList Lista ){
         if( Grafo.previo[ destino ] != -1 )    //si aun poseo un vertice previo
             path( Grafo.previo[ destino ], Lista );  //recursivamente sigo explorando
-        System.out.printf("%d " , destino );        //terminada la recursion imprimo los vertices recorridos
         Lista.add(destino);
         return Lista;
     }
@@ -140,12 +136,9 @@ public class Dijkstra{
             
             dijkstraAlgorithm.Grafo.addEdge(origen, destino, peso, false);
         }
-        System.out.print("Ingrese el vertice inicial: ");
         inicial = sc.nextInt();
         dijkstraAlgorithm.dijkstra(inicial);
-        System.out.print("Ingrese el vertice final: ");
         inicial = sc.nextInt();
-        System.out.println(dijkstraAlgorithm.shortestPath(inicial).size());
 
     }
     

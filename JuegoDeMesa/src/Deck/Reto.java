@@ -31,7 +31,7 @@ public class Reto {
         
         @Override
         public String toString(){
-            return tipo.toString() + ": " + DosRetos + " veces.";
+            return tipo.toString() + ": " + getCantidad() + " veces.";
         }
 
 }

@@ -11,7 +11,10 @@ public class DeckRetos extends Deck {
 		return Cartas;
 	}
 	public Reto getRandomCard(){
-		return Cartas.get(ThreadLocalRandom.current().nextInt(0, Cartas.size()));
+		Reto reto = Cartas.get(ThreadLocalRandom.current().nextInt(0, Cartas.size()));
+		System.out.println(reto.getTipo());
+
+		return reto;
 	}
 	public void setCartas(ArrayList<Reto> cartas) {
 		Cartas = cartas;

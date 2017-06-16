@@ -3,12 +3,16 @@ package Deck;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
+import Mapa.Type;
+
 public class DeckCiudades extends Deck {
 	private ArrayList<Ciudad> Cartas= new ArrayList<Ciudad>();
 
 	public ArrayList<Ciudad> getCartas() {
 		return Cartas;
 	}
+	
+
 	public Ciudad getRandomCard(){
 		return Cartas.get(ThreadLocalRandom.current().nextInt(0, Cartas.size()));
 	}

@@ -10,8 +10,8 @@ public interface IConstants {
 	public final File RANKINGFILE = new File("E//ranking");
 	public final String MCS_IDKEY = "AIzaSyCbb9-AtcNbXpRLRWaR-fuqDha0SEoss6k";
 	 public final String[][] LISTA_CIUDADES = {
-	            {"San Jose Morazan","9.9346199","-84.0752503"},
-	            {"Madrid Espanha","40.416775","-3.703790"},
+	            {"San Jose Morazan","9.9346199","-84.0752503"}//,
+	           /* {"Madrid Espanha","40.416775","-3.703790"},
 	            {"Central Park, New York, NY, USA","40.785091","-73.968285"},
 	            {"Vancouver, BC, Canada","49.246292","-123.116226"},
 	            {"New Delhi, Delhi, India","28.644800","77.216721"},
@@ -21,7 +21,7 @@ public interface IConstants {
 	            {"The Colosseum of Rome, Rome, Italy"," 41.890251","12.492373"},
 	            {"Sao Paulo, São Paulo, Brazil","-23.533773","-46.625290"},
 	            {"Moscow, Russia","55.751244","37.618423"},
-	            {"Tokyo, Japan","35.652832","139.839478"}
+	            {"Tokyo, Japan","35.652832","139.839478"}*/
 	            
 	 };
 }
