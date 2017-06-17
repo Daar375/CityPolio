@@ -26,14 +26,14 @@ public class LoginWindow extends javax.swing.JFrame {
 	 * Creates new form Login
 	 */
 	private CityPoly Control;
-	
+
 	public LoginWindow(CityPoly bcontrol) throws ClassNotFoundException, IOException {
 		ArchivoSecuencial usertree = new ArchivoSecuencial();
 		initComponents();
 		Control = bcontrol;
 
-			Control.setPlayers(		 usertree.LeerSecuenciaUsuarios()	);
-		
+		Control.setPlayers(usertree.LeerSecuenciaUsuarios());
+
 	}
 
 	/**
@@ -43,86 +43,76 @@ public class LoginWindow extends javax.swing.JFrame {
 	 */
 	@SuppressWarnings("unchecked")
 	// <editor-fold defaultstate="collapsed" desc="Generated Code">
-    private void initComponents() {
+	private void initComponents() {
 
-        Usuario = new javax.swing.JTextField();
-        CrearCuentaB = new javax.swing.JButton();
-        LogInB = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        UiContrasenha = new javax.swing.JPasswordField();
+		Usuario = new javax.swing.JTextField();
+		CrearCuentaB = new javax.swing.JButton();
+		LogInB = new javax.swing.JButton();
+		jLabel1 = new javax.swing.JLabel();
+		jLabel2 = new javax.swing.JLabel();
+		UiContrasenha = new javax.swing.JPasswordField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        Usuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                UsuarioActionPerformed(evt);
-            }
-        });
+		Usuario.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				UsuarioActionPerformed(evt);
+			}
+		});
 
-        CrearCuentaB.setText("Crear Cuenta");
-        CrearCuentaB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CrearCuentaBActionPerformed(evt);
-            }
-        });
+		CrearCuentaB.setText("Crear Cuenta");
+		CrearCuentaB.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				CrearCuentaBActionPerformed(evt);
+			}
+		});
 
-        LogInB.setText("Log in");
-        LogInB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LogInBActionPerformed(evt);
-            }
-        });
+		LogInB.setText("Log in");
+		LogInB.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent evt) {
+				LogInBActionPerformed(evt);
+			}
+		});
 
-        jLabel1.setText("Usuario");
+		jLabel1.setText("Usuario");
 
-        jLabel2.setText("Contraseña");
+		jLabel2.setText("Contraseña");
 
-        UiContrasenha.setText("jPasswordField1");
+		UiContrasenha.setText("jPasswordField1");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(48, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(UiContrasenha))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
-                        .addComponent(Usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(59, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(LogInB)
-                .addGap(18, 18, 18)
-                .addComponent(CrearCuentaB)
-                .addGap(24, 24, 24))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(UiContrasenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(CrearCuentaB)
-                    .addComponent(LogInB))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+		javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+		getContentPane().setLayout(layout);
+		layout.setHorizontalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout
+				.createSequentialGroup().addContainerGap(48, Short.MAX_VALUE)
+				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+						.addGroup(layout.createSequentialGroup().addComponent(jLabel2).addGap(18, 18, 18)
+								.addComponent(UiContrasenha))
+						.addGroup(layout.createSequentialGroup().addComponent(jLabel1)
+								.addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38,
+										Short.MAX_VALUE)
+								.addComponent(Usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 219,
+										javax.swing.GroupLayout.PREFERRED_SIZE)))
+				.addContainerGap(59, Short.MAX_VALUE))
+				.addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+						.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(LogInB)
+						.addGap(18, 18, 18).addComponent(CrearCuentaB).addGap(24, 24, 24)));
+		layout.setVerticalGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(layout
+				.createSequentialGroup().addGap(34, 34, 34)
+				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+						.addComponent(Usuario, javax.swing.GroupLayout.PREFERRED_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+						.addComponent(jLabel1))
+				.addGap(18, 18, 18)
+				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(jLabel2)
+						.addComponent(UiContrasenha, javax.swing.GroupLayout.PREFERRED_SIZE,
+								javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+				.addGap(18, 18, 18)
+				.addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+						.addComponent(CrearCuentaB).addComponent(LogInB))
+				.addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
-        pack();
-    }// </editor-fold>
+		pack();
+	}// </editor-fold>
 
 	private void UsuarioActionPerformed(java.awt.event.ActionEvent evt) {
 		// TODO add your handling code here:
@@ -133,27 +123,36 @@ public class LoginWindow extends javax.swing.JFrame {
 	}
 
 	private void LogInBActionPerformed(java.awt.event.ActionEvent evt) {
+
 		if (!Control.logIn(Usuario.getText(), UiContrasenha.getText())) {
 			JOptionPane.showMessageDialog(null, "Wrong user or pass");
 		}
 
-		else if(Control.getPlayer1()!=null &&Control.getPlayer2()!=null){
+		else if (Control.getPlayer1() != null && Control.getPlayer2() != null) {
 			Control.getGame();
 			Control.getGameWindow().setVisible(true);
-			Control.getGameWindow().setPlayerLabel(Control.getPlayer1().getName(),Control.getPlayer2().getName());
+			Control.getGameWindow().setPlayerLabel(Control.getPlayer1().getName(), Control.getPlayer2().getName());
 			dispose();
 		}
 
 	}
 
+	@SuppressWarnings("deprecation")
 	private void CrearCuentaBActionPerformed(java.awt.event.ActionEvent evt) {
-		if (!Control.newPlayer(Usuario.getText(), UiContrasenha.getText())) {
-			
-			JOptionPane.showMessageDialog(null, "User already exist");
+		if (Usuario.getText().length() > 10) {
+			JOptionPane.showMessageDialog(null, "Max 10 characters in Name");
+
+		} else if (UiContrasenha.getText().length() > 10) {
+			JOptionPane.showMessageDialog(null, "Max 10 characters in Password");
+
+		} else {
+			if (!Control.newPlayer(Usuario.getText(), UiContrasenha.getText())) {
+
+				JOptionPane.showMessageDialog(null, "User already exist");
+			}
+			JOptionPane.showMessageDialog(null, "User Created");
+
 		}
-		JOptionPane.showMessageDialog(null, "User Created");
-
-
 	}
 
 	/**
@@ -162,11 +161,11 @@ public class LoginWindow extends javax.swing.JFrame {
 	 */
 
 	// Variables declaration - do not modify
-    private javax.swing.JPasswordField UiContrasenha;
-    private javax.swing.JButton CrearCuentaB;
-    private javax.swing.JButton LogInB;
-    private javax.swing.JTextField Usuario;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+	private javax.swing.JPasswordField UiContrasenha;
+	private javax.swing.JButton CrearCuentaB;
+	private javax.swing.JButton LogInB;
+	private javax.swing.JTextField Usuario;
+	private javax.swing.JLabel jLabel1;
+	private javax.swing.JLabel jLabel2;
 	// End of variables declaration
 }
