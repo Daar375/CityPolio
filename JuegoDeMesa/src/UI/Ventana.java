@@ -183,6 +183,7 @@ public class Ventana extends javax.swing.JFrame {
 			public void windowClosing(WindowEvent winEvt) {
 				try {
 					Game.getControl().SaveTree();
+					Game.getControl().SaveRanking();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -346,6 +347,7 @@ public class Ventana extends javax.swing.JFrame {
 	private void RankingBActionPerformed(java.awt.event.ActionEvent evt) {
 		try {
 			Game.rankingButton();
+			
 		} catch (ClassNotFoundException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

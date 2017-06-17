@@ -2,16 +2,16 @@ package Estructuras;
 
 import java.util.ArrayList;
 
-public class TreeNode<K extends Comparable<K>, T> {
+public class TreeNode<Key extends Comparable<Key>, Value> {
 	protected boolean isLeafNode;
-	protected ArrayList<K> keys;
+	protected ArrayList<Key> keys;
 
 	public boolean isOverflowed() {
-		return keys.size() > 2 * BPlusTree.D;
+		return keys.size() > 2 * BPlusTree.Degrees;
 	}
 
 	public boolean isUnderflowed() {
-		return keys.size() < BPlusTree.D;
+		return keys.size() < BPlusTree.Degrees;
 	}
 
 }

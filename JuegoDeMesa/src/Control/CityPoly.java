@@ -29,7 +29,7 @@ public class CityPoly implements IConstants {
 	private GameController Game;
 	private Ventana GameWindow;
 	private Dijkstra Dijkstra ;
-
+	private ArrayList<Jugador> Ranking;
 	public BufferedImage getMapWithMarkers() {
 		String Player1Markerlat=Double.toString(City.getPlaces().get(player1.getCurrentPos()).getLatitud());
 		String Player1Markerlong=Double.toString(City.getPlaces().get(player1.getCurrentPos()).getLongitud());
@@ -40,16 +40,30 @@ public class CityPoly implements IConstants {
 	}
         /**
          * Constructor
+         * @throws IOException 
+         * @throws ClassNotFoundException 
          */
-	public CityPoly() {
+	public CityPoly(){
 		GameWindow = new Ventana();
 		Game = new GameController(this);
 		GameWindow.setVisible(false);
 		DeckBuilder build = new DeckBuilder();
 		DecC = build.bluidCityDeck();
-		
+		ArchivoSecuencial rankingread = new ArchivoSecuencial();
+		try {
+			Ranking = rankingread.LeerSecuenciaRanking();
+		} catch (ClassNotFoundException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
+	public ArrayList<Jugador> getRanking() {
+			return Ranking;
+		}
+		public void setRanking(ArrayList<Jugador> ranking) {
+			Ranking = ranking;
+		}
 	/**
          * Inicia la ventana de Login
 	 * @throws IOException 
@@ -77,19 +91,30 @@ public class CityPoly implements IConstants {
 		ArrayList<Jugador> PlayersInNode = Inicio.getValues();
 		SAVEFILE.delete();
 		SAVEFILE.createNewFile();
+		ArchivoSecuencial save = new ArchivoSecuencial();
+
 		for(Jugador player:PlayersInNode){
-			ArchivoSecuencial save = new ArchivoSecuencial();
 			save.EscribirSecuancialUsuarios(player);
 		}
 		while(Inicio.HasNextLeaf()){
 			
 			PlayersInNode = Inicio.getValues();
 			for(Jugador player:PlayersInNode){
-				ArchivoSecuencial save = new ArchivoSecuencial();
 				save.EscribirSecuancialUsuarios(player);
 			}
 			Inicio=Inicio.getNextLeaf();
 
+		}
+	}
+	public void SaveRanking() throws IOException{
+		RANKINGFILE.delete();
+		RANKINGFILE.createNewFile();
+		ArchivoSecuencial save = new ArchivoSecuencial();
+
+		int index = 0;
+		while(index!=Ranking.size()){
+			
+			save.EscribirSecuancialRanking(Ranking.get(index).getName(),  Integer.toString(Ranking.get(index).getPointsLife()));
 		}
 	}
 	

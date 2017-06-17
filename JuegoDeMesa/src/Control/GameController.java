@@ -7,6 +7,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import Estructuras.ArchivoSecuencial;
 import Estructuras.Dijkstra;
+import Estructuras.MergeSort;
 import Google.HTTPPlaces;
 import UI.LoginWindow;
 import UI.RankingUI;
@@ -57,8 +58,8 @@ public class GameController {
 			VentanaJuego.getRollDice().setEnabled(true);
 
 		}
-		JOptionPane.showMessageDialog(null,"Turno:" +  PlayerActual.getName());
-		System.out.println("\n"+PlayerActual.getName()+"\n");
+		JOptionPane.showMessageDialog(null, "Turno:" + PlayerActual.getName());
+		System.out.println("\n" + PlayerActual.getName() + "\n");
 		VentanaJuego.PanelMap(Control.getMapWithMarkers());
 
 	}
@@ -107,18 +108,20 @@ public class GameController {
 
 	public void retoButton() {
 
+
 		PlayerActual.setReto(Control.getDecR().getRandomCard());
-		
+
 		System.out.println(PlayerActual.getReto().toString());
-		System.out.println("esta: "+PlayerActual.getCurrentPos());
+		System.out.println("esta: " + PlayerActual.getCurrentPos());
 		PlayerActual.setCurrentPath(this.Control.caminoMasCorto(PlayerActual.getReto().isDosRetos(), PlayerActual));
 		System.out.println(PlayerActual.getCurrentPath());
 
-		System.out.println("ahora esta: "+PlayerActual.getCurrentPos());
+		System.out.println("ahora esta: " + PlayerActual.getCurrentPos());
 
 		PlayerActual.setObjetivo(Control.getCity().getPlaces()
 				.get(PlayerActual.getCurrentPath().get(PlayerActual.getCurrentPath().size() - 1)));
 		thisTurn(PlayerActual);
+		PlayerActual.setRetosCompletos(PlayerActual.getRetosCompletos()+1);
 		nextTurn();
 
 	}
@@ -143,7 +146,14 @@ public class GameController {
 
 			PlayerActual.setReto(null);
 			PlayerActual.addPoints(this.Control.getCity().getPlaces().get(PlayerActual.getCurrentPos()).getValor());
+			if(PlayerActual.getRetosCompletos()==3){
+				if(PlayerActual.equals(Control.getPlayer1())){
+					GameOver(PlayerActual,Control.getPlayer2());
+				}else{
+					GameOver(PlayerActual,Control.getPlayer1());
 
+				}
+			}
 		}
 
 		nextTurn();
@@ -152,6 +162,32 @@ public class GameController {
 	private void thisTurn(Jugador Actual) {
 		this.actualizarRecorridoUi(Actual);
 
+	}
+
+	private void GameOver(Jugador ganador,Jugador perdedor)  {
+		ganador.addPointsLife(Control.getPlayer1().getPoints());
+		perdedor.addPointsLife(Control.getPlayer2().getPoints() / 2);
+		boolean player1bool = false;
+		boolean player2bool = false;
+		ArrayList<Jugador> ranking = Control.getRanking();
+		int index = 0;
+		while (ranking.size() != index) {
+			if (ranking.get(index).getName() == ganador.getName()) {
+				ranking.get(index).addPointsLife(ganador.getPoints());
+				player1bool=true;
+			} else if (ranking.get(index).getName() == perdedor.getName()) {
+				ranking.get(index).addPointsLife(perdedor.getPoints()/2);
+				player2bool = false;
+			}
+			if(!player1bool){
+				ranking.add(ganador);
+			}else if(!player2bool){
+				ranking.add(perdedor);
+			}
+			index++;
+		}
+		MergeSort sort = new MergeSort(ranking);
+	
 	}
 
 	private void actualizarRecorridoUi(Jugador Actual) {

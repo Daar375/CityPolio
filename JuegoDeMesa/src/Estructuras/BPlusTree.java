@@ -3,10 +3,10 @@ import java.util.AbstractMap;
 import java.util.Map.Entry;
 import java.util.ArrayList;
 
-public class BPlusTree<K extends Comparable<K>, T> {
+public class BPlusTree<Key extends Comparable<Key>, Value> {
 
-	public TreeNode<K,T> root;
-	public static final int D = 2;
+	public TreeNode<Key,Value> root;
+	public static final int Degrees = 2;
 
 
 	
@@ -20,7 +20,7 @@ public class BPlusTree<K extends Comparable<K>, T> {
 		else{
 		
 			TreeNode Searching =root;
-			IndexNode<K,T> index = (IndexNode<K, T>) Searching;
+			IndexNode<Key,Value> index = (IndexNode<Key, Value>) Searching;
 			
 			while(!Searching.isLeafNode){
 				Searching=index.children.get(0);
@@ -34,15 +34,15 @@ public class BPlusTree<K extends Comparable<K>, T> {
 		
 	}
 
-	public T search(K key) {
-		// Return if empty tree or key
+	public Value search(Key key) {
+		// retorna si la llave o el arbol estan vacios
 		if(key == null || root == null) {
 			return null;
 		}
-		// Look for leaf node that key is pointing to
-		LeafNode<K,T> leaf = (LeafNode<K,T>)treeSearch(root, key);
+		// busca desde la raiz la llave que tiene
+		LeafNode<Key,Value> leaf = (LeafNode<Key,Value>)treeSearch(root, key);
 					
-		// Look for value in the leaf
+		//busca el valor dentro de la hoja
 		for(int i=0; i<leaf.keys.size(); i++) {
 			if(key.compareTo(leaf.keys.get(i)) == 0) {
 				return leaf.values.get(i);
@@ -52,28 +52,31 @@ public class BPlusTree<K extends Comparable<K>, T> {
 		return null;
 	}
 	
-	private TreeNode<K,T> treeSearch(TreeNode<K,T> node, K key) {
+	private TreeNode<Key,Value> treeSearch(TreeNode<Key,Value> node, Key key) {
+		//si el nodo es una hoja significa que ya encontro el valor
 		if(node.isLeafNode) {
 			return node;
 		} 
-		// The node is index node
+		// si es un nodo de indice
 		else {
-			IndexNode<K,T> index = (IndexNode<K,T>)node;
+			IndexNode<Key,Value> index = (IndexNode<Key,Value>)node;
 			
-			// K < K1, return treeSearch(P0, K)
+			// si el valor de la llave es menor al primer valor que esta en el nodo indice 
+			///entonces se llama a si misma con ese valor
 			if(key.compareTo(index.keys.get(0)) < 0) {
-				return treeSearch((TreeNode<K,T>)index.children.get(0), key);
+				return treeSearch((TreeNode<Key,Value>)index.children.get(0), key);
 			}
-			// K >= Km, return treeSearch(Pm, K), m = #entries
+			// si el valor de la llave es mayor o igual al ultimo valor  que esta en el nodo indice 
+			///entonces se llama a si misma con ese valor
 			else if(key.compareTo(index.keys.get(node.keys.size()-1)) >= 0) {
-				return treeSearch((TreeNode<K,T>)index.children.get(index.children.size()-1), key);
+				return treeSearch((TreeNode<Key,Value>)index.children.get(index.children.size()-1), key);
 			}
-			// Find i such that Ki <= K < K(i+1), return treeSearch(Pi,K)
+			// en el caso que ninguna de los 2 se cumpla busca uno por uno hasta encontrarlo
 			else {
 				// Linear searching
 				for(int i=0; i<index.keys.size()-1; i++) {
 					if(key.compareTo(index.keys.get(i)) >= 0 && key.compareTo(index.keys.get(i+1)) < 0) {
-						return treeSearch((TreeNode<K,T>)index.children.get(i+1), key);
+						return treeSearch((TreeNode<Key,Value>)index.children.get(i+1), key);
 					}
 				}
  			}
@@ -82,70 +85,75 @@ public class BPlusTree<K extends Comparable<K>, T> {
 	} 
 	
 
-	public void insert(K key, T value) {
-		LeafNode<K,T> newLeaf = new LeafNode<K,T>(key, value);
-		Entry<K, TreeNode<K,T>> entry = new AbstractMap.SimpleEntry<K, TreeNode<K,T>>(key, newLeaf);
+	public void insert(Key key, Value value) {
 		
-		// Insert entry into subtree with root node pointer
+		//crea la hoja donde se va a insertar el valor
+		LeafNode<Key,Value> newLeaf = new LeafNode<Key,Value>(key, value);
+		//crea una entry donde se va a guardar el dato en la hoja
+		Entry<Key, TreeNode<Key,Value>> entry = new AbstractMap.SimpleEntry<Key, TreeNode<Key,Value>>(key, newLeaf);
+		
+		//inserta la entry  en la raiz del arbol
 		if(root == null || root.keys.size() == 0) {
 			root = entry.getValue();
 		}
 		
-		// newChildEntry null initially, and null on return unless child is split
-		Entry<K, TreeNode<K,T>> newChildEntry = getChildEntry(root, entry, null);
+		//manda la raiz , la entry y un null(en este caso) a getchild entry que devuelve
+		Entry<Key, TreeNode<Key,Value>> newChildEntry = getChildEntry(root, entry, null);
 		
 		if(newChildEntry == null) {
 			return;
 		} else {
-			IndexNode<K,T> newRoot = new IndexNode<K,T>(newChildEntry.getKey(), root, 
+			IndexNode<Key,Value> newRoot = new IndexNode<Key,Value>(newChildEntry.getKey(), root, 
 					newChildEntry.getValue());
 			root = newRoot;
 			return;
 		}
 	}
 	
-	private Entry<K, TreeNode<K,T>> getChildEntry(TreeNode<K,T> node, Entry<K, TreeNode<K,T>> entry, 
-			Entry<K, TreeNode<K,T>> newChildEntry) {
+	private Entry<Key, TreeNode<Key,Value>> getChildEntry(TreeNode<Key,Value> node, Entry<Key, TreeNode<Key,Value>> entry, 
+			Entry<Key, TreeNode<Key,Value>> newChildEntry) {
+	
 		if(!node.isLeafNode) {
-			// Choose subtree, find i such that Ki <= entry's key value < J(i+1)
-			IndexNode<K,T> index = (IndexNode<K,T>) node;
-			int i = 0;
-			while(i < index.keys.size()) {
-				if(entry.getKey().compareTo(index.keys.get(i)) < 0) {
+			// busca en el subarbol el valor que sea mayor que la entry 
+			IndexNode<Key,Value> index = (IndexNode<Key,Value>) node;
+			int comparandoI = 0;
+			while(comparandoI < index.keys.size()) {
+				if(entry.getKey().compareTo(index.keys.get(comparandoI)) < 0) {
 					break;
 				}
-				i++;
+				comparandoI++;
 			}
-			// Recursively, insert entry
-			newChildEntry = getChildEntry((TreeNode<K,T>) index.children.get(i), entry, newChildEntry);
+			// inserta recursivamente la entry en el subarbol
+			newChildEntry = getChildEntry((TreeNode<Key,Value>) index.children.get(comparandoI), entry, newChildEntry);
 			
-			// Usual case, didn't split child
+			// en caso que el resultado anterior sea null esto devuelve null
 			if(newChildEntry == null) {
 				return null;
 			} 
-			// Split child case, must insert newChildEntry in node
+			// busca en el subarbol el valor que sea mayor que el newChildEntry
 			else {
-				int j = 0;
-				while (j < index.keys.size()) {
-					if(newChildEntry.getKey().compareTo(index.keys.get(j)) < 0) {
+				int comparandoj = 0;
+				while (comparandoj < index.keys.size()) {
+					if(newChildEntry.getKey().compareTo(index.keys.get(comparandoj)) < 0) {
 						break;
 					}
-					j++;
+					comparandoj++;
 				}
+				//inserta en el puesto que va en el index el newChildEntry
+				index.insertSorted(newChildEntry, comparandoj);
 				
-				index.insertSorted(newChildEntry, j);
-				
-				// Usual case, put newChildEntry on it, set newChildEntry to null, return
+				// si el indice no esta overflowed (tiene mas valores dentro de los que permite ) se sale
 				if(!index.isOverflowed()) {
 					return null;
 				} 
+				
 				else{
 					newChildEntry = splitIndexNode(index);
 					
-					// Root was just split
+					// se divide el index
 					if(index == root) {
-						// Create new node and make tree's root-node pointer point to newRoot
-						IndexNode<K,T> newRoot = new IndexNode<K,T>(newChildEntry.getKey(), root, 
+						// se crea un nuevo nodo y se hace que la raiz apunte a la nueva raiz
+						IndexNode<Key,Value> newRoot = new IndexNode<Key,Value>(newChildEntry.getKey(), root, 
 								newChildEntry.getValue());
 						root = newRoot;
 						return null;
@@ -154,22 +162,23 @@ public class BPlusTree<K extends Comparable<K>, T> {
 				}
 			}
 		}
-		// Node pointer is a leaf node
+		// si el nodo de puntero es una hoja
 		else {
-			LeafNode<K,T> leaf = (LeafNode<K,T>)node;
-			LeafNode<K,T> newLeaf = (LeafNode<K,T>)entry.getValue();
+			LeafNode<Key,Value> leaf = (LeafNode<Key,Value>)node;
+			LeafNode<Key,Value> newLeaf = (LeafNode<Key,Value>)entry.getValue();
 			
 			leaf.insertSorted(entry.getKey(), newLeaf.values.get(0));
 			
-			// Usual case: leaf has space, put entry and set newChildEntry to null and return
+			// si la hoja tiene espacio se le pone la entry y se pone el newChild en null y se devuelve
 			if(!leaf.isOverflowed()) {
 				return null;
 			}
-			// Once in a while, the leaf is full
+			// si la hoja esta llena
 			else {
+				//se divide la hoja
 				newChildEntry = splitLeafNode(leaf);
 				if(leaf == root) {
-					IndexNode<K,T> newRoot = new IndexNode<K,T>(newChildEntry.getKey(), leaf, 
+					IndexNode<Key,Value> newRoot = new IndexNode<Key,Value>(newChildEntry.getKey(), leaf, 
 							newChildEntry.getValue());
 					root = newRoot;
 					return null;
@@ -186,193 +195,191 @@ public class BPlusTree<K extends Comparable<K>, T> {
 	 * @param leaf, any other relevant data
 	 * @return the key/node pair as an Entry
 	 */
-	public Entry<K, TreeNode<K,T>> splitLeafNode(LeafNode<K,T> leaf) {
-		ArrayList<K> newKeys = new ArrayList<K>();
-		ArrayList<T> newValues = new ArrayList<T>();
+	public Entry<Key, TreeNode<Key,Value>> splitLeafNode(LeafNode<Key,Value> leaf) {
+		ArrayList<Key> newKeys = new ArrayList<Key>();
+		ArrayList<Value> newValues = new ArrayList<Value>();
 		
 		// The rest D entries move to brand new node
-		for(int i=D; i<=2*D; i++) {
+		for(int i=Degrees; i<=2*Degrees; i++) {
 			newKeys.add(leaf.keys.get(i));
 			newValues.add(leaf.values.get(i));
 		}
 		
 		// First D entries stay
-		for(int i=D; i<=2*D; i++) {
+		for(int i=Degrees; i<=2*Degrees; i++) {
 			leaf.keys.remove(leaf.keys.size()-1);
 			leaf.values.remove(leaf.values.size()-1);
 		}
 		
-		K splitKey = newKeys.get(0);
-		LeafNode<K,T> rightNode = new LeafNode<K,T>(newKeys, newValues);
+		Key splitKey = newKeys.get(0);
+		LeafNode<Key,Value> rightNode = new LeafNode<Key,Value>(newKeys, newValues);
 		
 		// Set sibling pointers
-		LeafNode<K,T> tmp = leaf.nextLeaf;
+		LeafNode<Key,Value> tmp = leaf.nextLeaf;
 		leaf.nextLeaf = rightNode;
 		leaf.nextLeaf.previousLeaf = rightNode;
 		rightNode.previousLeaf = leaf;
 		rightNode.nextLeaf = tmp;
         
-		Entry<K, TreeNode<K,T>> newChildEntry = new AbstractMap.SimpleEntry<K, TreeNode<K,T>>(splitKey, rightNode);
+		Entry<Key, TreeNode<Key,Value>> newChildEntry = new AbstractMap.SimpleEntry<Key, TreeNode<Key,Value>>(splitKey, rightNode);
 		
 		return newChildEntry;
 	}
 
 
-	public Entry<K, TreeNode<K,T>> splitIndexNode(IndexNode<K,T> index) {
-		ArrayList<K> newKeys = new ArrayList<K>();
-		ArrayList<TreeNode<K,T>> newChildren = new ArrayList<TreeNode<K,T>>();
+	public Entry<Key, TreeNode<Key,Value>> splitIndexNode(IndexNode<Key,Value> index) {
+		ArrayList<Key> newKeys = new ArrayList<Key>();
+		ArrayList<TreeNode<Key,Value>> newChildren = new ArrayList<TreeNode<Key,Value>>();
+		//consigue el valor que esta en degress y lo saca del nodo indice
+		Key splitKey = index.keys.get(Degrees);
+		index.keys.remove(Degrees);
 		
-		// Note difference with splitting leaf page, 2D+1 key values and 2D+2 node pointers
-		K splitKey = index.keys.get(D);
-		index.keys.remove(D);
-		
-		// First D key values and D+1 node pointers stay
-		// Last D keys and D+1 pointers move to new node
-		newChildren.add(index.children.get(D+1));
-		index.children.remove(D+1);
-		
-		while(index.keys.size() > D) {
-			newKeys.add(index.keys.get(D));
-			index.keys.remove(D);
-			newChildren.add(index.children.get(D+1));
-			index.children.remove(D+1);
+		// agrega al array el valor que esta despues del degrees luego lo remueve
+		newChildren.add(index.children.get(Degrees+1));
+		index.children.remove(Degrees+1);
+		//mientras la cantidad de llaves sea menor que los degrees, agrega a nuevas llaves el que esta en degress y lo remueve del indice
+		while(index.keys.size() > Degrees) {
+			newKeys.add(index.keys.get(Degrees));
+			index.keys.remove(Degrees);
+			newChildren.add(index.children.get(Degrees+1));
+			index.children.remove(Degrees+1);
 		}
 
-		IndexNode<K,T> rightNode = new IndexNode<K,T>(newKeys, newChildren);
-		Entry<K, TreeNode<K,T>> newChildEntry = new AbstractMap.SimpleEntry<K, TreeNode<K,T>>(splitKey, rightNode);
-
+		IndexNode<Key,Value> rightNode = new IndexNode<Key,Value>(newKeys, newChildren);//crea un nuevo nodo indice
+		Entry<Key, TreeNode<Key,Value>> newChildEntry = new AbstractMap.SimpleEntry<Key, TreeNode<Key,Value>>(splitKey, rightNode);
+		//crea el nuevo entry con el nuevo nodo y la llave
 		return newChildEntry;
 	}
 
-	public void delete(K key) {
+	public void delete(Key key) {
 		if(key == null || root == null) {
 			return;
 		}
 
-		// Check if entry key exist in the leaf node
-		LeafNode<K,T> leaf = (LeafNode<K,T>)treeSearch(root, key);
+		// busca si esta la llave en la hoja
+		LeafNode<Key,Value> leaf = (LeafNode<Key,Value>)treeSearch(root, key);
 		if(leaf == null) {
-			return;
+			return;//en caso de no estar se sale
 		}
 		
-		// Delete entry from subtree with root node pointer
-		Entry<K, TreeNode<K,T>> entry = new AbstractMap.SimpleEntry<K, TreeNode<K,T>>(key, leaf);
+		////borra la entry del sub arbol con puntero de la raiz
+		Entry<Key, TreeNode<Key,Value>> entry = new AbstractMap.SimpleEntry<Key, TreeNode<Key,Value>>(key, leaf);
 		
-		// oldChildEntry null initially, and null upon return unless child deleted
-		Entry<K, TreeNode<K,T>> oldChildEntry = deleteChildEntry(root, root, entry, null);
+		// una entry que se queda en null a menos  que un hijo sea borrado 
+		Entry<Key, TreeNode<Key,Value>> oldChildEntry = deleteChildEntry(root, root, entry, null);
 		
-		// Readjust the root, no child is deleted
+		// reacomoda la raiz en caso de que no hijo sea borrado 
 		if(oldChildEntry == null) {
 			if(root.keys.size() == 0) {
 				if(!root.isLeafNode) {
-					root = ((IndexNode<K,T>) root).children.get(0);
+					root = ((IndexNode<Key,Value>) root).children.get(0);
 				}
 			}
 			return;
 		}
-		// Child is deleted
+		// si el hijo es borrado
 		else {
-			// Find empty node
+			// se busca un nodo vacio
 			int i = 0;
-			K oldKey = oldChildEntry.getKey();
+			Key oldKey = oldChildEntry.getKey();
 			while(i < root.keys.size()) {
 				if(oldKey.compareTo(root.keys.get(i)) == 0) {
 					break;
 				}
 				i++;
 			}
-			// Return if empty node already discarded
+			// se regresa si no encontro ninguno(el nodo ya fue descartado)
 			if(i == root.keys.size()) {
 				return;
 			}
-			// Discard empty node
+			// descarta el nodo vacio
 			root.keys.remove(i);
-			((IndexNode<K,T>)root).children.remove(i+1);
+			((IndexNode<Key,Value>)root).children.remove(i+1);
 			return;
 		}
 	}
 	
-	private Entry<K, TreeNode<K,T>> deleteChildEntry(TreeNode<K,T> parentNode, TreeNode<K,T> node, 
-			Entry<K, TreeNode<K,T>> entry, Entry<K, TreeNode<K,T>> oldChildEntry) {
+	private Entry<Key, TreeNode<Key,Value>> deleteChildEntry(TreeNode<Key,Value> parentNode, TreeNode<Key,Value> node, 
+			Entry<Key, TreeNode<Key,Value>> entry, Entry<Key, TreeNode<Key,Value>> oldChildEntry) {
 		if(!node.isLeafNode) {
-			// Choose subtree, find i such that Ki <= entry's key value < K(i+1)
-			IndexNode<K,T> index = (IndexNode<K,T>)node;
+			// busca un sub arbol donde este la entry
+			IndexNode<Key,Value> index = (IndexNode<Key,Value>)node;
 			int i = 0;
-			K entryKey = entry.getKey();
+			Key entryKey = entry.getKey();
 			while(i < index.keys.size()) {
 				if(entryKey.compareTo(index.keys.get(i)) < 0) {
 					break;
 				}
 				i++;
 			}
-			// Recursive delete
+			// borra recursivamente
 			oldChildEntry = deleteChildEntry(index, index.children.get(i), entry, oldChildEntry);
 			
-			// Usual case: child not deleted
+			// en caso de que el hijo no sea borrado aun regresa null
 			if(oldChildEntry == null) {
 				return null;
 			}
-			// Discarded child node case
+			// el hijo que hay que borrar esta en este nodo
 			else {
 				int j = 0;
-				K oldKey = oldChildEntry.getKey();
+				Key oldKey = oldChildEntry.getKey();
 				while(j < index.keys.size()) {
 					if(oldKey.compareTo(index.keys.get(j)) == 0) {
 						break;
 					}
 					j++;
 				}
-				// Remove oldChildEntry from node
+				//lo remueve del nodo
 				index.keys.remove(j);
 				index.children.remove(j+1);
 				
-				// Check for underflow, return null if empty
+				//ve si esta en underflow (menos valores de los que deberia tener) regresa null si vacio
 				if(!index.isUnderflowed() || index.keys.size() == 0) {
 					// Node has entries to spare, delete doesn't go further
 					return null; 
 				}
 				else {
-					// Return if root
+					// se regresa si es la raiz
 					if(index == root) {
 						return oldChildEntry;
 					}
-					// Get sibling S using parent pointer
-					int s = 0;
-					K firstKey = index.keys.get(0);
-					while(s < parentNode.keys.size()) {
-						if(firstKey.compareTo(parentNode.keys.get(s)) < 0) {
+					//busca a los hermanos
+					int SiblingI = 0;
+					Key firstKey = index.keys.get(0);
+					while(SiblingI < parentNode.keys.size()) {
+						if(firstKey.compareTo(parentNode.keys.get(SiblingI)) < 0) {
 							break;
 						}
-						s++;
+						SiblingI++;
 					}
-					// Handle index underflow
+					//  maneja le underflow del indice
 					int splitKeyPos;
-					IndexNode<K,T> parent = (IndexNode<K,T>)parentNode;
-					
-					if(s > 0 && parent.children.get(s-1) != null) {
+					IndexNode<Key,Value> parent = (IndexNode<Key,Value>)parentNode;
+					//revisa de que lado tiene hermano
+					if(SiblingI > 0 && parent.children.get(SiblingI-1) != null) {
 						splitKeyPos = handleIndexNodeUnderflow(
-								(IndexNode<K,T>)parent.children.get(s-1), index, parent);
+								(IndexNode<Key,Value>)parent.children.get(SiblingI-1), index, parent);
 					} else {
 						splitKeyPos = handleIndexNodeUnderflow(
-								index, (IndexNode<K,T>)parent.children.get(s+1), parent);
+								index, (IndexNode<Key,Value>)parent.children.get(SiblingI+1), parent);
 					}
-					// S has extra entries, set oldChildentry to null, return
+					// si el hermano tiene entry de mas retorna
 					if(splitKeyPos == -1) {
 						return null;
 					}
-					// Merge indexNode and S
+					// mezcla el nodo indice y el nodo hermano
 					else {
-						K parentKey = parentNode.keys.get(splitKeyPos);
-						oldChildEntry = new AbstractMap.SimpleEntry<K, TreeNode<K,T>>(parentKey, parentNode);
+						Key parentKey = parentNode.keys.get(splitKeyPos);
+						oldChildEntry = new AbstractMap.SimpleEntry<Key, TreeNode<Key,Value>>(parentKey, parentNode);
 						return oldChildEntry;
 					}
 				}
 			}
 		}
-		// The node is a leaf node
+		// is el nodo es una hoja
 		else {
-			LeafNode<K,T> leaf = (LeafNode<K,T>)node;
-			// Look for value to delete
+			LeafNode<Key,Value> leaf = (LeafNode<Key,Value>)node;
+			// busca el valor que va a borrar
 			for(int i=0; i<leaf.keys.size(); i++) {
 				if(leaf.keys.get(i) == entry.getKey()) {
 					leaf.keys.remove(i);
@@ -380,34 +387,34 @@ public class BPlusTree<K extends Comparable<K>, T> {
 					break;
 				}
 			}
-			// Usual case: no underflow
+			// si no hay underflow
 			if(!leaf.isUnderflowed()) {
 				return null;
 			}
-			// Once in a while, the leaf becomes underflow
+			//si tiene underflow
 			else {
-				// Return if root
+				// regresa si el la raiz
 				if(leaf == root || leaf.keys.size() == 0) {
 					return oldChildEntry;
 				}
-				// Handle leaf underflow
+				// maneja el under flow
 				int splitKeyPos;
-				K firstKey = leaf.keys.get(0);
-				K parentKey = parentNode.keys.get(0);
+				Key firstKey = leaf.keys.get(0);
+				Key parentKey = parentNode.keys.get(0);
 				
 				if(leaf.previousLeaf != null && firstKey.compareTo(parentKey) >= 0) {
-					splitKeyPos = handleLeafNodeUnderflow(leaf.previousLeaf, leaf, (IndexNode<K,T>)parentNode);
+					splitKeyPos = handleLeafNodeUnderflow(leaf.previousLeaf, leaf, (IndexNode<Key,Value>)parentNode);
 				} else {
-					splitKeyPos = handleLeafNodeUnderflow(leaf, leaf.nextLeaf, (IndexNode<K,T>)parentNode);
+					splitKeyPos = handleLeafNodeUnderflow(leaf, leaf.nextLeaf, (IndexNode<Key,Value>)parentNode);
 				}
-				// S has extra entries, set oldChildEntry to null, return
+				//si el hermano tiene entries extra devuelve null
 				if(splitKeyPos == -1) {
 					return null;
 				} 
-				// Merge leaf and S
+				//convina la hoja con el hermano
 				else {
 					parentKey = parentNode.keys.get(splitKeyPos);
-					oldChildEntry = new AbstractMap.SimpleEntry<K, TreeNode<K,T>>(parentKey, parentNode);
+					oldChildEntry = new AbstractMap.SimpleEntry<Key, TreeNode<Key,Value>>(parentKey, parentNode);
 					return oldChildEntry;
 				}	
 			}
@@ -426,11 +433,11 @@ public class BPlusTree<K extends Comparable<K>, T> {
 	 * @return the splitkey position in parent if merged so that parent can
 	 *         delete the splitkey later on. -1 otherwise
 	 */
-	public int handleLeafNodeUnderflow(LeafNode<K,T> left, LeafNode<K,T> right,
-			IndexNode<K,T> parent) {
+	public int handleLeafNodeUnderflow(LeafNode<Key,Value> left, LeafNode<Key,Value> right,
+			IndexNode<Key,Value> parent) {
 		// Find entry in parent for node on right
 		int i = 0;
-		K rKey = right.keys.get(0);
+		Key rKey = right.keys.get(0);
 		while(i < parent.keys.size()) {
 			if(rKey.compareTo(parent.keys.get(i)) < 0) {
 				break;
@@ -439,10 +446,10 @@ public class BPlusTree<K extends Comparable<K>, T> {
 		}	
 		// Redistribute evenly between right and left nodes
 		// If S has extra entries
-		if(left.keys.size() + right.keys.size() >= 2*D) {
+		if(left.keys.size() + right.keys.size() >= 2*Degrees) {
 			// Left node has more entries
 			if(left.keys.size() > right.keys.size()) {
-				while(left.keys.size() > D) {
+				while(left.keys.size() > Degrees) {
 					right.keys.add(0, left.keys.get(left.keys.size()-1));
 					right.values.add(0, left.values.get(left.keys.size()-1));
 					left.keys.remove(left.keys.size()-1);
@@ -451,7 +458,7 @@ public class BPlusTree<K extends Comparable<K>, T> {
 			}
 			// Right node has more entries
 			else {
-				while(left.keys.size() < D) {
+				while(left.keys.size() < Degrees) {
 					left.keys.add(right.keys.get(0));
 					left.values.add(right.values.get(0));
 					right.keys.remove(0);
@@ -483,10 +490,10 @@ public class BPlusTree<K extends Comparable<K>, T> {
 	}
 	
 
-	public int handleIndexNodeUnderflow(IndexNode<K,T> leftIndex,IndexNode<K,T> rightIndex, IndexNode<K,T> parent){
+	public int handleIndexNodeUnderflow(IndexNode<Key,Value> leftIndex,IndexNode<Key,Value> rightIndex, IndexNode<Key,Value> parent){
 		// Find entry in parent for node on right
 		int i = 0;
-		K rKey = rightIndex.keys.get(0);
+		Key rKey = rightIndex.keys.get(0);
 		while(i < parent.keys.size()) {
 			if(rKey.compareTo(parent.keys.get(i)) < 0) {
 				break;
@@ -495,10 +502,10 @@ public class BPlusTree<K extends Comparable<K>, T> {
 		}
 		// Redistribute evenly between node and S through parent
 		// If S has extra entries
-		if(leftIndex.keys.size() + rightIndex.keys.size() >= 2*D) {
+		if(leftIndex.keys.size() + rightIndex.keys.size() >= 2*Degrees) {
 			// Left node has more entries
 			if(leftIndex.keys.size() > rightIndex.keys.size()) {
-				while(leftIndex.keys.size() > D) {
+				while(leftIndex.keys.size() > Degrees) {
 					rightIndex.keys.add(0, parent.keys.get(i-1));
 					rightIndex.children.add(leftIndex.children.get(leftIndex.children.size()-1));
 					parent.keys.set(i-1, leftIndex.keys.get(leftIndex.keys.size()-1));
@@ -508,7 +515,7 @@ public class BPlusTree<K extends Comparable<K>, T> {
 			}
 			// Right node has more entries
 			else {
-				while(leftIndex.keys.size() < D) {
+				while(leftIndex.keys.size() < Degrees) {
 					leftIndex.keys.add(parent.keys.get(i-1));
 					leftIndex.children.add(rightIndex.children.get(0));
 					parent.keys.set(i-1, rightIndex.keys.get(0));
