@@ -25,8 +25,7 @@ public class Ciudad implements IConstants {
 				"0");
 		for (Type tipo : Type.values()) {
 
-			loadplaces(
-					HTTPPlaces.getplaces(LISTA_CIUDADES[CityNumber][1], LISTA_CIUDADES[CityNumber][2], tipo.toString()),
+			loadplaces(HTTPPlaces.getplaces(LISTA_CIUDADES[CityNumber][1], LISTA_CIUDADES[CityNumber][2], tipo.toString()),
 					tipo);
 		}
 	}

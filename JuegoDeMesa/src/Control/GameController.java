@@ -29,16 +29,14 @@ public class GameController {
 		VentanaJuego = Control.getGameWindow();
 		VentanaJuego.setGame(this);
 		PlayerActual = Control.getPlayer1();
+
 	}
 
 	public void nextTurn() {
 
 		VentanaJuego.swichPlayer();
 
-		if (PlayerActual.getObjetivo().isVisitado()) {
-			// Correr el dijsktra otra vez desde la posicion actual
 
-		}
 		if (PlayerActual == Control.getPlayer1()) {
 			PlayerActual = Control.getPlayer2();
 
@@ -47,7 +45,7 @@ public class GameController {
 		}
 		if (PlayerActual.getReto() != null) {
 			VentanaJuego.getTipoLabel().setText("Tipo: " + PlayerActual.getReto().getTipo().toString());
-			VentanaJuego.getCantidadLabel().setText("Tipo: " + PlayerActual.getReto().getCantidad());
+			VentanaJuego.getCantidadLabel().setText("<html>Visitar: " + PlayerActual.getReto().getCantidad()+"  Retos Completos: "+PlayerActual.getRetosCompletos()+"/3</html>");
 		}
 		if (PlayerActual.getReto() == null) {
 			this.VentanaJuego.getRetoB().setEnabled(true);
@@ -59,9 +57,9 @@ public class GameController {
 
 		}
 		VentanaJuego.setPuntaje(Control.getPlayer1().getPoints(), Control.getPlayer1().getPointsLife(), Control.getPlayer2().getPoints(), Control.getPlayer2().getPointsLife());
-		if(PlayerActual.getObjetivo()!=null){
-			VentanaJuego.setPlaceLabel("Objetivo: "+ PlayerActual.getObjetivo().getName()+" Valor: " +PlayerActual.getObjetivo().getValor());
-			VentanaJuego.PanelObjetive(PlayerActual.getObjetivo().getIcon());
+		if(PlayerActual.getObjetivo().size()!=0){
+			VentanaJuego.setPlaceLabel(PlayerActual.GetObjetivoInfo());
+			VentanaJuego.PanelObjetive(PlayerActual.getObjetivo().get(0).getIcon());
 		}
 		JOptionPane.showMessageDialog(null, "Turno:" + PlayerActual.getName());
 		VentanaJuego.PanelMap(Control.getMapWithMarkers());
@@ -94,6 +92,8 @@ public class GameController {
 	}
 
 	public void ciudadButton() {
+		VentanaJuego.swichPlayer();
+
 		Control.setCity(Control.getDecC().getRandomCard());
 		Control.getCity().getInfo();
 		VentanaJuego.PanelMap(Control.getCity().getPictureULR());
@@ -116,17 +116,10 @@ public class GameController {
 
 		PlayerActual.setReto(Control.getDecR().getRandomCard());
 
-		//System.out.println(PlayerActual.getReto().toString());
-		//System.out.println("esta: " + PlayerActual.getCurrentPos());
 		PlayerActual.setCurrentPath(this.Control.caminoMasCorto(PlayerActual.getReto().isDosRetos(), PlayerActual));
-		//System.out.println(PlayerActual.getCurrentPath());
 
-		//System.out.println("ahora esta: " + PlayerActual.getCurrentPos());
 
-		PlayerActual.setObjetivo(Control.getCity().getPlaces()
-				.get(PlayerActual.getCurrentPath().get(PlayerActual.getCurrentPath().size() - 1)));
 		thisTurn(PlayerActual);
-		PlayerActual.setRetosCompletos(PlayerActual.getRetosCompletos() + 1);
 		nextTurn();
 
 	}
@@ -148,8 +141,9 @@ public class GameController {
 		}
 		// Lo que pasa cuando el jugador llega al lugar
 		else {
-
+			Control.getCity().getPlaces().get(PlayerActual.getCurrentPos()).setVisitado(true);
 			PlayerActual.setReto(null);
+			PlayerActual.setObjetivo(new ArrayList<Mapa.Place>());
 			PlayerActual.addPoints(Control.getCity().getPlaces().get(PlayerActual.getCurrentPos()).getValor());
 			PlayerActual.setRetosCompletos(PlayerActual.getRetosCompletos()+1);
 			System.out.println(PlayerActual.getName());
@@ -159,6 +153,7 @@ public class GameController {
 					PlayerActual.addPointsLife(Control.getPlayer1().getPoints());
 					Control.getPlayer2().addPointsLife(Control.getPlayer2().getPoints() / 2);
 					GameOver(PlayerActual, Control.getPlayer2());
+					
 
 				} else {
 					PlayerActual.addPointsLife(Control.getPlayer2().getPoints());
@@ -168,7 +163,7 @@ public class GameController {
 				}
 				Control.getPlayer1().setRetosCompletos(-1);
 				Control.getPlayer2().setRetosCompletos(-1);
-				
+				return;
 			}
 		}
 

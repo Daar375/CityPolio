@@ -134,7 +134,7 @@ public class Ventana extends javax.swing.JFrame {
 
         PlaceLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         getContentPane().add(PlaceLabel);
-        PlaceLabel.setBounds(820, 10, 150, 100);
+        PlaceLabel.setBounds(820, 0, 150, 150);
 
         CantidadLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         getContentPane().add(CantidadLabel);
@@ -343,9 +343,9 @@ public class Ventana extends javax.swing.JFrame {
         getContentPane().add(Player2Place4);
         Player2Place4.setBounds(810, 850, 150, 20);
         getContentPane().add(ObjectiveImage);
-        ObjectiveImage.setBounds(810, 120, 190, 120);
+        ObjectiveImage.setBounds(750, 120, 190, 120);
 
-        PlaceName.setFont(new java.awt.Font("Trebuchet MS", 0, 12)); // NOI18N
+        PlaceName.setFont(new java.awt.Font("Trebuchet MS", 0, 10)); // NOI18N
         getContentPane().add(PlaceName);
         PlaceName.setBounds(870, 150, 60, 0);
 
@@ -460,7 +460,8 @@ public class Ventana extends javax.swing.JFrame {
 			url = new URL (objectiveimage);
 
 			 image = ImageIO.read(url);
-
+				ObjectiveImage.getGraphics().clearRect(0, 0, 200, 200);
+				ObjectiveImage.getGraphics().drawImage(image, 0, 0, null);
 		} catch (MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -468,8 +469,7 @@ public class Ventana extends javax.swing.JFrame {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		ObjectiveImage.getGraphics().clearRect(0, 0, 200, 200);
-		ObjectiveImage.getGraphics().drawImage(image, 0, 0, null);
+
 		// paint(jPanel1.getGraphics());
 	}
 

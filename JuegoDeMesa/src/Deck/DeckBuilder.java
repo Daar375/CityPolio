@@ -34,6 +34,7 @@ public class DeckBuilder implements IConstants {
 		ArrayList<Type> permitidos = city.TiposPermitidos();
 		int index = 0;
 		while (index != 30) {
+			System.out.println(permitidos);
 			int randomnumber = 	ThreadLocalRandom.current().nextInt(0, permitidos.size());
 			
 			

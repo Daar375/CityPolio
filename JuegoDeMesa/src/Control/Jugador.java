@@ -12,8 +12,19 @@ public class Jugador implements Comparable {
 	private ArrayList<Integer> CurrentPath = new ArrayList();
 	private Reto reto;
 	private int Points;
-	private int RetosCompletos=-1;
-	private Place Objetivo;
+	private int RetosCompletos = 0;
+	private ArrayList<Place> Objetivo = new ArrayList();;
+
+	public String GetObjetivoInfo() {
+		String res = "";
+		for (Place lugar : Objetivo) {
+			res += " Objetivo: ";
+			res += lugar.getName() + " Valor: " + lugar.getValor();
+		}
+
+		return res;
+
+	}
 
 	public int getRetosCompletos() {
 		return RetosCompletos;
@@ -22,7 +33,6 @@ public class Jugador implements Comparable {
 	public void setRetosCompletos(int retosCompletos) {
 		RetosCompletos = retosCompletos;
 	}
-
 
 	public void addPoints(int pointsadd) {
 		Points = pointsadd + Points;
@@ -77,6 +87,14 @@ public class Jugador implements Comparable {
 		return Points;
 	}
 
+	public ArrayList<Place> getObjetivo() {
+		return Objetivo;
+	}
+
+	public void setObjetivo(ArrayList<Place> objetivo) {
+		Objetivo = objetivo;
+	}
+
 	public void setPoints(int points) {
 		Points = points;
 	}
@@ -87,14 +105,6 @@ public class Jugador implements Comparable {
 
 	public void setName(String name) {
 		Name = name;
-	}
-
-	public Place getObjetivo() {
-		return Objetivo;
-	}
-
-	public void setObjetivo(Place Objetivo) {
-		this.Objetivo = Objetivo;
 	}
 
 	@Override

@@ -198,7 +198,7 @@ public class CityPoly implements IConstants {
         int index = 0;
         int EncontradoMejor = CurrentPos;
         int DistanciaMejor = 999999; 
-        int DistanciActual= 0;
+        int DistanciActual= 999999;
         for(Place lugar : City.getPlaces()){
             
             if(lugar.getTipo().equals(TipoBuscado)){
@@ -208,7 +208,7 @@ public class CityPoly implements IConstants {
                         City.getPlaces().get(index).getLatitud(),
                         City.getPlaces().get(index).getLongitud());
                 
-                if(DistanciActual < DistanciaMejor && CurrentPos != index){
+                if(DistanciActual < DistanciaMejor && CurrentPos != index&& DistanciaMejor>1){
                     if(!City.getPlaces().get(index).isVisitado()){
                         DistanciaMejor = DistanciActual;
                         EncontradoMejor = index;
@@ -232,18 +232,21 @@ public class CityPoly implements IConstants {
         public ArrayList<Integer> caminoMasCorto(boolean dosRetos, Jugador JugadorActual){
             ArrayList<Integer> CaminoAAgregar;
             this.Dijkstra.dijkstra(JugadorActual.getCurrentPos());
-            int Cercano = this.searchNear(JugadorActual.getCurrentPos(), JugadorActual.getReto().getTipo());
-            CaminoAAgregar = this.Dijkstra.shortestPath(Cercano);
+            int lugaruno = this.searchNear(JugadorActual.getCurrentPos(), JugadorActual.getReto().getTipo());
+            int SegundoLugar=0;
+            CaminoAAgregar = this.Dijkstra.shortestPath(lugaruno);
             if(dosRetos){ // Si son dos lugares en el reto
-                this.Dijkstra.dijkstra(Cercano);
+                this.Dijkstra.dijkstra(lugaruno);
                 // Buscamos el mass cercano desde el ultimo lugar hasta el segundo lugar
-                Cercano = this.searchNear(Cercano, JugadorActual.getReto().getTipo());
+                SegundoLugar = this.searchNear(lugaruno, JugadorActual.getReto().getTipo());
                 // Eliminar el ultimo elemento ya que se repite al agregarle el segundo camino
                 CaminoAAgregar.remove(CaminoAAgregar.size()-1); 
                 // Le agregamos al camino que ya tenemos, el nuevo que va desde
                 // el ultimo encontrado hasta el siguiente luar del reto
-                CaminoAAgregar.addAll(this.Dijkstra.shortestPath(Cercano));
-                
+                CaminoAAgregar.addAll(this.Dijkstra.shortestPath(SegundoLugar));
+            	JugadorActual.getObjetivo().add(City.getPlaces().get(lugaruno));
+            	JugadorActual.getObjetivo().add(City.getPlaces().get(CaminoAAgregar.get(CaminoAAgregar.size()-1)));
+
             }
             
             
