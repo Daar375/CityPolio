@@ -17,6 +17,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
+import javax.swing.JOptionPane;
+
 public class CityPoly implements IConstants {
 
 	private BPlusTree<String, Jugador> Players = new BPlusTree();
@@ -110,11 +112,14 @@ public class CityPoly implements IConstants {
 		RANKINGFILE.delete();
 		RANKINGFILE.createNewFile();
 		ArchivoSecuencial save = new ArchivoSecuencial();
-
+		MergeSort sort = new MergeSort(Ranking);
+		sort.sortGivenArray();
+		Ranking=sort.getSortedArray();
 		int index = 0;
 		while(index!=Ranking.size()){
 			
 			save.EscribirSecuancialRanking(Ranking.get(index).getName(),  Integer.toString(Ranking.get(index).getPointsLife()));
+			index++;
 		}
 	}
 	
@@ -268,8 +273,12 @@ public class CityPoly implements IConstants {
 		if (playerfound != null) {
 			if (playerfound.getContrasenha().equals(Pass)) {
 				if (player1 == null) {
+					JOptionPane.showMessageDialog(null, "Player 1 Logged, Log Player 2");
+
 					player1 = playerfound;
 				} else {
+					JOptionPane.showMessageDialog(null, "Player 2 Logged");
+
 					player2 = playerfound;
 
 				}

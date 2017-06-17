@@ -123,8 +123,8 @@ public class Ciudad implements IConstants {
 			if (Array.getJSONObject(index).has("rating")) {
 				Object tempdouble = Array.getJSONObject(index).get("rating");
 				if (tempdouble.getClass() == Double.class) {
-					Double d = (Double) tempdouble;
-					place.setValor(d.intValue());
+					Double rankingdouble = (Double) tempdouble;
+					place.setValor(rankingdouble.intValue());
 
 				} else {
 					place.setValor((int) tempdouble);
@@ -132,12 +132,11 @@ public class Ciudad implements IConstants {
 				}
 
 			} else {
-				place.setValor(ThreadLocalRandom.current().nextInt(0, 6));
+				place.setValor(ThreadLocalRandom.current().nextInt(1, 5));
 			}
 			lugares.add(place);
 			index++;
 		}
-		System.out.println(tipe.toString() + " " + lugares.size());
 		Places.addAll(lugares);
 	}
 }

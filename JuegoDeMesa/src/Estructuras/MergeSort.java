@@ -42,7 +42,7 @@ public class MergeSort {
         int rightIndex = midIndex+1;
          
         while(leftIndex<=midIndex && rightIndex<=endIndex){
-            if(inputArray.get(leftIndex).getPointsLife()<=inputArray.get(rightIndex).getPointsLife()){
+            if(inputArray.get(leftIndex).getPointsLife()>=inputArray.get(rightIndex).getPointsLife()){
                 mergedSortedArray.add(inputArray.get(leftIndex));
                 leftIndex++;
             }else{

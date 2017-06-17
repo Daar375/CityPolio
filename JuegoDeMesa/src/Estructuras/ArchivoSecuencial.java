@@ -26,13 +26,13 @@ public class ArchivoSecuencial implements IConstants {
 		
 		
 		FileManager write = new FileManager();
-		write.escribirArchivo(SAVEFILE, ranking);
+		write.escribirArchivo(RANKINGFILE, ranking);
 
 	}	
 	public void EscribirSecuancialUsuarios(Jugador  player) throws IOException {
 
 
-		int puntos  = player.getPoints();
+		int puntos  = player.getPointsLife();
 		byte[] namebytes = FixByteSize(player.getName().getBytes(),10);
 		byte[] pointbytes =  FixByteSize(Integer.toString(puntos).getBytes(),10) ;
 		byte[] passbytes = FixByteSize(player.getContrasenha().getBytes(),10);
@@ -41,7 +41,7 @@ public class ArchivoSecuencial implements IConstants {
 		outputStream.write( namebytes );
 		outputStream.write( pointbytes );
 		outputStream.write( passbytes );
-
+		
 		byte jugadorbytes[] = outputStream.toByteArray( );
 		
 		int index=0;
@@ -71,7 +71,7 @@ public class ArchivoSecuencial implements IConstants {
 
 			
 			player.setName(NameString);
-			player.setPoints(Integer.valueOf(PointString));
+			player.setPointsLife(Integer.valueOf(PointString));
 			Ranking.add(player);
 			index = index+20;
 			
@@ -103,7 +103,7 @@ public class ArchivoSecuencial implements IConstants {
 
 			player.setContrasenha(PassString);
 			player.setName(NameString);
-			player.setPoints( Integer.valueOf(PointString));
+			player.setPointsLife( Integer.valueOf(PointString));
 			index = index+30;
 			System.out.println(NameString);
 			tree.insert(NameString, player);

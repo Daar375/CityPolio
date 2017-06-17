@@ -58,8 +58,12 @@ public class GameController {
 			VentanaJuego.getRollDice().setEnabled(true);
 
 		}
+		VentanaJuego.setPuntaje(Control.getPlayer1().getPoints(), Control.getPlayer1().getPointsLife(), Control.getPlayer2().getPoints(), Control.getPlayer2().getPointsLife());
+		if(PlayerActual.getObjetivo()!=null){
+			VentanaJuego.setPlaceLabel("Objetivo: "+ PlayerActual.getObjetivo().getName()+" Valor: " +PlayerActual.getObjetivo().getValor());
+			VentanaJuego.PanelObjetive(PlayerActual.getObjetivo().getIcon());
+		}
 		JOptionPane.showMessageDialog(null, "Turno:" + PlayerActual.getName());
-		System.out.println("\n" + PlayerActual.getName() + "\n");
 		VentanaJuego.PanelMap(Control.getMapWithMarkers());
 
 	}
@@ -71,14 +75,15 @@ public class GameController {
 		int index = 0;
 		while (index != ranking.length) {
 			Object[] playerdata = new Object[3];
-			playerdata[0] = index + 1;
-			playerdata[1] = rankingplayerlist.get(index).getName();
+			playerdata[0] = rankingplayerlist.get(index).getName();
 
-			playerdata[2] = rankingplayerlist.get(index).getPoints();
+			playerdata[1] = rankingplayerlist.get(index).getPointsLife();
+			playerdata[2] = index + 1;
 			ranking[index] = playerdata;
-
+			index++;
 		}
 		RankingUI UI = new RankingUI(ranking);
+		UI.setVisible(true);
 	}
 
 	public void logoffButton() throws ClassNotFoundException, IOException {
@@ -92,6 +97,7 @@ public class GameController {
 		Control.setCity(Control.getDecC().getRandomCard());
 		Control.getCity().getInfo();
 		VentanaJuego.PanelMap(Control.getCity().getPictureULR());
+		VentanaJuego.setCiudadLabel(Control.getCity().getName());
 		Control.genGrafo();
 		Control.setDijkstra(new Dijkstra(Control.getGrafo()));
 
@@ -108,20 +114,19 @@ public class GameController {
 
 	public void retoButton() {
 
-
 		PlayerActual.setReto(Control.getDecR().getRandomCard());
 
-		System.out.println(PlayerActual.getReto().toString());
-		System.out.println("esta: " + PlayerActual.getCurrentPos());
+		//System.out.println(PlayerActual.getReto().toString());
+		//System.out.println("esta: " + PlayerActual.getCurrentPos());
 		PlayerActual.setCurrentPath(this.Control.caminoMasCorto(PlayerActual.getReto().isDosRetos(), PlayerActual));
-		System.out.println(PlayerActual.getCurrentPath());
+		//System.out.println(PlayerActual.getCurrentPath());
 
-		System.out.println("ahora esta: " + PlayerActual.getCurrentPos());
+		//System.out.println("ahora esta: " + PlayerActual.getCurrentPos());
 
 		PlayerActual.setObjetivo(Control.getCity().getPlaces()
 				.get(PlayerActual.getCurrentPath().get(PlayerActual.getCurrentPath().size() - 1)));
 		thisTurn(PlayerActual);
-		PlayerActual.setRetosCompletos(PlayerActual.getRetosCompletos()+1);
+		PlayerActual.setRetosCompletos(PlayerActual.getRetosCompletos() + 1);
 		nextTurn();
 
 	}
@@ -145,14 +150,25 @@ public class GameController {
 		else {
 
 			PlayerActual.setReto(null);
-			PlayerActual.addPoints(this.Control.getCity().getPlaces().get(PlayerActual.getCurrentPos()).getValor());
-			if(PlayerActual.getRetosCompletos()==3){
-				if(PlayerActual.equals(Control.getPlayer1())){
-					GameOver(PlayerActual,Control.getPlayer2());
-				}else{
-					GameOver(PlayerActual,Control.getPlayer1());
+			PlayerActual.addPoints(Control.getCity().getPlaces().get(PlayerActual.getCurrentPos()).getValor());
+			PlayerActual.setRetosCompletos(PlayerActual.getRetosCompletos()+1);
+			System.out.println(PlayerActual.getName());
+			if (PlayerActual.getRetosCompletos()> 3) {
+				if (PlayerActual.equals(Control.getPlayer1())) {
+
+					PlayerActual.addPointsLife(Control.getPlayer1().getPoints());
+					Control.getPlayer2().addPointsLife(Control.getPlayer2().getPoints() / 2);
+					GameOver(PlayerActual, Control.getPlayer2());
+
+				} else {
+					PlayerActual.addPointsLife(Control.getPlayer2().getPoints());
+					Control.getPlayer2().addPointsLife(Control.getPlayer1().getPoints() / 2);
+					GameOver(PlayerActual, Control.getPlayer1());
 
 				}
+				Control.getPlayer1().setRetosCompletos(-1);
+				Control.getPlayer2().setRetosCompletos(-1);
+				
 			}
 		}
 
@@ -164,30 +180,48 @@ public class GameController {
 
 	}
 
-	private void GameOver(Jugador ganador,Jugador perdedor)  {
-		ganador.addPointsLife(Control.getPlayer1().getPoints());
-		perdedor.addPointsLife(Control.getPlayer2().getPoints() / 2);
+	private void GameOver(Jugador ganador, Jugador perdedor) {
+		JOptionPane.showMessageDialog(null, "Gano " + ganador.getName() + "Con " + ganador.getPoints() + " puntos");
+
 		boolean player1bool = false;
 		boolean player2bool = false;
 		ArrayList<Jugador> ranking = Control.getRanking();
 		int index = 0;
 		while (ranking.size() != index) {
-			if (ranking.get(index).getName() == ganador.getName()) {
+			if (ranking.get(index).getName().equals(ganador.getName())) {
 				ranking.get(index).addPointsLife(ganador.getPoints());
-				player1bool=true;
-			} else if (ranking.get(index).getName() == perdedor.getName()) {
-				ranking.get(index).addPointsLife(perdedor.getPoints()/2);
-				player2bool = false;
-			}
-			if(!player1bool){
-				ranking.add(ganador);
-			}else if(!player2bool){
-				ranking.add(perdedor);
-			}
+				player1bool = true;
+			} else if (ranking.get(index).getName().equals(perdedor.getName())) {
+				ranking.get(index).addPointsLife(perdedor.getPoints() / 2);
+				player2bool = true;
+			}			
 			index++;
 		}
+			if (!player1bool) {
+				ranking.add(ganador);
+			}if (!player2bool) {
+				ranking.add(perdedor);
+			}
+			
+		@SuppressWarnings("unused")
 		MergeSort sort = new MergeSort(ranking);
-	
+		Control.setRanking(sort.getSortedArray());
+		try {
+			Control.SaveTree();
+			Control.SaveRanking();
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		CityPoly control = new CityPoly();
+		try {
+			control.iniciarUi();
+		} catch (ClassNotFoundException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		VentanaJuego.dispose();
 	}
 
 	private void actualizarRecorridoUi(Jugador Actual) {
