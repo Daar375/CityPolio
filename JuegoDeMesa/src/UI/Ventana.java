@@ -103,7 +103,8 @@ public class Ventana extends javax.swing.JFrame {
         ObjectiveImage = new javax.swing.JPanel();
         PlaceName = new javax.swing.JLabel();
         CiudadLabel = new javax.swing.JLabel();
-
+        LugaresLabel = new javax.swing.JLabel();
+        LugaresCantidad = new javax.swing.JLabel();
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1024, 950));
         getContentPane().setLayout(null);
@@ -351,12 +352,21 @@ public class Ventana extends javax.swing.JFrame {
 
         CiudadLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         getContentPane().add(CiudadLabel);
-        CiudadLabel.setBounds(0, 44, 720, 30);
+        CiudadLabel.setBounds(0, 44, 400
+        		, 30);
+        LugaresLabel.setText("Total de Lugares:");
+        getContentPane().add(LugaresLabel);
+        LugaresLabel.setBounds(500, 50, 100, 30);
+        
+        getContentPane().add(LugaresCantidad);
+        LugaresCantidad.setBounds(500, 60, 30, 30);
 
         pack();
     }
 
-
+	public void setLugaresCantidad(int Text) {
+		LugaresCantidad.setText("<html>"+Text+"</html>");
+	}
 
 	public void setPlaceLabel(String Text) {
 		PlaceLabel.setText("<html>"+Text+"</html>");
@@ -511,6 +521,8 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JButton CiudadB;
     private javax.swing.JLabel CiudadLabel;
     private javax.swing.JButton LogOffB;
+    private javax.swing.JLabel LugaresCantidad;
+    private javax.swing.JLabel LugaresLabel;
     private javax.swing.JPanel ObjectiveImage;
     private javax.swing.JLabel PlaceName;
     private javax.swing.JLabel Player1Place0;
