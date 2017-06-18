@@ -74,11 +74,12 @@ public class Place implements CypherExportable {
 
     @Override
     public String getNodeName() {
-        return this.Name.replace
+        return this.Name.replace("\"", "").replace
         (" ", "_").replace(".", "_").replace(",", "_").replace("-", "_").
         replace("'", "").replace("@", "").replace("#", "").replace("$", "").
         replace("%", "").replace("^", "").replace("&", "").replace("*", "").
-        replace("(", "").replace(")", "").replace("`", "").replace("\"", "");
+        replace("(", "").replace(")", "").replace("`", "").replace("\"", "")
+        .replace("_", "");
     }
 
     @Override

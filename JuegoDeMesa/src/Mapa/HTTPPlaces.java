@@ -33,6 +33,7 @@ public class HTTPPlaces implements IConstants {
 			HttpResponse response = httpclient.execute(request);
 			HttpEntity entity = response.getEntity();
 			if (entity != null) {
+                           // System.out.println("Este es entity: " + EntityUtils.toString(entity));
 				return EntityUtils.toString(entity);
 			}
 		} catch (Exception e) {
