@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-public class LeafNode<K extends Comparable<K>, T> extends TreeNode<K, T> {
-	protected ArrayList<T> values;
-	protected LeafNode<K, T> nextLeaf;
-	protected LeafNode<K, T> previousLeaf;
+public class LeafNode<Key extends Comparable<Key>, Value> extends TreeNode<Key, Value> {
+	protected ArrayList<Value> values;
+	protected LeafNode<Key, Value> nextLeaf;
+	protected LeafNode<Key, Value> previousLeaf;
 
-	public LeafNode(K firstKey, T firstValue) {
+	public LeafNode(Key firstKey, Value firstValue) {
 		isLeafNode = true;
-		keys = new ArrayList<K>();
-		values = new ArrayList<T>();
+		keys = new ArrayList<Key>();
+		values = new ArrayList<Value>();
 		keys.add(firstKey);
 		values.add(firstValue);
 
@@ -26,34 +26,34 @@ public class LeafNode<K extends Comparable<K>, T> extends TreeNode<K, T> {
 		}
 	}
 
-	public ArrayList<T> getValues() {
+	public ArrayList<Value> getValues() {
 		return values;
 	}
 
-	public void setValues(ArrayList<T> values) {
+	public void setValues(ArrayList<Value> values) {
 		this.values = values;
 	}
 
-	public LeafNode<K, T> getNextLeaf() {
+	public LeafNode<Key, Value> getNextLeaf() {
 		return nextLeaf;
 	}
 
-	public void setNextLeaf(LeafNode<K, T> nextLeaf) {
+	public void setNextLeaf(LeafNode<Key, Value> nextLeaf) {
 		this.nextLeaf = nextLeaf;
 	}
 
-	public LeafNode<K, T> getPreviousLeaf() {
+	public LeafNode<Key, Value> getPreviousLeaf() {
 		return previousLeaf;
 	}
 
-	public void setPreviousLeaf(LeafNode<K, T> previousLeaf) {
+	public void setPreviousLeaf(LeafNode<Key, Value> previousLeaf) {
 		this.previousLeaf = previousLeaf;
 	}
 
-	public LeafNode(List<K> newKeys, List<T> newValues) {
+	public LeafNode(List<Key> newKeys, List<Value> newValues) {
 		isLeafNode = true;
-		keys = new ArrayList<K>(newKeys);
-		values = new ArrayList<T>(newValues);
+		keys = new ArrayList<Key>(newKeys);
+		values = new ArrayList<Value>(newValues);
 
 	}
 
@@ -63,7 +63,7 @@ public class LeafNode<K extends Comparable<K>, T> extends TreeNode<K, T> {
 	 * @param key
 	 * @param value
 	 */
-	public void insertSorted(K key, T value) {
+	public void insertSorted(Key key, Value value) {
 		if (key.compareTo(keys.get(0)) < 0) {
 			keys.add(0, key);
 			values.add(0, value);
@@ -71,7 +71,7 @@ public class LeafNode<K extends Comparable<K>, T> extends TreeNode<K, T> {
 			keys.add(key);
 			values.add(value);
 		} else {
-			ListIterator<K> iterator = keys.listIterator();
+			ListIterator<Key> iterator = keys.listIterator();
 			while (iterator.hasNext()) {
 				if (iterator.next().compareTo(key) > 0) {
 					int position = iterator.previousIndex();

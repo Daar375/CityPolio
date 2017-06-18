@@ -3,25 +3,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
-public class IndexNode<K extends Comparable<K>, T> extends TreeNode<K,T> {
+public class IndexNode<Key extends Comparable<Key>, Value> extends TreeNode<Key,Value> {
 
 	// m nodes
-	protected ArrayList<TreeNode<K,T>> children; // m+1 children
+	protected ArrayList<TreeNode<Key,Value>> children; // m+1 children
 
-	public IndexNode(K key, TreeNode<K,T> child0, TreeNode<K,T> child1) {
+	public IndexNode(Key key, TreeNode<Key,Value> child0, TreeNode<Key,Value> child1) {
 		isLeafNode = false;
-		keys = new ArrayList<K>();
+		keys = new ArrayList<Key>();
 		keys.add(key);
-		children = new ArrayList<TreeNode<K,T>>();
+		children = new ArrayList<TreeNode<Key,Value>>();
 		children.add(child0);
 		children.add(child1);
 	}
 
-	public IndexNode(List<K> newKeys, List<TreeNode<K,T>> newChildren) {
+	public IndexNode(List<Key> newKeys, List<TreeNode<Key,Value>> newChildren) {
 		isLeafNode = false;
 
-		keys = new ArrayList<K>(newKeys);
-		children = new ArrayList<TreeNode<K,T>>(newChildren);
+		keys = new ArrayList<Key>(newKeys);
+		children = new ArrayList<TreeNode<Key,Value>>(newChildren);
 
 	}
 
@@ -32,9 +32,9 @@ public class IndexNode<K extends Comparable<K>, T> extends TreeNode<K,T> {
 	 * @param e
 	 * @param index
 	 */
-	public void insertSorted(Entry<K, TreeNode<K,T>> e, int index) {
-		K key = e.getKey();
-		TreeNode<K,T> child = e.getValue();
+	public void insertSorted(Entry<Key, TreeNode<Key,Value>> e, int index) {
+		Key key = e.getKey();
+		TreeNode<Key,Value> child = e.getValue();
 		if (index >= keys.size()) {
 			keys.add(key);
 			children.add(child);

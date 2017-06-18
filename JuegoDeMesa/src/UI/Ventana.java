@@ -1,12 +1,21 @@
 package UI;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import Control.CityPoly;
 import Control.GameController;
+import java.util.Arrays;
+import java.util.List;
+
+import javax.imageio.ImageIO;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 
 /**
  *
@@ -18,23 +27,20 @@ public class Ventana extends javax.swing.JFrame {
 	 * Creates new form Ventana
 	 */
 	private GameController Game;
+
 	public Ventana() {
 		initComponents();
-		RollDice.setVisible(false);
-
+		RollDice.setEnabled(false);
 
 	}
-
 
 	public GameController getGame() {
 		return Game;
 	}
 
-
 	public void setGame(GameController game) {
 		Game = game;
 	}
-
 
 	/**
 	 * This method is called from within the constructor to initialize the form.
@@ -50,7 +56,7 @@ public class Ventana extends javax.swing.JFrame {
         Username1 = new javax.swing.JLabel();
         Username2 = new javax.swing.JLabel();
         TipoLabel = new javax.swing.JLabel();
-        CityLabel = new javax.swing.JLabel();
+        PlaceLabel = new javax.swing.JLabel();
         CantidadLabel = new javax.swing.JLabel();
         Puntaje2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -60,9 +66,7 @@ public class Ventana extends javax.swing.JFrame {
         RetoB = new javax.swing.JButton();
         RollDice = new javax.swing.JButton();
         Box = new javax.swing.JLabel();
-        CartaJugador1 = new javax.swing.JLabel();
         LogOffB = new javax.swing.JButton();
-        CartaJugador3 = new javax.swing.JLabel();
         Box1 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         Player1Place4 = new javax.swing.JLabel();
@@ -96,12 +100,16 @@ public class Ventana extends javax.swing.JFrame {
         Player2Place2 = new javax.swing.JLabel();
         Player2Place3 = new javax.swing.JLabel();
         Player2Place4 = new javax.swing.JLabel();
-
+        ObjectiveImage = new javax.swing.JPanel();
+        PlaceName = new javax.swing.JLabel();
+        CiudadLabel = new javax.swing.JLabel();
+        LugaresLabel = new javax.swing.JLabel();
+        LugaresCantidad = new javax.swing.JLabel();
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1000, 900));
+        setPreferredSize(new java.awt.Dimension(1024, 950));
         getContentPane().setLayout(null);
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(50, 50, 700, 680);
+        jPanel1.setBounds(0, 80, 700, 660);
 
         Puntaje1.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
         Puntaje1.setForeground(new java.awt.Color(100, 100, 100));
@@ -125,9 +133,9 @@ public class Ventana extends javax.swing.JFrame {
         getContentPane().add(TipoLabel);
         TipoLabel.setBounds(820, 340, 150, 70);
 
-        CityLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        getContentPane().add(CityLabel);
-        CityLabel.setBounds(820, 0, 150, 60);
+        PlaceLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        getContentPane().add(PlaceLabel);
+        PlaceLabel.setBounds(820, 0, 150, 150);
 
         CantidadLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         getContentPane().add(CantidadLabel);
@@ -163,7 +171,7 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
         getContentPane().add(CiudadB);
-        CiudadB.setBounds(850, 200, 100, 23);
+        CiudadB.setBounds(850, 240, 100, 23);
 
         RetoB.setText("Elegir Reto");
         RetoB.addActionListener(new java.awt.event.ActionListener() {
@@ -180,17 +188,18 @@ public class Ventana extends javax.swing.JFrame {
                 RollDiceActionPerformed(evt);
             }
         });
-				   addWindowListener(new java.awt.event.WindowAdapter() {
-		        public void windowClosing(WindowEvent winEvt) {
-		        	try {
-						Game.getControl().SaveTree();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-		        	System.exit(0);
-		        }
-		    });
+				addWindowListener(new java.awt.event.WindowAdapter() {
+			public void windowClosing(WindowEvent winEvt) {
+				try {
+					Game.getControl().SaveTree();
+					Game.getControl().SaveRanking();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				System.exit(0);
+			}
+		});
         getContentPane().add(RollDice);
         RollDice.setBounds(820, 470, 150, 170);
 
@@ -199,19 +208,9 @@ public class Ventana extends javax.swing.JFrame {
         getContentPane().add(Box);
         Box.setBounds(50, 820, 150, 30);
 
-        CartaJugador1.setBackground(new java.awt.Color(255, 50, 50));
-        CartaJugador1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(CartaJugador1);
-        CartaJugador1.setBounds(820, 0, 150, 200);
-
         LogOffB.setText("Log Off");
         getContentPane().add(LogOffB);
         LogOffB.setBounds(640, 0, 150, 40);
-
-        CartaJugador3.setBackground(new java.awt.Color(255, 50, 50));
-        CartaJugador3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        getContentPane().add(CartaJugador3);
-        CartaJugador3.setBounds(820, 240, 150, 200);
 
         Box1.setBackground(new java.awt.Color(50, 255, 50));
         Box1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -268,7 +267,7 @@ public class Ventana extends javax.swing.JFrame {
         getContentPane().add(Box9);
         Box9.setBounds(810, 740, 150, 30);
         getContentPane().add(jSeparator4);
-        jSeparator4.setBounds(-40, 40, 860, 10);
+        jSeparator4.setBounds(0, 40, 790, 10);
         getContentPane().add(jSeparator5);
         jSeparator5.setBounds(200, 830, 40, 30);
         getContentPane().add(jSeparator6);
@@ -344,9 +343,40 @@ public class Ventana extends javax.swing.JFrame {
         Player2Place4.setText("P1");
         getContentPane().add(Player2Place4);
         Player2Place4.setBounds(810, 850, 150, 20);
+        getContentPane().add(ObjectiveImage);
+        ObjectiveImage.setBounds(750, 120, 190, 120);
+
+        PlaceName.setFont(new java.awt.Font("Trebuchet MS", 0, 10)); // NOI18N
+        getContentPane().add(PlaceName);
+        PlaceName.setBounds(870, 150, 60, 0);
+
+        CiudadLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        getContentPane().add(CiudadLabel);
+        CiudadLabel.setBounds(0, 44, 400
+        		, 30);
+        LugaresLabel.setText("Total de Lugares:");
+        getContentPane().add(LugaresLabel);
+        LugaresLabel.setBounds(500, 50, 100, 30);
+        
+        getContentPane().add(LugaresCantidad);
+        LugaresCantidad.setBounds(500, 60, 30, 30);
 
         pack();
     }
+
+	public void setLugaresCantidad(int Text) {
+		LugaresCantidad.setText("<html>"+Text+"</html>");
+	}
+
+	public void setPlaceLabel(String Text) {
+		PlaceLabel.setText("<html>"+Text+"</html>");
+	}
+
+
+
+	public void setCiudadLabel(String Text) {
+		CiudadLabel.setText(Text);
+	}
 
 	private void LogOffBActionPerformed(java.awt.event.ActionEvent evt) throws ClassNotFoundException, IOException {
 		Game.logoffButton();
@@ -357,6 +387,7 @@ public class Ventana extends javax.swing.JFrame {
 	private void RankingBActionPerformed(java.awt.event.ActionEvent evt) {
 		try {
 			Game.rankingButton();
+			
 		} catch (ClassNotFoundException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -366,39 +397,107 @@ public class Ventana extends javax.swing.JFrame {
 	private void CiudadBActionPerformed(java.awt.event.ActionEvent evt) {
 		Game.ciudadButton();
 		CiudadB.setVisible(false);
-		RollDice.setVisible(true);
 	}
 
 	private void RetoBActionPerformed(java.awt.event.ActionEvent evt) {
 		Game.retoButton();
-		CartaJugador1.setText("Debe Visitar "+Game.getPlayerActual().getReto().getCantidad() +" lugares de tipo: "+ Game.getPlayerActual().getReto().getTipo().toString());
+
 		// TODO add your handling code here:
+	}
+
+	public javax.swing.JButton getRollDice() {
+		return RollDice;
+	}
+
+	public void setRollDice(javax.swing.JButton rollDice) {
+		RollDice = rollDice;
+	}
+
+	public javax.swing.JLabel getCantidadLabel() {
+		return CantidadLabel;
+	}
+
+	public void setCantidadLabel(javax.swing.JLabel cantidadLabel) {
+		CantidadLabel = cantidadLabel;
+	}
+
+	public javax.swing.JLabel getTipoLabel() {
+		return TipoLabel;
+	}
+
+	public void setTipoLabel(javax.swing.JLabel tipoLabel) {
+		TipoLabel = tipoLabel;
 	}
 
 	private void RollDiceActionPerformed(java.awt.event.ActionEvent evt) {
 		Game.diceButton();
 	}
 
-	public void swichPlayer(){
-		if(Username1.getForeground()==Color.green){
-		Username1.setForeground(Color.green);
-		Username2.setForeground(Color.black);
-		}else{
-			Username1.setForeground(Color.black);
+	public void swichPlayer() {
+		if (Username1.getForeground() == Color.green) {
 			Username2.setForeground(Color.green);
-			}
+			Username1.setForeground(Color.black);
+		} else {
+			Username2.setForeground(Color.black);
+			Username1.setForeground(Color.green);
+		}
 	}
-	
-	public void setPlayerLabel(String nameplayer,String nameplayer2){
+
+	public void setPlayerLabel(String nameplayer, String nameplayer2) {
 		Username1.setText(nameplayer);
 		Username2.setText(nameplayer2);
+
+	}
+
+	public void setPuntaje(int points,int pointslife,int points2,int pointslife2){
+		Puntaje1.setText(points+"/"+pointslife);
+		Puntaje2.setText(points2+"/"+pointslife2);
 	}
 	public void PanelMap(BufferedImage mapimage) {
 		int h = mapimage.getHeight();
 		int w = 500 * mapimage.getWidth() / h;
 
 		jPanel1.getGraphics().drawImage(mapimage, 0, 0, null);
-		//paint(jPanel1.getGraphics());
+		// paint(jPanel1.getGraphics());
+	}
+	
+	public void PanelObjetive(String objectiveimage) {
+		//int h = mapimage.getHeight();
+	//	int w = 500 * mapimage.getWidth() / h;
+		URL url;
+		BufferedImage image = null ;
+		try {
+			url = new URL (objectiveimage);
+
+			 image = ImageIO.read(url);
+				ObjectiveImage.getGraphics().clearRect(0, 0, 200, 200);
+				ObjectiveImage.getGraphics().drawImage(image, 0, 0, null);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// paint(jPanel1.getGraphics());
+	}
+
+	public List<JLabel> getP1Move() {
+
+		return Arrays.asList(Player1Place0, Player1Place1, Player1Place2, Player1Place3, Player1Place4);
+	}
+
+	public List<JLabel> getP2Move() {
+		return Arrays.asList(Player2Place0, Player2Place1, Player2Place2, Player2Place3, Player2Place4);
+	}
+
+	public JButton getRetoB() {
+		return RetoB;
+	}
+
+	public void setRetoB(JButton RetoB) {
+		this.RetoB = RetoB;
 	}
 
 	/**
@@ -418,11 +517,14 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JLabel Box8;
     private javax.swing.JLabel Box9;
     private javax.swing.JLabel CantidadLabel;
-    private javax.swing.JLabel CartaJugador1;
-    private javax.swing.JLabel CartaJugador3;
-    private javax.swing.JLabel CityLabel;
+    private javax.swing.JLabel PlaceLabel;
     private javax.swing.JButton CiudadB;
+    private javax.swing.JLabel CiudadLabel;
     private javax.swing.JButton LogOffB;
+    private javax.swing.JLabel LugaresCantidad;
+    private javax.swing.JLabel LugaresLabel;
+    private javax.swing.JPanel ObjectiveImage;
+    private javax.swing.JLabel PlaceName;
     private javax.swing.JLabel Player1Place0;
     private javax.swing.JLabel Player1Place1;
     private javax.swing.JLabel Player1Place2;
@@ -459,4 +561,6 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
 	// End of variables declaration
+
+	
 }

@@ -1,15 +1,17 @@
 package Estructuras;
  
 import java.util.ArrayList;
+
+import Control.Jugador;
  
 public class MergeSort {
-    private ArrayList<Integer> inputArray;
+    private ArrayList<Jugador> inputArray;
      
-    public ArrayList<Integer> getSortedArray() {
+    public ArrayList<Jugador> getSortedArray() {
         return inputArray;
     }
  
-    public MergeSort(ArrayList<Integer> inputArray){
+    public MergeSort(ArrayList<Jugador> inputArray){
         this.inputArray = inputArray;
     }
      
@@ -19,7 +21,7 @@ public class MergeSort {
      
     public void divide(int startIndex,int endIndex){
          
-        //Divide till you breakdown your list to single element
+        //Saca el indice del medio, y manda las 2 mitades a divir y ordena el array
         if(startIndex<endIndex && (endIndex-startIndex)>=1){
             int mid = (endIndex + startIndex)/2;
             divide(startIndex, mid);
@@ -33,14 +35,14 @@ public class MergeSort {
      
     public void merger(int startIndex,int midIndex,int endIndex){
          
-        //Below is the mergedarray that will be sorted array Array[i-midIndex] , Array[(midIndex+1)-endIndex]
-        ArrayList<Integer> mergedSortedArray = new ArrayList<Integer>();
+  
+        ArrayList<Jugador> mergedSortedArray = new ArrayList<Jugador>();
          
         int leftIndex = startIndex;
         int rightIndex = midIndex+1;
          
         while(leftIndex<=midIndex && rightIndex<=endIndex){
-            if(inputArray.get(leftIndex)<=inputArray.get(rightIndex)){
+            if(inputArray.get(leftIndex).getPointsLife()>=inputArray.get(rightIndex).getPointsLife()){
                 mergedSortedArray.add(inputArray.get(leftIndex));
                 leftIndex++;
             }else{
@@ -62,7 +64,7 @@ public class MergeSort {
          
         int i = 0;
         int j = startIndex;
-        //Setting sorted array to original one
+        //Se reacomoda el array
         while(i<mergedSortedArray.size()){
             inputArray.set(j, mergedSortedArray.get(i++));
             j++;
