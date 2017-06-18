@@ -50,11 +50,12 @@ public class Ciudad implements IConstants {
                 }
                 index++;
             }
-            if (cantidad > 4) {
+            if (cantidad > 3) {
                 res.add(tipe);
             }
         }
 
+        
         return res;
 
     }
@@ -65,6 +66,7 @@ public class Ciudad implements IConstants {
      * @param tipe 
      */
     private void loadplaces(String JsonString, Type tipe) {
+        //System.out.println(" This is json");
         JSONObject placesjson = new JSONObject(JsonString);
         JSONArray Array = placesjson.getJSONArray("results");
         int index = 0;

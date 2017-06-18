@@ -43,9 +43,14 @@ public class DeckBuilder implements IConstants {
     public DeckRetos buildRetoDeck(Ciudad city) {
         DeckRetos DecR = new DeckRetos();
         ArrayList<Type> permitidos = city.TiposPermitidos();
+        
+        if(permitidos.isEmpty()){
+            System.out.println("El lugar no tiene suficientes places, elija otra ciudad");
+        }
+        
         int index = 0;
         while (index != 30) {
-            System.out.println(permitidos);
+            //System.out.println(permitidos);
             int randomnumber = Tools.genRandom(0, permitidos.size());
 
             Reto reto = new Reto();
