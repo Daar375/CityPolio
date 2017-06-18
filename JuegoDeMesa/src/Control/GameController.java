@@ -197,7 +197,7 @@ public class GameController {
         PlayerActual.setObjetivo(new ArrayList<Mapa.Place>());
         PlayerActual.addPoints(Control.getCity().getPlaces().get(PlayerActual.getCurrentPos()).getValor());
         PlayerActual.setRetosCompletos(PlayerActual.getRetosCompletos() + 1);
-        System.out.println(PlayerActual.getName());
+        //System.out.println(PlayerActual.getName());
         if (PlayerActual.getRetosCompletos() > 3) {
             if (PlayerActual.equals(Control.getPlayer1())) {
 

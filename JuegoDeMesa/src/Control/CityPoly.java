@@ -160,6 +160,8 @@ public class CityPoly implements IConstants {
      * distancia minima los que estan a 50m.
      */
     public void genGrafo() {
+        
+        
         Grafo = new Graph(City.getPlaces().size());
         int indexP = -1; // Primer indice para recorrer los places
         int indexP2 = -1; // Segundo indice para recorrer los places
