@@ -5,6 +5,7 @@ import Deck.DeckRetos;
 import Deck.Reto;
 import Deck.*;
 import Estructuras.*;
+import GraphGist.ClipBoardManager;
 import Mapa.HTTPPlaces;
 import GraphGist.CypherExportable;
 import GraphGist.CypherGraph;
@@ -17,7 +18,6 @@ import UI.Ventana;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
 
 import javax.swing.JOptionPane;
 
@@ -199,8 +199,8 @@ public class CityPoly implements IConstants {
         }
         
         CypherGraph Cg = new CypherGraph();
-        this.setCypher(Cg.getCypherCode(this.getGrafo(), this.getCypherPlaces()));
-        System.out.println("\n\n" + this.getCypher() + "\n\n");
+        this.setCypher(Cg.getCypherCode(Grafo, this.getCypherPlaces()));
+        
 
         
     }
@@ -399,6 +399,8 @@ public class CityPoly implements IConstants {
     }
 
     public String getCypher() {
+        ClipBoardManager ClipBoard = new ClipBoardManager();
+        ClipBoard.setClipboard(Cypher);
         return Cypher;
     }
 

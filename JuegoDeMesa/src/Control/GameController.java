@@ -169,7 +169,7 @@ public class GameController {
         int index = 0;
         while (index != dice && Path.size() > 1) {
             Path.remove(0);
-            actualizarUiPlayer();
+            //actualizarUiPlayer();
             /**
              * ***************************************
              */
