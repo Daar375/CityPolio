@@ -74,7 +74,11 @@ public class Place implements CypherExportable {
 
     @Override
     public String getNodeName() {
-        return this.Name.replace(" ", "_").replace(".", "_").replace(",", "_").replace("-", "_");
+        return this.Name.replace
+        (" ", "_").replace(".", "_").replace(",", "_").replace("-", "_").
+        replace("'", "").replace("@", "").replace("#", "").replace("$", "").
+        replace("%", "").replace("^", "").replace("&", "").replace("*", "").
+        replace("(", "").replace(")", "").replace("`", "").replace("\"", "");
     }
 
     @Override
@@ -84,7 +88,7 @@ public class Place implements CypherExportable {
 
     @Override
     public String getNodeProperties() {
-        return "{ name: " + Name + " , type: " + getNodeType() + " , long: " + Longitud + " , lat: " + Latitud + " }";
+        return "{ name: \"" + Name + "\" , type: \"" + getNodeType() + "\" , long: \"" + Longitud + "\" , lat: \"" + Latitud + "\" }";
     }
 
     @Override
