@@ -1,27 +1,30 @@
 package Estructuras;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
 
-public class IndexNode<Key extends Comparable<Key>, Value> extends TreeNode<Key,Value> {
+public class IndexNode<Key extends Comparable<Key>, Value> extends TreeNode<Key, Value> {
 
 	// m nodes
-	protected ArrayList<TreeNode<Key,Value>> children; // m+1 children
+	protected ArrayList<TreeNode<Key, Value>> children; // m+1 children
+	// nodo indice se onecta con un nodo hijo que puede ser otro indice o una
+	// hoja
 
-	public IndexNode(Key key, TreeNode<Key,Value> child0, TreeNode<Key,Value> child1) {
+	public IndexNode(Key key, TreeNode<Key, Value> child0, TreeNode<Key, Value> child1) {
 		isLeafNode = false;
 		keys = new ArrayList<Key>();
 		keys.add(key);
-		children = new ArrayList<TreeNode<Key,Value>>();
+		children = new ArrayList<TreeNode<Key, Value>>();
 		children.add(child0);
 		children.add(child1);
 	}
 
-	public IndexNode(List<Key> newKeys, List<TreeNode<Key,Value>> newChildren) {
+	public IndexNode(List<Key> newKeys, List<TreeNode<Key, Value>> newChildren) {
 		isLeafNode = false;
 
 		keys = new ArrayList<Key>(newKeys);
-		children = new ArrayList<TreeNode<Key,Value>>(newChildren);
+		children = new ArrayList<TreeNode<Key, Value>>(newChildren);
 
 	}
 
@@ -32,15 +35,15 @@ public class IndexNode<Key extends Comparable<Key>, Value> extends TreeNode<Key,
 	 * @param e
 	 * @param index
 	 */
-	public void insertSorted(Entry<Key, TreeNode<Key,Value>> e, int index) {
+	public void insertSorted(Entry<Key, TreeNode<Key, Value>> e, int index) {//inserta un nuevo valor en el indice
 		Key key = e.getKey();
-		TreeNode<Key,Value> child = e.getValue();
+		TreeNode<Key, Value> child = e.getValue();
 		if (index >= keys.size()) {
 			keys.add(key);
 			children.add(child);
 		} else {
 			keys.add(index, key);
-			children.add(index+1, child);
+			children.add(index + 1, child);
 		}
 	}
 
