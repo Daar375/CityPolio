@@ -16,10 +16,12 @@ import java.util.List;
 public class CypherGraph {
 
     private Graph Grafo;
-    private String CypherNodes = "";
-    private String NodeNames = "WITH ";
-    private String Edges = "";
-    private String MatchNode = "MATCH ";
+    private String CypherNodes;
+    private String NodeNames;
+    private String Edges;
+    private String MatchNode;
+    private ClipBoardManager ClipBoard;
+    private String AsciiCypher;
 
     /**
      * Default Constructor
@@ -27,18 +29,22 @@ public class CypherGraph {
      * @param pGrafo
      */
     public CypherGraph() {
-
-
+        ClipBoard = new ClipBoardManager();
+        MatchNode = "MATCH ";
+        Edges = "";
+        NodeNames = "WITH ";
+        CypherNodes = "";
     }
 
 
     private void addNode(CypherExportable Data) {
         if (CypherNodes != "") {
-            CypherNodes += ",CREATE (" + Data.getNodeName() + ":" + Data.getNodeType() + " " + Data.getNodeProperties() + ")";
-            NodeNames += Data.getNodeName() + " ";
+            CypherNodes += ", (" + Data.getNodeName() + ":" + Data.getNodeType() + " " + Data.getNodeProperties() + ")";
+            NodeNames += ", " +Data.getNodeName() ;
             MatchNode += ",(" + Data.getNodeName() + ":" + Data.getNodeType() + "),";
         } else {
-            CypherNodes += "CREATE (" + Data.getNodeName() + ":" + Data.getNodeType() + " " + Data.getNodeProperties() + ")";
+            CypherNodes += " (" + Data.getNodeName() + ":" + Data.getNodeType() + " " + Data.getNodeProperties() + ")";
+            NodeNames += Data.getNodeName() + " ";
             MatchNode += "(" + Data.getNodeName() + ":" + Data.getNodeType() + ")";
         }
         
@@ -69,15 +75,27 @@ public class CypherGraph {
     }
 
     public String getCypherCode(Graph pGrafo, ArrayList<CypherExportable> Data ){
-        Graph Grafo = pGrafo;
+        Grafo = pGrafo;
         
         chargeNodes(Data);
         chargeEdges(Data);
         
-        return "CREATE " + CypherNodes + " " + NodeNames + " " + MatchNode +
-                " " + Edges + " " + NodeNames + " MATCH (n) RETURN n";
+        String FinalT = "";
+        FinalT+= " :neo4j-version: 3.2.1\n :author: BryanHernandez/DanielAlvarez\n :twitter: @malabaryan\n :style: #54A835/#1078B5/white:Place(name)\n\n";
+        FinalT +="[source,cypher]\n----\nCREATE " + CypherNodes + " \n" + NodeNames + " \n\n" + MatchNode +
+                " \n\n" + Edges + " \n\n" + NodeNames + "\nMATCH (n) RETURN n\n----\n\n\n//graph_result";
+        ClipBoard.setClipboard(FinalT);
+        this.AsciiCypher = FinalT;
+        return FinalT;
         
     }
+
+    public String getAsciiCypher() {
+        return AsciiCypher;
+    }
+
+    
+    
 }
 
 
