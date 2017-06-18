@@ -37,22 +37,24 @@ public class CypherGraph {
     }
 
 
-    private void addNode(CypherExportable Data) {
+    private void addNode(CypherExportable Data,int index) {
         if (CypherNodes != "") {
-            CypherNodes += ", (" + Data.getNodeName() + ":" + Data.getNodeType() + " " + Data.getNodeProperties() + ")";
-            NodeNames += ", " +Data.getNodeName() ;
-            MatchNode += ",(" + Data.getNodeName() + ":" + Data.getNodeType() + "),";
+            CypherNodes += ", (" + Data.getNodeType() + index + ":" + Data.getNodeType() + " " + Data.getNodeProperties() + ")";
+            NodeNames += ", " +Data.getNodeType() + index;
+            MatchNode += ",(" + Data.getNodeType() + index + ":" + Data.getNodeType() + ")";
         } else {
-            CypherNodes += " (" + Data.getNodeName() + ":" + Data.getNodeType() + " " + Data.getNodeProperties() + ")";
-            NodeNames += Data.getNodeName() + " ";
-            MatchNode += "(" + Data.getNodeName() + ":" + Data.getNodeType() + ")";
+            CypherNodes += " (" + Data.getNodeType() + index + ":" + Data.getNodeType() + " " + Data.getNodeProperties() + ")";
+            NodeNames += Data.getNodeType() + index + " ";
+            MatchNode += "(" + Data.getNodeType() + index + ":" + Data.getNodeType() + ")";
         }
         
     }
     
     private void chargeNodes(ArrayList<CypherExportable> Nodes){
+        int index = 0;
         for(CypherExportable Data : Nodes){
-           addNode(Data); 
+           addNode(Data,index); 
+           index++;
         }
         
     }
@@ -61,17 +63,17 @@ public class CypherGraph {
      
         int indiceLista;
         int indiceNodo;
-        for(indiceLista = 0; indiceLista < Grafo.getAdyacencyList().size();indiceLista++ ){
-            for (indiceNodo = 0; indiceNodo < Grafo.getAdyacencyList().get(indiceLista).size();indiceNodo++ ) {
-                addEdge(Nodes.get(indiceLista), Nodes.get(indiceNodo));
+        for(indiceLista = 0; indiceLista < Grafo.getAdyacencyList().size()-1;indiceLista++ ){
+            for (indiceNodo = 0; indiceNodo < Grafo.getAdyacencyList().get(indiceLista).size() -1;indiceNodo++ ) {
+                addEdge(Nodes.get(indiceLista), Nodes.get(indiceNodo),indiceLista,indiceNodo);
             }
         }
         
         
     }
     
-    private void addEdge(CypherExportable Origin,CypherExportable Destination ){
-        Edges+= "CREATE (" + Origin.getNodeName() + ")-[:" + Origin.getNodeRelation().toUpperCase() +"]->(" + Destination.getNodeName() + ") ";
+    private void addEdge(CypherExportable Origin,CypherExportable Destination, int indexOrigin,int indexDestination ){
+        Edges+= "CREATE (" + Origin.getNodeType() + indexOrigin + ")-[:" + Origin.getNodeRelation().toUpperCase() +"]->(" + Destination.getNodeType() + indexDestination + ") ";
     }
 
     public String getCypherCode(Graph pGrafo, ArrayList<CypherExportable> Data ){
