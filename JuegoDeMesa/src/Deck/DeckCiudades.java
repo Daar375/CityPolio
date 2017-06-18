@@ -1,35 +1,34 @@
 package Deck;
 
+import Herramientas.Tools;
 import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
-
-import Mapa.Type;
 
 public class DeckCiudades extends Deck {
-	private ArrayList<Ciudad> Cartas= new ArrayList<Ciudad>();
 
-	public ArrayList<Ciudad> getCartas() {
-		return Cartas;
-	}
-	
+    private ArrayList<Ciudad> Cartas = new ArrayList();
 
-	public Ciudad getRandomCard(){
-		return Cartas.get(ThreadLocalRandom.current().nextInt(0, Cartas.size()));
-	}
+    public ArrayList<Ciudad> getCartas() {
+        return Cartas;
+    }
 
-	public void setCartas(ArrayList<Ciudad> cartas) {
-		Cartas = cartas;
-	}
+    public Ciudad getRandomCard() {
+        return Cartas.get(Tools.genRandom(0, Cartas.size()));
+    }
 
-	public void Add(Ciudad city) {
+    public void setCartas(ArrayList<Ciudad> cartas) {
+        Cartas = cartas;
+    }
 
-		Cartas.add(city);
-	}
-	
-	public void AddAll( ArrayList<Ciudad> adding){
-		Cartas.addAll(adding);
-	}
-	public void Print(){
-		System.out.println(Cartas.toString());
-	}
+    public void add(Ciudad city) {
+
+        Cartas.add(city);
+    }
+
+    public void addAll(ArrayList<Ciudad> adding) {
+        Cartas.addAll(adding);
+    }
+
+    public void print() {
+        System.out.println(Cartas.toString());
+    }
 }

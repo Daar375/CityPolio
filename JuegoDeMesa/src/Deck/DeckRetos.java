@@ -1,30 +1,34 @@
 package Deck;
 
+import Herramientas.Tools;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class DeckRetos extends Deck {
-	private ArrayList<Reto> Cartas = new ArrayList();
 
-	public ArrayList<Reto> getCartas() {
-		return Cartas;
-	}
-	public Reto getRandomCard(){
-		Reto reto = Cartas.get(ThreadLocalRandom.current().nextInt(0, Cartas.size()));
-		System.out.println(reto.getTipo());
+    private ArrayList<Reto> Cartas = new ArrayList();
 
-		return reto;
-	}
-	public void setCartas(ArrayList<Reto> cartas) {
-		Cartas = cartas;
-	}
+    public ArrayList<Reto> getCartas() {
+        return Cartas;
+    }
 
-	public void Add(Reto Carta) {
-		Cartas.add(Carta);
+    public Reto getRandomCard() {
+        Reto reto = Cartas.get(Tools.genRandom(0, Cartas.size()));
+        System.out.println(reto.getTipo());
 
-	}
-    public static <T extends Enum<?>> T randomEnum(Class<T> clazz){
+        return reto;
+    }
+
+    public void setCartas(ArrayList<Reto> cartas) {
+        Cartas = cartas;
+    }
+
+    public void Add(Reto Carta) {
+        Cartas.add(Carta);
+
+    }
+
+    public static <T extends Enum<?>> T randomEnum(Class<T> clazz) {
         int x = new Random().nextInt(clazz.getEnumConstants().length);
         return clazz.getEnumConstants()[x];
     }

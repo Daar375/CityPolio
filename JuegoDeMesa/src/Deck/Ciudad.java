@@ -2,140 +2,154 @@ package Deck;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.concurrent.ThreadLocalRandom;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import Control.IConstants;
-import Google.HTTPPlaces;
+import Mapa.HTTPPlaces;
+import Herramientas.Tools;
 import Mapa.Place;
 import Mapa.Type;
 
 public class Ciudad implements IConstants {
-	private double latitud;
-	private double longitud;
-	private int CityNumber;
-	private String Name;
-	private ArrayList<Place> Places = new ArrayList();
-	private BufferedImage PictureULR;
 
-	public void getInfo() {
-		PictureULR = HTTPPlaces.getmap(LISTA_CIUDADES[CityNumber][1], LISTA_CIUDADES[CityNumber][2], "0", "0", "0",
-				"0");
-		for (Type tipo : Type.values()) {
+    private double latitud;
+    private double longitud;
+    private int CityNumber;
+    private String Name;
+    private ArrayList<Place> Places = new ArrayList();
+    private BufferedImage PictureULR;
 
-			loadplaces(HTTPPlaces.getplaces(LISTA_CIUDADES[CityNumber][1], LISTA_CIUDADES[CityNumber][2], tipo.toString()),
-					tipo);
-		}
-	}
+    /**
+     * 
+     */
+    public void getInfo() {
+        PictureULR = HTTPPlaces.getMap(LISTA_CIUDADES[CityNumber][1], LISTA_CIUDADES[CityNumber][2], "0", "0", "0",
+                "0");
+        for (Type tipo : Type.values()) {
 
-	public BufferedImage getPictureULR() {
+            loadplaces(HTTPPlaces.getPlaces(LISTA_CIUDADES[CityNumber][1], LISTA_CIUDADES[CityNumber][2], tipo.toString()),
+                    tipo);
+        }
+    }
 
-		return PictureULR;
-	}
 
-	public void setPictureULR(BufferedImage pictureULR) {
-		PictureULR = pictureULR;
-	}
+    /**
+     * Devuelve en un ArrayList los tipos de retos que son permitidos por ciudad
+     * @return 
+     */
+    public ArrayList TiposPermitidos() {
+        ArrayList res = new ArrayList();
+        for (Type tipe : Type.values()) {
+            int index = 0;
+            int cantidad = 0;
+            while (index != Places.size()) {
+                if (Places.get(index).getTipo() == tipe) {
+                    cantidad++;
+                }
+                index++;
+            }
+            if (cantidad > 4) {
+                res.add(tipe);
+            }
+        }
 
-	public int getCityNumber() {
-		return CityNumber;
-	}
+        return res;
 
-	public void setCityNumber(int cityNumber) {
-		CityNumber = cityNumber;
-	}
+    }
 
-	public double getLatitud() {
-		return latitud;
-	}
+    /**
+     * 
+     * @param JsonString
+     * @param tipe 
+     */
+    private void loadplaces(String JsonString, Type tipe) {
+        JSONObject placesjson = new JSONObject(JsonString);
+        JSONArray Array = placesjson.getJSONArray("results");
+        int index = 0;
+        ArrayList lugares = new ArrayList();
 
-	public void setLatitud(double latitud) {
-		this.latitud = latitud;
-	}
+        while (index != Array.length()) {
+            Place place = new Place();
+            place.setName((String) Array.getJSONObject(index).get("name"));
+            place.setLatitud(
+                    (double) Array.getJSONObject(index).getJSONObject("geometry").getJSONObject("location").get("lat"));
+            place.setLongitud(
+                    (double) Array.getJSONObject(index).getJSONObject("geometry").getJSONObject("location").get("lng"));
+            place.setIcon(Array.getJSONObject(index).getString("icon"));
+            place.setTipo(tipe);
+            if (Array.getJSONObject(index).has("rating")) {
+                Object tempdouble = Array.getJSONObject(index).get("rating");
+                if (tempdouble.getClass() == Double.class) {
+                    Double rankingdouble = (Double) tempdouble;
+                    place.setValor(rankingdouble.intValue());
 
-	public double getLongitud() {
-		return longitud;
-	}
+                } else {
+                    place.setValor((int) tempdouble);
 
-	public void setLongitud(double longitud) {
-		this.longitud = longitud;
-	}
+                }
 
-	public String getName() {
-		return Name;
-	}
+            } else {
+                place.setValor(Tools.genRandom(1, 5));
+            }
+            lugares.add(place);
+            index++;
+        }
+        Places.addAll(lugares);
+    }
+    
+    @Override
+    public String toString() {
+        return Name + ": Cantidad de Places: " + Places.size();
+    }
+    
+    public BufferedImage getPictureULR() {
 
-	public ArrayList<Place> getPlaces() {
-		return Places;
-	}
+        return PictureULR;
+    }
 
-	public void setPlaces(ArrayList<Place> places) {
-		Places = places;
-	}
+    public void setPictureULR(BufferedImage pictureULR) {
+        PictureULR = pictureULR;
+    }
 
-	public void setName(String name) {
-		Name = name;
-	}
+    public int getCityNumber() {
+        return CityNumber;
+    }
 
-	@Override
-	public String toString() {
-		return Name + ": Cantidad de Places: " + Places.size();
-	}
+    public void setCityNumber(int cityNumber) {
+        CityNumber = cityNumber;
+    }
 
-	public ArrayList TiposPermitidos() {
-		ArrayList res = new ArrayList();
-		for (Type tipe : Type.values()) {
-			int index = 0;
-			int cantidad=0;
-			while (index != Places.size()) {
-				if(Places.get(index).getTipo()==tipe){
-					cantidad++;
-				}
-				index++;
-			}
-			if(cantidad>4){
-				res.add(tipe);
-			}
-		}
+    public double getLatitud() {
+        return latitud;
+    }
 
-		return res;
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
+    }
 
-	}
+    public double getLongitud() {
+        return longitud;
+    }
 
-	private void loadplaces(String JsonString, Type tipe) {
-		JSONObject placesjson = new JSONObject(JsonString);
-		JSONArray Array = placesjson.getJSONArray("results");
-		int index = 0;
-		ArrayList lugares = new ArrayList();
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
+    }
 
-		while (index != Array.length()) {
-			Place place = new Place();
-			place.setName((String) Array.getJSONObject(index).get("name"));
-			place.setLatitud(
-					(double) Array.getJSONObject(index).getJSONObject("geometry").getJSONObject("location").get("lat"));
-			place.setLongitud(
-					(double) Array.getJSONObject(index).getJSONObject("geometry").getJSONObject("location").get("lng"));
-			place.setIcon(Array.getJSONObject(index).getString("icon"));
-			place.setTipo(tipe);
-			if (Array.getJSONObject(index).has("rating")) {
-				Object tempdouble = Array.getJSONObject(index).get("rating");
-				if (tempdouble.getClass() == Double.class) {
-					Double rankingdouble = (Double) tempdouble;
-					place.setValor(rankingdouble.intValue());
+    public String getName() {
+        return Name;
+    }
 
-				} else {
-					place.setValor((int) tempdouble);
+    public ArrayList<Place> getPlaces() {
+        return Places;
+    }
 
-				}
+    public void setPlaces(ArrayList<Place> places) {
+        Places = places;
+    }
 
-			} else {
-				place.setValor(ThreadLocalRandom.current().nextInt(1, 5));
-			}
-			lugares.add(place);
-			index++;
-		}
-		Places.addAll(lugares);
-	}
+    public void setName(String name) {
+        Name = name;
+    }
 }

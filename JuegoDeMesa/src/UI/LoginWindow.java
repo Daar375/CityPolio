@@ -32,7 +32,7 @@ public class LoginWindow extends javax.swing.JFrame {
 		initComponents();
 		Control = bcontrol;
 
-		Control.setPlayers(usertree.LeerSecuenciaUsuarios());
+		Control.setPlayers(usertree.leerSecuencialUsuarios());
 
 	}
 
@@ -76,7 +76,7 @@ public class LoginWindow extends javax.swing.JFrame {
 
 		jLabel1.setText("Usuario");
 
-		jLabel2.setText("Contraseña");
+		jLabel2.setText("Contraseï¿½a");
 
 		UiContrasenha.setText("jPasswordField1");
 
